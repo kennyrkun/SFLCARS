@@ -1,30 +1,48 @@
 #include "Display.hpp"
 
-Display(const sf::VideoMode& size, const sf::Vector2f& position);
+#include <iostream>
+
+Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id) : id(id)
 {
-    window = sf::RenderWindow(size, "SFLCARS");
-    window.setPosition(position);
+	window = new sf::RenderWindow(size, "SFLCARS");
+    window->setPosition(position);
+
+	std::cout << "created Display" << std::endl;
 }
 
-void HandleEvents()
+Display::~Display()
+{
+	std::cout << "destroyed Display" << std::endl;
+}
+
+void Display::addElement(Element* element)
+{
+	elements.push_back(element);
+}
+
+void Display::HandleEvents()
 {
     sf::Event event;
-    if (window.isOpen())
+    if (window->isOpen())
     {
-        window.pollEvent(event);
+        window->pollEvent(event);
 
         if (event.type == sf::Event::EventType::Closed)
-            window.close();
+            window->close();
     }
 }
 
-void Update()
+void Display::Update()
 {
 
 }
 
-void Draw()
+void Display::Draw()
 {
-    window.clear();
-    window.display();
+    window->clear();
+
+	for (size_t i = 0; i < elements.size(); i++)
+		window->draw(*elements[i]);
+
+    window->display();
 }

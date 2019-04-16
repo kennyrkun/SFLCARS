@@ -22,11 +22,7 @@ if(UNIX)
 	endif()
 
 	target_link_libraries(${PROJECT_NAME} stdc++fs)
-endif(UNIX)
-
-set(${CMAKE_BUILD_TYPE} Debug)
-
-if(WIN32)
+elseif(WIN32)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/SFML/include)
 	
 	target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/SFML/lib/sfml-graphics-s${CMAKE_DEBUG_POSTFIX}.lib)

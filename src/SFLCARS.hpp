@@ -12,16 +12,20 @@
 class SFLCARS
 {
 public:
-    Display& newDisplay(const sf::VideoMode& size, const sf::Vector2f& position);
+    Display* newDisplay(const sf::VideoMode& size, const sf::Vector2i& position);
 
     void HandleEvents();
     void Update();
     void Draw();
 
+	bool isRunning() { return running; }
+
 private:
     std::vector<Element> elements;
 
-    std::vector<Display> displays;
+    std::vector<Display*> displays;
+
+	bool running = false;
 };
 
 #endif // !LCARS_HPP
