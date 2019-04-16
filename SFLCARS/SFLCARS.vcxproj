@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="interface\Bar.cpp" />
+    <ClCompile Include="interface\Button.cpp" />
     <ClCompile Include="interface\Element.cpp" />
     <ClCompile Include="interface\IconButton.cpp" />
     <ClCompile Include="interface\TextButton.cpp" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="interface\Bar.hpp" />
+    <ClInclude Include="interface\Button.hpp" />
     <ClInclude Include="interface\Element.hpp" />
     <ClInclude Include="interface\IconButton.hpp" />
     <ClInclude Include="interface\TextButton.hpp" />

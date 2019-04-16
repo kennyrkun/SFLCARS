@@ -34,6 +34,9 @@
     <ClCompile Include="interface\TextButton.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="interface\Button.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SFLCARS.hpp">
@@ -52,6 +55,9 @@
       <Filter>Source Files\Interface</Filter>
     </ClInclude>
     <ClInclude Include="interface\TextButton.hpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\Button.hpp">
       <Filter>Source Files\Interface</Filter>
     </ClInclude>
   </ItemGroup>
