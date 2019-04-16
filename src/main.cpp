@@ -5,6 +5,8 @@
 
 #include "utility/RoundRectangle.hpp"
 
+#include "SFLCARS.hpp"
+
 const float edgePadding = 20.0f;
 const float padding = 10.0f;
 
@@ -27,43 +29,6 @@ sf::RectangleShape ss3;
 
 sf::Text t;
 
-class Element
-{
-
-};
-
-class Bar : public Element
-{
-public:
-	Bar(const std::string& name)
-	{
-
-	}
-
-
-};
-
-class LCARS
-{
-public:
-	LCARS(int instanceID = 0)
-	{
-
-	}
-
-	~LCARS()
-	{
-
-	}
-
-	void addBar(Bar bar)
-	{
-
-	}
-
-private:
-};
-
 void updatePositions()
 {
 	width = windowWidth - (edgePadding * 2);
@@ -75,7 +40,7 @@ void updatePositions()
 
 	ss1.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
-	s2.setSize(sf::Vector2f(windowWidth - ((edgePadding * 2) + (barEdgeWidth * 2) + (padding * 3) + t.getGlobalBounds().width), barHeight));
+	s2.setSize(sf::Vector2f(width - ((barEdgeWidth * 2) + (padding * 3) + t.getGlobalBounds().width), barHeight));
 
 	s3.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	s3.setCornerPointCount(16);
@@ -96,7 +61,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFLCARS");
 
 	sf::Font font;
-	font.loadFromFile("C:\\Windows\\Fonts\\Okuda.otf");
+	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
 
 	t.setFont(font);
 	t.setString("SFLCARS");
