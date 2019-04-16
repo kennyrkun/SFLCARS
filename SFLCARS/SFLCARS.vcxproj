@@ -127,11 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="interface\Bar.cpp" />
+    <ClCompile Include="interface\Element.cpp" />
+    <ClCompile Include="interface\IconButton.cpp" />
+    <ClCompile Include="interface\TextButton.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RoundRectangle.cpp" />
+    <ClCompile Include="SFLCARS.cpp" />
+    <ClCompile Include="utility\RoundRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RoundRectangle.hpp" />
+    <ClInclude Include="interface\Bar.hpp" />
+    <ClInclude Include="interface\Element.hpp" />
+    <ClInclude Include="interface\IconButton.hpp" />
+    <ClInclude Include="interface\TextButton.hpp" />
+    <ClInclude Include="SFLCARS.hpp" />
+    <ClInclude Include="utility\RoundRectangle.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

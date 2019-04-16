@@ -1,8 +1,9 @@
 #include <iostream>
 
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "RoundRectangle.hpp"
+#include "utility/RoundRectangle.hpp"
 
 const float edgePadding = 20.0f;
 const float padding = 10.0f;
@@ -101,6 +102,20 @@ int main()
 	t.setString("SFLCARS");
 	t.setCharacterSize(36);
 
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("./interface/resources/sounds/beep.ogg"))
+		std::cerr << "failed to load audio file" << std::endl;
+
+	sf::SoundBuffer buffer2;
+	if (!buffer2.loadFromFile("./interface/resources/sounds/beep2.ogg"))
+		std::cerr << "failed to load audio file" << std::endl;
+
+	std::vector<sf::Sound> sounds;
+
+	sf::Sound beep;
+	beep.setBuffer(buffer);
+	beep.setVolume(50);
+
 	updatePositions();
 
 	while (window.isOpen())
@@ -112,7 +127,7 @@ int main()
 			{
 				window.close();
 			}
-			if (event.type == sf::Event::EventType::Resized)
+			else if (event.type == sf::Event::EventType::Resized)
 			{
 				// update the view to the new size of the window
 				sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
@@ -122,6 +137,22 @@ int main()
 				windowHeight = event.size.height;
 
 				updatePositions();
+			}
+			else if (event.type == sf::Event::EventType::MouseButtonPressed)
+			{
+				sf::Sound beep;
+				beep.setBuffer(buffer);
+				beep.setVolume(50);
+				sounds.push_back(beep);
+				sounds.back().play();
+			}
+			else if (event.type == sf::Event::EventType::KeyPressed)
+			{
+				sf::Sound beep;
+				beep.setBuffer(buffer2);
+				beep.setVolume(50);
+				sounds.push_back(beep);
+				sounds.back().play();
 			}
 		}
 
