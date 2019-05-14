@@ -20,8 +20,8 @@ public:
 
     const int id;
 
-private:
     sf::RenderWindow* window;
+private:
 
 	std::vector<Element*> elements;
 };

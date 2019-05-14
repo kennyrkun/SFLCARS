@@ -12,6 +12,8 @@
 class SFLCARS
 {
 public:
+    SFLCARS();
+
     Display* newDisplay(const sf::VideoMode& size, const sf::Vector2i& position);
 
     void HandleEvents();

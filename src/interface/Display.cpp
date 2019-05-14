@@ -7,12 +7,12 @@ Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const 
 	window = new sf::RenderWindow(size, "SFLCARS");
     window->setPosition(position);
 
-	std::cout << "created Display" << std::endl;
+	std::cout << "created Display with id " << id << std::endl;
 }
 
 Display::~Display()
 {
-	std::cout << "destroyed Display" << std::endl;
+	std::cout << "destroyed Display with id " << id << std::endl;
 }
 
 void Display::addElement(Element* element)
@@ -29,6 +29,15 @@ void Display::HandleEvents()
 
         if (event.type == sf::Event::EventType::Closed)
             window->close();
+        else if (event.type == sf::Event::EventType::Resized)
+        {
+            // update the view to the new size of the window
+            sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+            window->setView(sf::View(visibleArea));
+        }
+
+        for (size_t i = 0; i < elements.size(); i++)
+            elements[i]->HandleEvents(event);
     }
 }
 

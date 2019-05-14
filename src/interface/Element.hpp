@@ -5,6 +5,9 @@
 
 class Element : public sf::Drawable
 {
+public:
+	virtual void HandleEvents(const sf::Event& event) = 0;
+
 	int id;
 };
 

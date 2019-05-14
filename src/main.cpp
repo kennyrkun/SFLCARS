@@ -6,6 +6,7 @@
 #include "utility/RoundRectangle.hpp"
 
 #include "SFLCARS.hpp"
+#include "interface/Bar.hpp"
 
 const float edgePadding = 20.0f;
 const float padding = 10.0f;
@@ -58,6 +59,22 @@ void updatePositions()
 
 int main()
 {
+	SFLCARS* lcars = new SFLCARS;
+	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+
+	Bar bar;
+
+	display->addElement(&bar);
+
+	while (lcars->isRunning())
+	{
+		lcars->HandleEvents();
+		lcars->Update();
+		lcars->Draw();
+	}
+
+	delete lcars;
+
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFLCARS");
 
 	sf::Font font;
