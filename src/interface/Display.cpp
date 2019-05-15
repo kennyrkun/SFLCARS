@@ -18,12 +18,12 @@ Display::~Display()
 void Display::addElement(Element* element)
 {
 	if (elements.empty())
+		element->updateSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+	else
 	{
-		element->updateSize({window->getSize().x, window->getSize().y});
-//		element->updatePosition({ 0, 0 });
+		element->updateSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+		element->setPosition(sf::Vector2f(0, 90));
 	}
-//	else
-//		element->updatePosition({ elements.back().getPosition().x, 0 });
 
 	elements.push_back(element);
 }

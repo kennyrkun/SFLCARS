@@ -1,26 +1,18 @@
-#include "Bar.hpp"
+#include "TextBar.hpp"
 
 #include <iostream>
 
-Bar::Bar()
+TextBar::TextBar(std::string text)
 {
-	std::cout << "created bar" << std::endl;
+	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	this->text.setFont(font);
+	this->text.setCharacterSize(36);
+	this->text.setString(text);
+
+	std::cout << "created textbar" << std::endl;
 }
 
-Bar::Bar(const sf::Vector2f& pos)
-{
-	setPosition(pos);
-
-	std::cout << "created bar at position " << std::endl;
-}
-
-void Bar::HandleEvents(const sf::Event& event)
-{
-	if (event.type == sf::Event::EventType::Resized)
-		updateSize(sf::Vector2f(event.size.width, event.size.height));
-}
-
-void Bar::updateSize(const sf::Vector2f& newSize)
+void TextBar::updateSize(const sf::Vector2f& newSize)
 {
 	std::cout << "updating bar size" << std::endl;
 
@@ -32,7 +24,7 @@ void Bar::updateSize(const sf::Vector2f& newSize)
 
 	leftEdgeRight.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
-	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (padding * 2)), barHeight));
+	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (padding * 3) + text.getLocalBounds().width), barHeight));
 
 	rightEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	rightEdge.setCornerPointCount(16);
@@ -43,29 +35,22 @@ void Bar::updateSize(const sf::Vector2f& newSize)
 	reposition();
 }
 
-void Bar::setPosition(const sf::Vector2f& newPosition)
-{
-	std::cout << "updating bar position" << std::endl;
-
-	position = newPosition;
-
-	reposition();
-}
-
-void Bar::reposition()
+void TextBar::reposition()
 {
 	leftEdge.setPosition(position.x + edgePadding, position.y + edgePadding);
 	leftEdgeRight.setPosition(leftEdge.getPosition().x + (barEdgeWidth / 2), position.y + edgePadding);
-	middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y + edgePadding);
+	text.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y + edgePadding - 7);
+	middle.setPosition(text.getPosition().x + text.getGlobalBounds().width + padding, position.y + edgePadding);
 	rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y + edgePadding);
 	rightEdgeLeft.setPosition(rightEdge.getPosition().x, position.y + edgePadding);
 }
 
-void Bar::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void TextBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(leftEdge);
 	target.draw(leftEdgeRight);
 	target.draw(middle);
 	target.draw(rightEdge);
 	target.draw(rightEdgeLeft);
+	target.draw(text);
 }

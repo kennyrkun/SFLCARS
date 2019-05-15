@@ -6,7 +6,7 @@
 #include "utility/RoundRectangle.hpp"
 
 #include "SFLCARS.hpp"
-#include "interface/Bar.hpp"
+#include "interface/TextBar.hpp"
 
 /*
 const float edgePadding = 20.0f;
@@ -64,9 +64,11 @@ int main()
 	SFLCARS* lcars = new SFLCARS;
 	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
 
-	Bar bar;
+	TextBar bar("SFLCARS");
+	Bar bar2;
 
 	display->addElement(&bar);
+	display->addElement(&bar2);
 
 	while (lcars->isRunning())
 	{
