@@ -8,6 +8,7 @@
 #include "SFLCARS.hpp"
 #include "interface/Bar.hpp"
 
+/*
 const float edgePadding = 20.0f;
 const float padding = 10.0f;
 
@@ -56,6 +57,7 @@ void updatePositions()
 	s3.setPosition(s2.getPosition().x + s2.getSize().x + padding, edgePadding);
 	ss3.setPosition(s3.getPosition().x, edgePadding);
 }
+*/
 
 int main()
 {
@@ -75,6 +77,7 @@ int main()
 
 	delete lcars;
 
+	/*
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFLCARS");
 
 	sf::Font font;
@@ -147,4 +150,5 @@ int main()
 		window.draw(t);
 		window.display();
 	}
+	*/
 }

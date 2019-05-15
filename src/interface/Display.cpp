@@ -17,6 +17,14 @@ Display::~Display()
 
 void Display::addElement(Element* element)
 {
+	if (elements.empty())
+	{
+		element->updateSize({window->getSize().x, window->getSize().y});
+//		element->updatePosition({ 0, 0 });
+	}
+//	else
+//		element->updatePosition({ elements.back().getPosition().x, 0 });
+
 	elements.push_back(element);
 }
 
