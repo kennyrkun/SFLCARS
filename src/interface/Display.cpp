@@ -17,12 +17,25 @@ Display::~Display()
 
 void Display::addElement(Element* element)
 {
-	if (elements.empty())
-		element->updateSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	else
+	std::cout << "adding new element" << std::endl;
+	std::cout << elements.size() << std::endl;
+
+	element->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+	element->setPosition(sf::Vector2f(0, 0)); // HACK: get it to calculate it's geometry before we start moving things
+
+	if (!elements.empty())
 	{
-		element->updateSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-		element->setPosition(sf::Vector2f(0, 90));
+		if (elements.size() < 2) // make it the bottom piece
+			element->setPosition(sf::Vector2f(0, window->getSize().y - 75));
+		else
+		{
+			std::cout << "repositioning last element" << std::endl;
+
+			Element* back = elements[elements.size() - 2]; // because -1 is .back()
+			elements.back()->setPosition(sf::Vector2f(0, back->getPosition().y + back->getSize().y + 10));
+
+			element->setPosition(sf::Vector2f(0, window->getSize().y - 75));
+		}
 	}
 
 	elements.push_back(element);
