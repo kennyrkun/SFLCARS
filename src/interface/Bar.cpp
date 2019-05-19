@@ -17,10 +17,10 @@ Bar::Bar(const sf::Vector2f& pos)
 void Bar::HandleEvents(const sf::Event& event)
 {
 	if (event.type == sf::Event::EventType::Resized)
-		updateSize(sf::Vector2f(event.size.width, event.size.height));
+		setSize(sf::Vector2f(event.size.width, event.size.height));
 }
 
-void Bar::updateSize(const sf::Vector2f& newSize)
+void Bar::setSize(const sf::Vector2f& newSize)
 {
 	std::cout << "updating bar size" << std::endl;
 
@@ -41,6 +41,11 @@ void Bar::updateSize(const sf::Vector2f& newSize)
 	rightEdgeLeft.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
 	reposition();
+}
+
+sf::Vector2f Bar::getSize()
+{
+	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
 }
 
 void Bar::setPosition(const sf::Vector2f& newPosition)

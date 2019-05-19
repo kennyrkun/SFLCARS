@@ -13,7 +13,8 @@ public:
 	void HandleEvents(const sf::Event& event);
 
 	// TODO: make this just setLength(float length);
-	virtual void updateSize(const sf::Vector2f& newSize);
+	virtual void setSize(const sf::Vector2f& newSize);
+	virtual sf::Vector2f getSize();
 
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() { return position; }

@@ -12,7 +12,7 @@ TextBar::TextBar(std::string text)
 	std::cout << "created textbar" << std::endl;
 }
 
-void TextBar::updateSize(const sf::Vector2f& newSize)
+void TextBar::setSize(const sf::Vector2f& newSize)
 {
 	std::cout << "updating bar size" << std::endl;
 
@@ -33,6 +33,11 @@ void TextBar::updateSize(const sf::Vector2f& newSize)
 	rightEdgeLeft.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
 	reposition();
+}
+
+sf::Vector2f TextBar::getSize()
+{
+	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
 }
 
 void TextBar::reposition()
