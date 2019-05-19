@@ -12,7 +12,7 @@ int main()
 	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
 
 	TextBar bar("SFLCARS");
-	TextBar bar2("bar2");
+	TextBar bar2("bar2", Alignment::Right);
 	TextBar bar3("bar3");
 
 	display->addElement(&bar);

@@ -8,14 +8,13 @@
 enum class Alignment
 {
 	Left,
-	Center,
 	Right
 };
 
 class TextBar : public Bar
 {
 public:
-	TextBar(std::string text);
+	TextBar(std::string text, Alignment align = Alignment::Left);
 
 	void setAlignment(Alignment align);
 	Alignment getAlignment() { return align; }
@@ -31,7 +30,7 @@ public:
 private:
 	void reposition() override;
 
-	Alignment align = Alignment::Left;
+	Alignment align;
 
 	sf::Text text;
 	sf::Font font;
