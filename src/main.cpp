@@ -1,5 +1,6 @@
 #include "SFLCARS.hpp"
 #include "interface/TextBar.hpp"
+#include "interface/Button.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,6 +19,9 @@ int main()
 	display->addElement(&bar);
 	display->addElement(&bar2);
 	display->addElement(&bar3);
+
+	Button button("button1");
+	display->addElement(&button);
 
 	while (lcars->isRunning())
 	{

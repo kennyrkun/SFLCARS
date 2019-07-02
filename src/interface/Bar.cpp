@@ -68,9 +68,9 @@ void Bar::reposition()
 
 void Bar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(leftEdge);
-	target.draw(leftEdgeRight);
-	target.draw(middle);
-	target.draw(rightEdge);
-	target.draw(rightEdgeLeft);
+	target.draw(leftEdge, states);
+	target.draw(leftEdgeRight, states);
+	target.draw(middle, states);
+	target.draw(rightEdge, states);
+	target.draw(rightEdgeLeft, states);
 }

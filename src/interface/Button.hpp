@@ -1,19 +1,39 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#include <iostream>
+#include "Element.hpp"
+#include "../utility/RoundRectangle.hpp"
+
 #include <SFML/Graphics.hpp>
 
-#include "Element.hpp"
+#include <iostream>
+
+// TODO: button can be on the left or right side of a bar
 
 // This is a base class for all Buttons.
-// It 
 class Button : public Element
 {
 public:
-	std::string string;
+	Button();
+	Button(const std::string& string);
 
-	sf::RectangleShape box;
+	void setString(const std::string& string);
+	std::string getString();
+
+	void setPosition(const sf::Vector2f& newPosition);
+	sf::Vector2f getPosition();
+
+	void HandleEvents(const sf::Event& event);
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+private:
+	sf::Font font;
+	sf::Text text;
+
+	sf::RoundedRectangleShape box;
+
+	void reposition();
 };
 
 #endif // !BUTTON_HPP
