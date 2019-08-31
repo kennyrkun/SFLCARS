@@ -18,12 +18,14 @@ public:
 	Button(const std::string& string);
 
 	void setString(const std::string& string);
-	std::string getString();
+	std::string getString() const;
 
 	void setPosition(const sf::Vector2f& newPosition);
-	sf::Vector2f getPosition();
+	sf::Vector2f getPosition() const;
 
-	void HandleEvents(const sf::Event& event);
+	sf::Vector2f getSize() const;
+
+	void HandleEvents(const sf::Event& event, sf::RenderWindow& window);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

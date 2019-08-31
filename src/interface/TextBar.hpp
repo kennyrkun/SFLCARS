@@ -20,10 +20,10 @@ public:
 	Alignment getAlignment() { return align; }
 
 	void setSize(const sf::Vector2f& newSize) override;
-	sf::Vector2f getSize() override;
+	sf::Vector2f getSize() const;
 
 	void setText(std::string text) { this->text.setString(text); }
-	std::string getText() { return text.getString(); }
+	std::string getText() const { return text.getString(); }
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

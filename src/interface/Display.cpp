@@ -20,21 +20,27 @@ void Display::addElement(Element* element)
 	std::cout << "adding new element" << std::endl;
 	std::cout << elements.size() << std::endl;
 
+	int padding = 20;
+
 	element->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	element->setPosition(sf::Vector2f(0, 0)); // HACK: get it to calculate it's geometry before we start moving things
+	element->setPosition(sf::Vector2f(padding, padding)); // HACK: get it to calculate it's geometry before we start moving things
 
 	if (!elements.empty())
 	{
 		if (elements.size() < 2) // make it the bottom piece
-			element->setPosition(sf::Vector2f(0, window->getSize().y - 75));
+			element->setPosition(sf::Vector2f(padding, padding));
 		else
 		{
 			std::cout << "repositioning last element" << std::endl;
 
+			// set the position of the last element to behind the previous element
 			Element* back = elements[elements.size() - 2]; // because -1 is .back()
-			elements.back()->setPosition(sf::Vector2f(0, back->getPosition().y + back->getSize().y + 10));
+			elements.back()->setPosition(sf::Vector2f(padding, back->getPosition().y + back->getSize().y + padding));
 
-			element->setPosition(sf::Vector2f(0, window->getSize().y - 75));
+			// TODO: don't put buttons at the back
+
+			// put the new element at the bottom of the display
+			element->setPosition(sf::Vector2f(padding, window->getSize().y - 75));
 		}
 	}
 
@@ -58,7 +64,7 @@ void Display::HandleEvents()
         }
 
         for (size_t i = 0; i < elements.size(); i++)
-            elements[i]->HandleEvents(event);
+            elements[i]->HandleEvents(event, *window);
     }
 }
 

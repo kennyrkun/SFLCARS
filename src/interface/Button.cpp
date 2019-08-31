@@ -30,7 +30,7 @@ void Button::setString(const std::string& string)
 	// probably update sizes and such
 }
 
-std::string Button::getString()
+std::string Button::getString() const
 {
 	return text.getString();
 }
@@ -42,14 +42,29 @@ void Button::setPosition(const sf::Vector2f& newPosition)
 	reposition();
 }
 
-sf::Vector2f Button::getPosition()
+sf::Vector2f Button::getPosition() const
 {
 	return box.getPosition();
 }
 
-void Button::HandleEvents(const sf::Event& event)
+sf::Vector2f Button::getSize() const
 {
+	return sf::Vector2f(box.getGlobalBounds().width, box.getGlobalBounds().height);
+}
 
+void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
+{
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		sf::Vector2i position = sf::Mouse::getPosition(window);
+
+		if (box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+			box.setFillColor(sf::Color::Red);
+	}
+	else if (event.type == sf::Event::MouseButtonReleased)
+	{
+		box.setFillColor(sf::Color::White);
+	}
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -60,9 +75,9 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Button::reposition()
 {
-	sf::Vector2f size = { text.getGlobalBounds().width, text.getGlobalBounds().height };
+	sf::FloatRect size = text.getGlobalBounds();
 
-	box.setSize(sf::Vector2f(size.x + 30, 35));
+	box.setSize(sf::Vector2f(size.width + 30, 35));
 	box.setCornerPointCount(16);
 	box.setCornersRadius(16);
 

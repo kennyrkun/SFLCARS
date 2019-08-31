@@ -14,7 +14,7 @@ Bar::Bar(const sf::Vector2f& pos)
 	std::cout << "created bar at position " << std::endl;
 }
 
-void Bar::HandleEvents(const sf::Event& event)
+void Bar::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 {
 	if (event.type == sf::Event::EventType::Resized)
 		setSize(sf::Vector2f(event.size.width, event.size.height));
@@ -24,7 +24,8 @@ void Bar::setSize(const sf::Vector2f& newSize)
 {
 	std::cout << "updating bar size" << std::endl;
 
-	usableSize.x = newSize.x - (edgePadding * 2);
+	// TODO: replace 40 with a global edge size somehow
+	usableSize.x = newSize.x - (40);
 
 	leftEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	leftEdge.setCornerPointCount(16);
@@ -43,7 +44,7 @@ void Bar::setSize(const sf::Vector2f& newSize)
 	reposition();
 }
 
-sf::Vector2f Bar::getSize()
+sf::Vector2f Bar::getSize() const
 {
 	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
 }
@@ -59,11 +60,11 @@ void Bar::setPosition(const sf::Vector2f& newPosition)
 
 void Bar::reposition()
 {
-	leftEdge.setPosition(position.x + edgePadding, position.y + edgePadding);
-	leftEdgeRight.setPosition(leftEdge.getPosition().x + (barEdgeWidth / 2), position.y + edgePadding);
-	middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y + edgePadding);
-	rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y + edgePadding);
-	rightEdgeLeft.setPosition(rightEdge.getPosition().x, position.y + edgePadding);
+	leftEdge.setPosition(position.x, position.y);
+	leftEdgeRight.setPosition(leftEdge.getPosition().x + (barEdgeWidth / 2), position.y);
+	middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y);
+	rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y);
+	rightEdgeLeft.setPosition(rightEdge.getPosition().x, position.y);
 }
 
 void Bar::draw(sf::RenderTarget& target, sf::RenderStates states) const

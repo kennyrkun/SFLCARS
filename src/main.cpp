@@ -16,12 +16,22 @@ int main()
 	TextBar bar2("bar2", Alignment::Right);
 	TextBar bar3("bar3");
 
-	display->addElement(&bar);
-	display->addElement(&bar2);
-	display->addElement(&bar3);
-
 	Button button("button1");
+	Button button2("button2");
+	Button button3("button3");
+	Button button4("button4");
+	Button button5("button5");
+
+	display->addElement(&bar);
 	display->addElement(&button);
+	display->addElement(&button2);
+	display->addElement(&button3);
+
+	display->addElement(&bar2);
+	display->addElement(&button4);
+
+	display->addElement(&bar3);
+	display->addElement(&button5);
 
 	while (lcars->isRunning())
 	{
