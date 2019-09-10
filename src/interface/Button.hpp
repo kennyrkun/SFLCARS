@@ -37,7 +37,7 @@ private:
 
 	void reposition();
 
-	bool depressed;
+	bool depressed = false;
 };
 
 #endif // !BUTTON_HPP
