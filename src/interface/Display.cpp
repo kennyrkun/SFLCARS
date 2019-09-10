@@ -4,7 +4,10 @@
 
 Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id) : id(id)
 {
-	window = new sf::RenderWindow(size, "SFLCARS");
+	sf::ContextSettings context;
+	context.antialiasingLevel = 1;
+
+	window = new sf::RenderWindow(size, "SFLCARS", sf::Style::Default, context);
     window->setPosition(position);
 
 	std::cout << "created Display with id " << id << std::endl;
