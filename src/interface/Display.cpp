@@ -54,14 +54,65 @@ void Display::addElement(Element* element, ElementAlignment align)
 	elements.push_back(element);
 }
 
-			// TODO: don't put buttons at the back
+int Display::onEvent(const sf::Event& event)
+{
+	for (auto& x : elements)
+	{
+		// TODO: test events for subwindows
 
-			// put the new element at the bottom of the display
-			element->setPosition(sf::Vector2f(padding, window->getSize().y - 75));
+		switch (event.type)
+		{
+		case sf::Event::MouseMoved:
+		{
+			sf::Vector2f mouse = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+			x->onMouseMoved(mouse);
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				sf::Vector2f mouse = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+				x->onMousePressed(mouse);
+			}
+			break;
+		}
+		case sf::Event::MouseButtonReleased:
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				sf::Vector2f mouse = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+				x->onMouseReleased(mouse);
+			}
+			break;
+		}
+		case sf::Event::MouseWheelMoved:
+			x->onMouseWheelMoved(event.mouseWheel.delta);
+			break;
+		case sf::Event::KeyPressed:
+			x->onKeyPressed(event.key.code);
+			break;
+		case sf::Event::KeyReleased:
+			x->onKeyReleased(event.key.code);
+			break;
+		case sf::Event::TextEntered:
+			x->onTextEntered(event.text.unicode);
+			break;
+		default:
+			break;
 		}
 	}
 
-	elements.push_back(element);
+	/*
+	if (m_triggered != NULL)
+	{
+		int id = m_triggered->getID();
+		m_triggered = NULL;
+		return id;
+	}
+	*/
+
+	return -1;
 }
 
 void Display::HandleEvents()

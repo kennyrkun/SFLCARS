@@ -23,6 +23,7 @@ public:
 
 	void addElement(Element* element, ElementAlignment align = ElementAlignment::Vertical);
 
+	int onEvent(const sf::Event& event);
 
     void HandleEvents();
     void Update();
