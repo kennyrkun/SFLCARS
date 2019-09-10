@@ -5,6 +5,7 @@
 #include "../utility/RoundRectangle.hpp"
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include <iostream>
 
@@ -34,6 +35,9 @@ public:
 private:
 	sf::Font font;
 	sf::Text text;
+
+	sf::SoundBuffer buffer;
+	sf::Sound beep;
 
 	sf::RoundedRectangleShape box;
 

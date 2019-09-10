@@ -2,6 +2,9 @@
 
 Button::Button()
 {
+	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
+	beep.setBuffer(buffer);
+
 	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
 	text.setFont(font);
 	text.setFillColor(sf::Color::Black);
@@ -14,6 +17,9 @@ Button::Button()
 
 Button::Button(const std::string& string)
 {
+	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
+	beep.setBuffer(buffer);
+
 	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
 	text.setFont(font);
 	text.setFillColor(sf::Color::Black);
@@ -71,6 +77,7 @@ void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 		{
 			depressed = true;
 			box.setFillColor(sf::Color::Red);
+			beep.play();
 		}
 	}
 	else if (event.type == sf::Event::MouseButtonReleased)
