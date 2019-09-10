@@ -45,6 +45,7 @@ public:
 	void setSelectable(bool selectable);
 
 	bool isSelectable() const;
+	bool isFocused() const;
 
 	virtual void onStateChanged(State state);
 	virtual void onMouseMoved(const sf::Vector2f& position);

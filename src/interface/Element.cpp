@@ -30,6 +30,11 @@ bool Element::isSelectable() const
 	return selectable;
 }
 
+bool Element::isFocused() const
+{
+	return (state == State::Focused);
+}
+
 // callbacks
 
 void Element::onStateChanged(State) {}
