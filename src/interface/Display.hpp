@@ -21,6 +21,8 @@ public:
 	void setPadding(float padding);
 	float getPadding();
 
+	bool isOpen() { return window->isOpen(); }
+
 	void addElement(Element* element, ElementAlignment align = ElementAlignment::Vertical);
 
 	int onEvent(const sf::Event& event);
@@ -31,8 +33,8 @@ public:
 
     const int id;
 
-    sf::RenderWindow* window;
 private:
+    sf::RenderWindow* window;
 
 	std::vector<Element*> elements;
 
