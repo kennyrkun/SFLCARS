@@ -134,8 +134,12 @@ void Display::HandleEvents()
             window->setView(sf::View(visibleArea));
         }
 
+		/*
         for (size_t i = 0; i < elements.size(); i++)
             elements[i]->HandleEvents(event, *window);
+		*/
+
+		onEvent(event);
     }
 }
 

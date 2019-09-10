@@ -24,7 +24,7 @@ public:
 	// optional
 	virtual void setSize(const sf::Vector2f& newSize) { return; }
 	// optional
-	virtual sf::Vector2f getSize() const { return sf::Vector2f(); };
+	virtual sf::Vector2f getSize() const { return sf::Vector2f(0, 0); }
 
 	// required
 	virtual void setPosition(const sf::Vector2f& newPosition) = 0;
@@ -46,6 +46,14 @@ public:
 
 	bool isSelectable() const;
 
+	virtual void onStateChanged(State state);
+	virtual void onMouseMoved(const sf::Vector2f& position);
+	virtual void onMousePressed(const sf::Vector2f& position);
+	virtual void onMouseReleased(const sf::Vector2f& position);
+	virtual void onMouseWheelMoved(int delta);
+	virtual void onKeyPressed(const sf::Keyboard::Key& key);
+	virtual void onKeyReleased(const sf::Keyboard::Key& key);
+	virtual void onTextEntered(const sf::Uint32& unicode);
 
 private:
 	State state;

@@ -30,3 +30,13 @@ bool Element::isSelectable() const
 	return selectable;
 }
 
+// callbacks
+
+void Element::onStateChanged(State) {}
+void Element::onMouseMoved(const sf::Vector2f&) {}
+void Element::onMousePressed(const sf::Vector2f&) {}
+void Element::onMouseReleased(const sf::Vector2f&) {}
+void Element::onMouseWheelMoved(int) {}
+void Element::onKeyPressed(const sf::Keyboard::Key&) {}
+void Element::onKeyReleased(const sf::Keyboard::Key&) {}
+void Element::onTextEntered(const sf::Uint32&) {}

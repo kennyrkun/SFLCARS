@@ -10,6 +10,7 @@
 #include <iostream>
 
 // TODO: button can be on the left or right side of a bar
+// TODO: register listeners for each button or something
 
 // This is a base class for all Buttons.
 class Button : public Element
@@ -32,6 +33,9 @@ public:
 	void release();
 
 	void HandleEvents(const sf::Event& event, sf::RenderWindow& window);
+
+	void onMousePressed(const sf::Vector2f& position);
+	void onMouseReleased(const sf::Vector2f& position);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
