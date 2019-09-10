@@ -1,6 +1,16 @@
 #include "Element.hpp"
 #include <random>
 
+void Element::setID(int id)
+{
+	this->id = id;
+}
+
+int Element::getID() const
+{
+	return id;
+}
+
 sf::Color Element::getRandomColor(int lower, int upper)
 {
 	std::random_device dev;

@@ -96,6 +96,16 @@ void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 	}
 }
 
+void Button::onMousePressed(const sf::Vector2f& position)
+{
+	if (box.getGlobalBounds().contains(position))
+	{
+		box.setFillColor(sf::Color::Red);
+
+		beep.play();
+	}
+}
+
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(box, states);

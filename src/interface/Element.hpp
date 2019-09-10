@@ -15,6 +15,9 @@ enum class State
 class Element : public sf::Drawable
 {
 public:
+	void setID(int id);
+	int getID() const;
+
 	// required
 	virtual void HandleEvents(const sf::Event& event, sf::RenderWindow& window) = 0;
 
@@ -39,10 +42,10 @@ public:
 	virtual void setState(State newState) { state = newState; };
 	State getState() const { return state; };
 
-	int id;
 
 private:
 	State state;
+	int id;
 };
 
 #endif // !ELEMENT_HPP
