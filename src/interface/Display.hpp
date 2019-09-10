@@ -29,8 +29,6 @@ public:
     void Update();
     void Draw();
 
-	void reSize(int x, int y);
-
     const int id;
 
     sf::RenderWindow* window;
