@@ -1,9 +1,5 @@
 #include "TextBar.hpp"
 
-#ifdef _WIN32
-	#include <SFML/OpenGL.hpp>
-#endif // _WIN32
-
 #include <iostream>
 
 TextBar::TextBar(std::string text, Alignment align) : align(align)
@@ -13,6 +9,12 @@ TextBar::TextBar(std::string text, Alignment align) : align(align)
 	this->text.setCharacterSize(36);
 	this->text.setString(text);
 
+	leftEdge.setFillColor(getRandomColor());
+	leftEdgeRight.setFillColor(leftEdge.getFillColor());
+	middle.setFillColor(getRandomColor());
+	rightEdge.setFillColor(getRandomColor());
+	rightEdgeLeft.setFillColor(rightEdge.getFillColor());
+	
 	std::cout << "created textbar" << std::endl;
 }
 

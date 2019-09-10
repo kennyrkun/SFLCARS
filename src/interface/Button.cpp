@@ -7,6 +7,8 @@ Button::Button()
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
+	box.setFillColor(getRandomColor());
+
 	// suffer
 }
 
@@ -16,6 +18,8 @@ Button::Button(const std::string& string)
 	text.setFont(font);
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
+
+	box.setFillColor(getRandomColor());
 
 	setString(string);
 
@@ -52,6 +56,11 @@ sf::Vector2f Button::getSize() const
 	return sf::Vector2f(box.getGlobalBounds().width, box.getGlobalBounds().height);
 }
 
+bool Button::isDepressed() const
+{
+	return depressed;
+}
+
 void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 {
 	if (event.type == sf::Event::MouseButtonPressed)
@@ -59,11 +68,18 @@ void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 		sf::Vector2i position = sf::Mouse::getPosition(window);
 
 		if (box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+		{
+			depressed = true;
 			box.setFillColor(sf::Color::Red);
+		}
 	}
 	else if (event.type == sf::Event::MouseButtonReleased)
 	{
-		box.setFillColor(sf::Color::White);
+		if (depressed)
+		{
+			depressed = false;
+			box.setFillColor(getRandomColor());
+		}
 	}
 }
 

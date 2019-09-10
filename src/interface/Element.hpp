@@ -31,6 +31,11 @@ public:
 	//virtual void setColor(const sf::Color& color) = 0;
 	//virtual sf::Color& const getColor() = 0;
 
+	// TODO: add upper and lower bounds to this
+	// int lower: the lower boundary for colour
+	// int upper: the upper boundary for colour
+	sf::Color getRandomColor(int lower = 100, int upper = 255);
+
 	virtual void setState(State newState) { state = newState; };
 	State getState() const { return state; };
 

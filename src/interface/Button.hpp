@@ -36,6 +36,8 @@ private:
 	sf::RoundedRectangleShape box;
 
 	void reposition();
+
+	bool depressed;
 };
 
 #endif // !BUTTON_HPP
