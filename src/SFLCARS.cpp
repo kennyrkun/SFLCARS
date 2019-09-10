@@ -26,11 +26,11 @@ void SFLCARS::Update()
 	else
 		for (int i = 0; i < displays.size(); i++)
         {
-            if (displays[i]->window->isOpen())
-	            displays[i]->Update();
-            else
+			if (displays[i]->isOpen())
+				displays[i]->Update();
+            else //TODO: don't delete display unless the display is ready to die
             {
-                std::cout << "window is closed, deleting" << std::endl;
+                std::cout << "window is closed, deleting Display" << std::endl;
 
                 Display* d = displays[i];
 
