@@ -6,13 +6,23 @@
 
 #include "Element.hpp"
 
+enum class ElementAlignment
+{
+	Horizontal,
+	Vertical
+};
+
 class Display
 {
 public:
 	Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id);
 	~Display();
 
-	void addElement(Element* element);
+	void setPadding(float padding);
+	float getPadding();
+
+	void addElement(Element* element, ElementAlignment align = ElementAlignment::Vertical);
+
 
     void HandleEvents();
     void Update();
@@ -26,6 +36,8 @@ public:
 private:
 
 	std::vector<Element*> elements;
+
+	float padding = 20;
 };
 
 #endif // !DISPLAY_HPP

@@ -13,29 +13,43 @@ Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const 
 Display::~Display()
 {
 	std::cout << "destroyed Display with id " << id << std::endl;
+
+void Display::setPadding(float padding)
+{
+	this->padding = padding;
 }
 
-void Display::addElement(Element* element)
+float Display::getPadding()
+{
+	return 0.0f;
+}
+
+void Display::addElement(Element* element, ElementAlignment align)
 {
 	std::cout << "adding new element" << std::endl;
 	std::cout << elements.size() << std::endl;
 
-	int padding = 20;
-
 	element->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	element->setPosition(sf::Vector2f(padding, padding)); // HACK: get it to calculate it's geometry before we start moving things
 
-	if (!elements.empty())
+	if (elements.empty())
+		element->setPosition(sf::Vector2f(padding, padding));
+	else
 	{
-		if (elements.size() < 2) // make it the bottom piece
-			element->setPosition(sf::Vector2f(padding, padding));
-		else
+		if (align == ElementAlignment::Vertical)
 		{
-			std::cout << "repositioning last element" << std::endl;
+			std::cout << "aligning element vertically" << std::endl;
+			element->setPosition(sf::Vector2f(padding, elements.back()->getPosition().y + elements.back()->getSize().y + padding));
+		}
+		else if (align == ElementAlignment::Horizontal)
+		{
+			std::cout << "aligning element horizontally" << std::endl;
+			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + padding, elements.back()->getPosition().y));
+		}
+	}
 
-			// set the position of the last element to behind the previous element
-			Element* back = elements[elements.size() - 2]; // because -1 is .back()
-			elements.back()->setPosition(sf::Vector2f(padding, back->getPosition().y + back->getSize().y + padding));
+	elements.push_back(element);
+}
 
 			// TODO: don't put buttons at the back
 
