@@ -12,7 +12,7 @@ int calculator()
 	SFLCARS* lcars = new SFLCARS;
 	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
 
-	display->setPadding(0);
+	display->setPadding(5);
 
 	TextBar bar("CALCULATOR");
 

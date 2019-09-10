@@ -28,6 +28,9 @@ public:
 
 	bool isDepressed() const;
 
+	void press();
+	void release();
+
 	void HandleEvents(const sf::Event& event, sf::RenderWindow& window);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

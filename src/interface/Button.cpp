@@ -67,6 +67,19 @@ bool Button::isDepressed() const
 	return depressed;
 }
 
+void Button::press()
+{
+	depressed = true;
+	box.setFillColor(sf::Color::Red);
+	beep.play();
+}
+
+void Button::release()
+{
+	depressed = false;
+	box.setFillColor(getRandomColor());
+}
+
 void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 {
 	if (event.type == sf::Event::MouseButtonPressed)
@@ -74,19 +87,12 @@ void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
 		sf::Vector2i position = sf::Mouse::getPosition(window);
 
 		if (box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
-		{
-			depressed = true;
-			box.setFillColor(sf::Color::Red);
-			beep.play();
-		}
+			press();
 	}
 	else if (event.type == sf::Event::MouseButtonReleased)
 	{
 		if (depressed)
-		{
-			depressed = false;
-			box.setFillColor(getRandomColor());
-		}
+			release();
 	}
 }
 
