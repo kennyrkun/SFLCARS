@@ -25,6 +25,8 @@ public:
 
 	sf::Vector2f getSize() const;
 
+	bool isDepressed() const;
+
 	void HandleEvents(const sf::Event& event, sf::RenderWindow& window);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
