@@ -1,10 +1,12 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 
+#include "Element.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "Element.hpp"
+class SFLCARS;
 
 enum class ElementAlignment
 {
@@ -15,7 +17,7 @@ enum class ElementAlignment
 class Display
 {
 public:
-	Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id);
+	Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id);
 	~Display();
 
 	void setPadding(float padding);
@@ -34,6 +36,8 @@ public:
     const int id;
 
 private:
+	SFLCARS* application;
+
     sf::RenderWindow* window;
 
 	std::vector<Element*> elements;

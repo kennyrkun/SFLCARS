@@ -1,8 +1,10 @@
 #include "Display.hpp"
 
+#include "../SFLCARS.hpp"
+
 #include <iostream>
 
-Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id) : id(id)
+Display::Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id) : application(application), id(id)
 {
 	sf::ContextSettings context;
 	context.antialiasingLevel = 1;
@@ -15,7 +17,8 @@ Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const 
 
 Display::~Display()
 {
-	std::cout << "destroyed Display with id " << id << std::endl;
+	std::cout << "destroyed Display  (id " << id << ")" << std::endl;
+}
 
 void Display::setPadding(float padding)
 {

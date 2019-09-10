@@ -1,5 +1,7 @@
 #include "SFLCARS.hpp"
 
+#include <iostream>
+
 SFLCARS::SFLCARS()
 {
     running = true;
@@ -7,7 +9,7 @@ SFLCARS::SFLCARS()
 
 Display* SFLCARS::newDisplay(const sf::VideoMode& size, const sf::Vector2i& position)
 {
-	Display* newDisplay = new Display(size, position, -1);
+	Display* newDisplay = new Display(this, size, position, -1);
 	displays.push_back(newDisplay);
 
 	return displays.back();

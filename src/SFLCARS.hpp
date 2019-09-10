@@ -1,13 +1,12 @@
 #ifndef LCARS_HPP
 #define LCARS_HPP
 
+#include "interface/Element.hpp"
+#include "interface/Display.hpp"
+
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
 #include <vector>
-
-#include "interface/Display.hpp"
-#include "interface/Element.hpp"
 
 class SFLCARS
 {
