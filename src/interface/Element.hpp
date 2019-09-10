@@ -42,10 +42,15 @@ public:
 	virtual void setState(State newState) { state = newState; };
 	State getState() const { return state; };
 
+	void setSelectable(bool selectable);
+
+	bool isSelectable() const;
+
 
 private:
 	State state;
 	int id;
+	bool selectable;
 };
 
 #endif // !ELEMENT_HPP

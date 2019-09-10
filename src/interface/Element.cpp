@@ -20,3 +20,13 @@ sf::Color Element::getRandomColor(int lower, int upper)
 	return sf::Color(dist(rng), dist(rng), dist(rng));
 }
 
+void Element::setSelectable(bool selectable)
+{
+	this->selectable = selectable;
+}
+
+bool Element::isSelectable() const
+{
+	return selectable;
+}
+
