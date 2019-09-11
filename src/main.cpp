@@ -18,30 +18,30 @@ int calculator()
 
 	display->addElement(&bar);
 
-	Button leftParenthesis("(");
-	Button rightParenthesis(")");
+	Button leftParenthesis("(", sf::Keyboard::Key::LBracket);
+	Button rightParenthesis(")", sf::Keyboard::Key::RBracket);
 	Button percent("%");
-	Button clear("C");
+	Button clear("C", sf::Keyboard::Key::C);
 
-	Button seven("7");
-	Button eight("8");
-	Button nine("9");
-	Button divide("/");
+	Button seven("7", sf::Keyboard::Key::Numpad7);
+	Button eight("8", sf::Keyboard::Key::Numpad8);
+	Button nine("9", sf::Keyboard::Key::Numpad9);
+	Button divide("/", sf::Keyboard::Key::Divide);
 
-	Button four("4");
-	Button five("5");
-	Button six("6");
-	Button multiply("X");
+	Button four("4", sf::Keyboard::Key::Numpad4);
+	Button five("5", sf::Keyboard::Key::Numpad5);
+	Button six("6", sf::Keyboard::Key::Numpad6);
+	Button multiply("X", sf::Keyboard::Multiply);
 
-	Button one("1");
-	Button two("2");
-	Button three("3");
-	Button subtract("-");
+	Button one("1", sf::Keyboard::Key::Numpad1);
+	Button two("2", sf::Keyboard::Key::Numpad2);
+	Button three("3", sf::Keyboard::Key::Numpad3);
+	Button subtract("-", sf::Keyboard::Key::Subtract);
 
-	Button zero("0");
-	Button decimal(".");
-	Button equals("=");
-	Button add("+");
+	Button zero("0", sf::Keyboard::Key::Numpad0);
+	Button decimal(".", sf::Keyboard::Key::Period);
+	Button equals("=", sf::Keyboard::Key::Equal);
+	Button add("+", sf::Keyboard::Key::Add);
 
 	display->addElement(&leftParenthesis);
 	display->addElement(&rightParenthesis, ElementAlignment::Horizontal);

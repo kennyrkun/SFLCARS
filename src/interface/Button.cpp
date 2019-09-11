@@ -1,5 +1,7 @@
 #include "Button.hpp"
 
+#include <random>
+
 Button::Button()
 {
 	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
@@ -28,8 +30,27 @@ Button::Button(const std::string& string)
 	box.setFillColor(getRandomColor());
 
 	setString(string);
+}
 
-	reposition();
+Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
+{
+	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
+	beep.setBuffer(buffer);
+
+	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	text.setFont(font);
+	text.setFillColor(sf::Color::Black);
+	text.setCharacterSize(36);
+
+	box.setFillColor(getRandomColor());
+
+	setString(string);
+
+	this->hotkey = hotkey;
+
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 3);
 }
 
 void Button::setString(const std::string& string)
@@ -105,6 +126,18 @@ void Button::onMousePressed(const sf::Vector2f& position)
 void Button::onMouseReleased(const sf::Vector2f& position)
 {
 	if (depressed)
+		release();
+}
+
+void Button::onKeyPressed(const sf::Keyboard::Key& key)
+{
+	if (key == hotkey)
+		press();
+}
+
+void Button::onKeyReleased(const sf::Keyboard::Key & key)
+{
+	if (key == hotkey)
 		release();
 }
 

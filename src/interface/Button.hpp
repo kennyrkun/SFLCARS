@@ -18,6 +18,7 @@ class Button : public Element
 public:
 	Button();
 	Button(const std::string& string);
+	Button(const std::string& string, const sf::Keyboard::Key& hotkey);
 
 	void setString(const std::string& string);
 	std::string getString() const;
@@ -36,6 +37,8 @@ public:
 
 	void onMousePressed(const sf::Vector2f& position);
 	void onMouseReleased(const sf::Vector2f& position);
+	void onKeyPressed(const sf::Keyboard::Key& key);
+	void onKeyReleased(const sf::Keyboard::Key& key);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -47,6 +50,8 @@ private:
 	sf::Sound beep;
 
 	sf::RoundedRectangleShape box;
+
+	sf::Keyboard::Key hotkey;
 
 	void reposition();
 
