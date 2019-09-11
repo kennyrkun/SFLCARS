@@ -39,7 +39,7 @@ int calculator()
 	Button subtract("-", sf::Keyboard::Key::Subtract);
 
 	Button zero("0", sf::Keyboard::Key::Numpad0);
-	Button decimal(".", sf::Keyboard::Key::Period);
+	Button decimal(".", sf::Keyboard::Key::Delete);
 	Button equals("=", sf::Keyboard::Key::Equal);
 	Button add("+", sf::Keyboard::Key::Add);
 

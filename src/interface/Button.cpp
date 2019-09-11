@@ -32,9 +32,19 @@ Button::Button(const std::string& string)
 	setString(string);
 }
 
-Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
+Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys)
 {
-	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
+	std::string sounds[4] = {"beep", "beep2", "beep3", "beep4"};
+
+	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 4);
+	std::random_device dev;
+	std::mt19937 rng(dev());
+
+	int i = dist(rng);
+
+	std::cout << "opening " << sounds[i] << ".ogg" << std::endl;
+
+	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
 
 	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
@@ -46,11 +56,34 @@ Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
 
 	setString(string);
 
-	this->hotkey = hotkey;
+	this->hotkeys = hotkeys;
+}
 
+Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
+{
+	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
+
+	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 4);
 	std::random_device dev;
 	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 3);
+
+	int i = dist(rng);
+
+	std::cout << "opening " << sounds[i] << ".ogg" << std::endl;
+
+	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
+	beep.setBuffer(buffer);
+
+	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	text.setFont(font);
+	text.setFillColor(sf::Color::Black);
+	text.setCharacterSize(36);
+
+	box.setFillColor(getRandomColor());
+
+	setString(string);
+
+	hotkeys.push_back(hotkey);
 }
 
 void Button::setString(const std::string& string)
@@ -131,14 +164,15 @@ void Button::onMouseReleased(const sf::Vector2f& position)
 
 void Button::onKeyPressed(const sf::Keyboard::Key& key)
 {
-	if (key == hotkey)
+	if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
 		press();
 }
 
-void Button::onKeyReleased(const sf::Keyboard::Key & key)
+void Button::onKeyReleased(const sf::Keyboard::Key& key)
 {
-	if (key == hotkey)
-		release();
+	if (depressed)
+		if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
+			release();
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const

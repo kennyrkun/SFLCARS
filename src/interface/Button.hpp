@@ -8,6 +8,8 @@
 #include <SFML/Audio.hpp>
 
 #include <iostream>
+#include <vector>
+//#include <functional>
 
 // TODO: button can be on the left or right side of a bar
 // TODO: register listeners for each button or something
@@ -18,6 +20,7 @@ class Button : public Element
 public:
 	Button();
 	Button(const std::string& string);
+	Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys);
 	Button(const std::string& string, const sf::Keyboard::Key& hotkey);
 
 	void setString(const std::string& string);
@@ -51,7 +54,8 @@ private:
 
 	sf::RoundedRectangleShape box;
 
-	sf::Keyboard::Key hotkey;
+	std::vector<sf::Keyboard::Key> hotkeys;
+//	std::function callback;
 
 	void reposition();
 
