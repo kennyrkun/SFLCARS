@@ -3,6 +3,10 @@
 #include "../SFLCARS.hpp"
 
 #include <iostream>
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <iostream>
 
 Display::Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id) : application(application), id(id)
 {
@@ -133,11 +137,23 @@ void Display::HandleEvents()
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             window->setView(sf::View(visibleArea));
         }
+		else if (event.type == sf::Event::EventType::GainedFocus)
+		{
+			auto temp = elements;
 
-		/*
-        for (size_t i = 0; i < elements.size(); i++)
-            elements[i]->HandleEvents(event, *window);
-		*/
+			std::random_device rd;
+			std::mt19937 g(rd());
+
+			std::shuffle(temp.begin(), temp.end(), g);
+
+			for (auto& x : temp)
+			{
+				x->onMousePressed(x->getPosition());
+				sf::sleep(sf::milliseconds(100));
+
+				Draw();
+			}
+		}
 
 		onEvent(event);
     }

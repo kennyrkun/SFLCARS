@@ -12,7 +12,7 @@ Button::Button()
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
-	box.setFillColor(getRandomColor());
+	box.setFillColor(getRandomColor(80, 200, true));
 
 	// suffer
 }
@@ -27,22 +27,23 @@ Button::Button(const std::string& string)
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
-	box.setFillColor(getRandomColor());
+	box.setFillColor(getRandomColor(80, 200, true));
 
 	setString(string);
 }
 
 Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys)
 {
-	std::string sounds[4] = {"beep", "beep2", "beep3", "beep4"};
+	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
 
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 4);
+	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 3);
 	std::random_device dev;
 	std::mt19937 rng(dev());
 
 	int i = dist(rng);
 
-	std::cout << "opening " << sounds[i] << ".ogg" << std::endl;
+	std::cout << sounds[4] << std::endl;
+	std::cout << "opening " << sounds[i] << ".ogg (" << i << ")" << std::endl;
 
 	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
@@ -52,7 +53,7 @@ Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
-	box.setFillColor(getRandomColor());
+	box.setFillColor(getRandomColor(80, 200, true));
 
 	setString(string);
 
@@ -63,13 +64,14 @@ Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
 {
 	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
 
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 4);
+	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 3);
 	std::random_device dev;
 	std::mt19937 rng(dev());
 
 	int i = dist(rng);
 
-	std::cout << "opening " << sounds[i] << ".ogg" << std::endl;
+	std::cout << sounds[4] << std::endl;
+	std::cout << "opening " << sounds[i] << ".ogg (" << i << ")" << std::endl;
 
 	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
@@ -79,7 +81,7 @@ Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
-	box.setFillColor(getRandomColor());
+	box.setFillColor(getRandomColor(80, 200, true));
 
 	setString(string);
 
@@ -165,7 +167,12 @@ void Button::onMouseReleased(const sf::Vector2f& position)
 void Button::onKeyPressed(const sf::Keyboard::Key& key)
 {
 	if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
-		press();
+	{
+		if (!depressed)
+			press();
+
+		//triggerCallback();
+	}
 }
 
 void Button::onKeyReleased(const sf::Keyboard::Key& key)

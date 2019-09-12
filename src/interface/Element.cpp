@@ -11,13 +11,19 @@ int Element::getID() const
 	return id;
 }
 
-sf::Color Element::getRandomColor(int lower, int upper)
+sf::Color Element::getRandomColor(int lower, int upper, bool single)
 {
 	std::random_device dev;
 	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> dist(lower, upper);
 
-	return sf::Color(dist(rng), dist(rng), dist(rng));
+	if (single)
+	{
+		int i = dist(rng);
+		return sf::Color(i, i, i);
+	}
+	else
+		return sf::Color(dist(rng), dist(rng), dist(rng));
 }
 
 void Element::setSelectable(bool selectable)

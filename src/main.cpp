@@ -16,7 +16,26 @@ int calculator()
 
 	TextBar bar("CALCULATOR");
 
+	Bar placeholderforcurrentequationandstuff;
+
 	display->addElement(&bar);
+	display->addElement(&placeholderforcurrentequationandstuff);
+
+	Button rad("Rad");
+	Button deg("Deg");
+	Button inv("Inv");
+	Button sin("sin");
+	Button cos("cos");
+	Button tan("tan");
+	Button pi("pi");
+	Button e("e");
+	Button exp("EXP");
+	Button ans("ans");
+	Button xy("x^y");
+	Button sqrt("sqrt");
+	Button log("log");
+	Button ln("ln");
+	Button x("x!");
 
 	Button leftParenthesis("(", sf::Keyboard::Key::LBracket);
 	Button rightParenthesis(")", sf::Keyboard::Key::RBracket);
@@ -40,30 +59,50 @@ int calculator()
 
 	Button zero("0", sf::Keyboard::Key::Numpad0);
 	Button decimal(".", sf::Keyboard::Key::Delete);
-	Button equals("=", sf::Keyboard::Key::Equal);
+	Button equals("=", {sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
 	Button add("+", sf::Keyboard::Key::Add);
 
-	display->addElement(&leftParenthesis);
+	display->addElement(&rad);
+	display->addElement(&deg, ElementAlignment::Horizontal);
+	display->addElement(&x, ElementAlignment::Horizontal);
+
+	display->addElement(&leftParenthesis, ElementAlignment::Horizontal);
 	display->addElement(&rightParenthesis, ElementAlignment::Horizontal);
 	display->addElement(&percent, ElementAlignment::Horizontal);
 	display->addElement(&clear, ElementAlignment::Horizontal);
 
-	display->addElement(&seven);
+	display->addElement(&inv);
+	display->addElement(&sin, ElementAlignment::Horizontal);
+	display->addElement(&ln, ElementAlignment::Horizontal);
+
+	display->addElement(&seven, ElementAlignment::Horizontal);
 	display->addElement(&eight, ElementAlignment::Horizontal);
 	display->addElement(&nine, ElementAlignment::Horizontal);
 	display->addElement(&divide, ElementAlignment::Horizontal);
 
-	display->addElement(&four);
+	display->addElement(&pi);
+	display->addElement(&cos, ElementAlignment::Horizontal);
+	display->addElement(&log, ElementAlignment::Horizontal);
+
+	display->addElement(&four, ElementAlignment::Horizontal);
 	display->addElement(&five, ElementAlignment::Horizontal);
 	display->addElement(&six, ElementAlignment::Horizontal);
 	display->addElement(&multiply, ElementAlignment::Horizontal);
 
-	display->addElement(&one);
+	display->addElement(&e);
+	display->addElement(&tan, ElementAlignment::Horizontal);
+	display->addElement(&sqrt, ElementAlignment::Horizontal);
+
+	display->addElement(&one, ElementAlignment::Horizontal);
 	display->addElement(&two, ElementAlignment::Horizontal);
 	display->addElement(&three, ElementAlignment::Horizontal);
 	display->addElement(&subtract, ElementAlignment::Horizontal);
 
-	display->addElement(&zero);
+	display->addElement(&ans);
+	display->addElement(&exp, ElementAlignment::Horizontal);
+	display->addElement(&xy, ElementAlignment::Horizontal);
+
+	display->addElement(&zero, ElementAlignment::Horizontal);
 	display->addElement(&decimal, ElementAlignment::Horizontal);
 	display->addElement(&equals, ElementAlignment::Horizontal);
 	display->addElement(&add, ElementAlignment::Horizontal);

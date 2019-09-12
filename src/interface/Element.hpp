@@ -37,7 +37,8 @@ public:
 	// TODO: add upper and lower bounds to this
 	// int lower: the lower boundary for colour
 	// int upper: the upper boundary for colour
-	sf::Color getRandomColor(int lower = 100, int upper = 255);
+	// bool single: if r g and b should be the same number
+	sf::Color getRandomColor(int lower = 100, int upper = 255, bool single = false);
 
 	virtual void setState(State newState) { state = newState; };
 	State getState() const { return state; };
