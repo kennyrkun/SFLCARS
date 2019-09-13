@@ -19,7 +19,7 @@ public:
 	int getID() const;
 
 	// required
-	virtual void HandleEvents(const sf::Event& event, sf::RenderWindow& window) = 0;
+	virtual void HandleEvents(const sf::Event& event, sf::RenderWindow& window) {};
 
 	// optional
 	virtual void setSize(const sf::Vector2f& newSize) { return; }

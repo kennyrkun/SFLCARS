@@ -86,22 +86,6 @@ void Button::release()
 	box.setFillColor(getRandomColor());
 }
 
-void Button::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
-{
-	if (event.type == sf::Event::MouseButtonPressed)
-	{
-		sf::Vector2i position = sf::Mouse::getPosition(window);
-
-		if (box.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
-			press();
-	}
-	else if (event.type == sf::Event::MouseButtonReleased)
-	{
-		if (depressed)
-			release();
-	}
-}
-
 void Button::onMousePressed(const sf::Vector2f& position)
 {
 	if (box.getGlobalBounds().contains(position))

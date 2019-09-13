@@ -37,8 +37,6 @@ public:
 	void press();
 	void release();
 
-	void HandleEvents(const sf::Event& event, sf::RenderWindow& window);
-
 	void onMousePressed(const sf::Vector2f& position);
 	void onMouseReleased(const sf::Vector2f& position);
 	void onKeyPressed(const sf::Keyboard::Key& key);
