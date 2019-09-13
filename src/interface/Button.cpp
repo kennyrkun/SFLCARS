@@ -70,7 +70,7 @@ sf::Vector2f Button::getPosition() const
 	return box.getPosition();
 }
 
-const sf::Vector2f& Button::getSize() const
+sf::Vector2f Button::getSize() const
 {
 	return sf::Vector2f(box.getGlobalBounds().width, box.getGlobalBounds().height);
 }

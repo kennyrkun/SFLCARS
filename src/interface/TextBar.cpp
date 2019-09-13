@@ -48,7 +48,7 @@ void TextBar::setSize(const sf::Vector2f& newSize)
 	reposition();
 }
 
-const sf::Vector2f& TextBar::getSize() const
+sf::Vector2f TextBar::getSize() const
 {
 	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
 }
