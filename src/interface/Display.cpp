@@ -149,7 +149,7 @@ void Display::HandleEvents()
 			for (auto& x : temp)
 			{
 				x->onMousePressed(x->getPosition());
-				sf::sleep(sf::milliseconds(100));
+				sf::sleep(sf::milliseconds(25));
 
 				Draw();
 			}

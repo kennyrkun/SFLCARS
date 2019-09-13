@@ -4,9 +4,6 @@
 
 Button::Button()
 {
-	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
-	beep.setBuffer(buffer);
-
 	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
 	text.setFont(font);
 	text.setFillColor(sf::Color::Black);
@@ -14,26 +11,6 @@ Button::Button()
 
 	box.setFillColor(getRandomColor(80, 200, true));
 
-	// suffer
-}
-
-Button::Button(const std::string& string)
-{
-	buffer.loadFromFile("./interface/resources/sounds/beep.ogg");
-	beep.setBuffer(buffer);
-
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
-	text.setFont(font);
-	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(36);
-
-	box.setFillColor(getRandomColor(80, 200, true));
-
-	setString(string);
-}
-
-Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys)
-{
 	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
 
 	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 3);
@@ -42,49 +19,22 @@ Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys
 
 	int i = dist(rng);
 
-	std::cout << sounds[4] << std::endl;
-	std::cout << "opening " << sounds[i] << ".ogg (" << i << ")" << std::endl;
-
 	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
+}
 
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
-	text.setFont(font);
-	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(36);
-
-	box.setFillColor(getRandomColor(80, 200, true));
-
+Button::Button(const std::string& string) : Button()
+{
 	setString(string);
+}
 
+Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys) : Button(string)
+{
 	this->hotkeys = hotkeys;
 }
 
-Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey)
+Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey) : Button(string)
 {
-	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
-
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, 3);
-	std::random_device dev;
-	std::mt19937 rng(dev());
-
-	int i = dist(rng);
-
-	std::cout << sounds[4] << std::endl;
-	std::cout << "opening " << sounds[i] << ".ogg (" << i << ")" << std::endl;
-
-	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
-	beep.setBuffer(buffer);
-
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
-	text.setFont(font);
-	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(36);
-
-	box.setFillColor(getRandomColor(80, 200, true));
-
-	setString(string);
-
 	hotkeys.push_back(hotkey);
 }
 
