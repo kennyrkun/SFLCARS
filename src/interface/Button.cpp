@@ -9,7 +9,7 @@ Button::Button(const std::string& string)
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
-	box.setFillColor(getRandomColor(80, 200, true));
+	box.setFillColor(getRandomColor());
 
 	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
 
@@ -70,7 +70,7 @@ sf::Vector2f Button::getPosition() const
 	return box.getPosition();
 }
 
-sf::Vector2f Button::getSize() const
+const sf::Vector2f& Button::getSize() const
 {
 	return sf::Vector2f(box.getGlobalBounds().width, box.getGlobalBounds().height);
 }

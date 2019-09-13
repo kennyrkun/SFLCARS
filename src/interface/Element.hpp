@@ -24,7 +24,7 @@ public:
 	// optional
 	virtual void setSize(const sf::Vector2f& newSize) { return; }
 	// optional
-	virtual sf::Vector2f getSize() const { return sf::Vector2f(0, 0); }
+	virtual const sf::Vector2f& getSize() const { return sf::Vector2f(0, 0); }
 
 	// required
 	virtual void setPosition(const sf::Vector2f& newPosition) = 0;

@@ -32,7 +32,7 @@ public:
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 
-	sf::Vector2f getSize() const;
+	const sf::Vector2f& getSize() const;
 
 	bool isDepressed() const;
 

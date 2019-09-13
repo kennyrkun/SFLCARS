@@ -14,7 +14,7 @@ public:
 
 	// TODO: make this just setLength(float length);
 	virtual void setSize(const sf::Vector2f& newSize);
-	virtual sf::Vector2f getSize() const;
+	virtual const sf::Vector2f& getSize() const;
 
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const { return position; }

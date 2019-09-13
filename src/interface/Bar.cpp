@@ -44,7 +44,7 @@ void Bar::setSize(const sf::Vector2f& newSize)
 	reposition();
 }
 
-sf::Vector2f Bar::getSize() const
+const sf::Vector2f& Bar::getSize() const
 {
 	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
 }

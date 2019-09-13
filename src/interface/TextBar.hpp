@@ -20,7 +20,7 @@ public:
 	Alignment getAlignment() { return align; }
 
 	void setSize(const sf::Vector2f& newSize) override;
-	sf::Vector2f getSize() const;
+	const sf::Vector2f& getSize() const;
 
 	void setText(std::string text) { this->text.setString(text); }
 	std::string getText() const { return text.getString(); }

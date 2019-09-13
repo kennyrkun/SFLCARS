@@ -137,23 +137,6 @@ void Display::HandleEvents()
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             window->setView(sf::View(visibleArea));
         }
-		else if (event.type == sf::Event::EventType::GainedFocus)
-		{
-			auto temp = elements;
-
-			std::random_device rd;
-			std::mt19937 g(rd());
-
-			std::shuffle(temp.begin(), temp.end(), g);
-
-			for (auto& x : temp)
-			{
-				x->onMousePressed(x->getPosition());
-				sf::sleep(sf::milliseconds(25));
-
-				Draw();
-			}
-		}
 
 		onEvent(event);
     }
