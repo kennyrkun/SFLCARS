@@ -2,7 +2,7 @@
 
 #include <random>
 
-Button::Button()
+Button::Button(const std::string& string)
 {
 	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
 	text.setFont(font);
@@ -21,10 +21,7 @@ Button::Button()
 
 	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
-}
 
-Button::Button(const std::string& string) : Button()
-{
 	setString(string);
 }
 
