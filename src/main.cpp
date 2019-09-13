@@ -1,6 +1,7 @@
 #include "SFLCARS.hpp"
 #include "interface/TextBar.hpp"
 #include "interface/Button.hpp"
+#include "interface/Spacer.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -10,16 +11,16 @@
 int calculator()
 {
 	SFLCARS* lcars = new SFLCARS;
-	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+	Display* display = lcars->newDisplay(sf::VideoMode(400, 350), sf::Vector2i(100, 100));
 
 	display->setPadding(5);
 
 	TextBar bar("CALCULATOR");
-
-	Bar placeholderforcurrentequationandstuff;
-
 	display->addElement(&bar);
-	display->addElement(&placeholderforcurrentequationandstuff);
+
+	Spacer spacer(sf::FloatRect(sf::Vector2f(0, 0), sf::Vector2f(0, 0)));
+	display->addElement(&spacer);
+	spacer.setSize(sf::Vector2f(100, 100));
 
 	Button rad("Rad");
 	Button deg("Deg");

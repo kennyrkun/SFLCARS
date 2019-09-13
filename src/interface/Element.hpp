@@ -49,6 +49,7 @@ public:
 	bool isFocused() const;
 
 	virtual void onStateChanged(State state);
+	//void Element::onWindowResized(const sf::Vector2f& newSize);
 	virtual void onMouseMoved(const sf::Vector2f& position);
 	virtual void onMousePressed(const sf::Vector2f& position);
 	virtual void onMouseReleased(const sf::Vector2f& position);
