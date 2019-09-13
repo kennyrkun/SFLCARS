@@ -38,6 +38,16 @@ Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey) : But
 	hotkeys.push_back(hotkey);
 }
 
+void Button::addHotkey(const sf::Keyboard::Key& key)
+{
+	hotkeys.push_back(key);
+}
+
+std::vector<sf::Keyboard::Key> Button::getHotkeys() const
+{
+	return hotkeys;
+}
+
 void Button::setString(const std::string& string)
 {
 	text.setString(string);
@@ -103,9 +113,12 @@ void Button::onKeyPressed(const sf::Keyboard::Key& key)
 	if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
 	{
 		if (!depressed)
+		{
 			press();
 
-		//triggerCallback();
+			//if (callbackOnPress) 
+				//triggerCallback();
+		}
 	}
 }
 
@@ -113,6 +126,8 @@ void Button::onKeyReleased(const sf::Keyboard::Key& key)
 {
 	if (depressed)
 		if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
+			//if (callbackOnPress) 
+				//triggerCallback();
 			release();
 }
 

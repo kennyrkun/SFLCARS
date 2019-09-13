@@ -24,6 +24,9 @@ public:
 	Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys);
 	Button(const std::string& string, const sf::Keyboard::Key& hotkey);
 
+	void addHotkey(const sf::Keyboard::Key& key);
+	std::vector<sf::Keyboard::Key> getHotkeys() const;
+
 	void setString(const std::string& string);
 	std::string getString() const;
 
