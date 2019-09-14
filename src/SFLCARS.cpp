@@ -15,10 +15,19 @@ Display* SFLCARS::newDisplay(const sf::VideoMode& size, const sf::Vector2i& posi
 	return displays.back();
 }
 
-void SFLCARS::HandleEvents()
+std::vector<std::pair<int, int>> SFLCARS::HandleEvents()
 {
-    for (int i = 0; i < displays.size(); i++)
-        displays[i]->HandleEvents();
+	std::vector<std::pair<int, int>> vector;
+
+	for (int i = 0; i < displays.size(); i++)
+	{
+		int id = displays[i]->HandleEvents();
+
+		if (id >= 0)
+			vector.push_back({i, id});
+	}
+	
+	return vector;
 }
 
 void SFLCARS::Update()

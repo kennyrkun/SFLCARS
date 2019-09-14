@@ -102,7 +102,10 @@ void Button::onMousePressed(const sf::Vector2f& position)
 void Button::onMouseReleased(const sf::Vector2f& position)
 {
 	if (depressed)
+	{
 		release();
+		triggerCallback();
+	}
 }
 
 void Button::onKeyPressed(const sf::Keyboard::Key& key)
@@ -123,9 +126,10 @@ void Button::onKeyReleased(const sf::Keyboard::Key& key)
 {
 	if (depressed)
 		if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
-			//if (callbackOnPress) 
-				//triggerCallback();
+		{
 			release();
+			triggerCallback();
+		}
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const

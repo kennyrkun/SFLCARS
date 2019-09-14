@@ -16,12 +16,12 @@ Display::Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vect
 	window = new sf::RenderWindow(size, "SFLCARS", sf::Style::Default, context);
     window->setPosition(position);
 
-	std::cout << "created Display with id " << id << std::endl;
+	std::cout << "created Display" << id << std::endl;
 }
 
 Display::~Display()
 {
-	std::cout << "destroyed Display  (id " << id << ")" << std::endl;
+	std::cout << "destroyed Display" << id << std::endl;
 }
 
 void Display::setPadding(float padding)
@@ -36,8 +36,9 @@ float Display::getPadding()
 
 Element* Display::addElement(Element* element, Layout align, int id)
 {
-	std::cout << "adding element with id " << id << " to display" << this->id << std::endl;
+	std::cout << "[display" << this->id << "] adding element with id " << id << " to display" << this->id << std::endl;
 
+	element->setParent(this);
 	element->setID(id);
 
 	element->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));

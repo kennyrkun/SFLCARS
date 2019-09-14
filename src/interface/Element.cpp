@@ -36,7 +36,7 @@ void Element::setState(State newState)
 
 void Element::setParent(Display* display)
 {
-	this->parent = parent;
+	this->parent = display;
 }
 
 Display* Element::getParent() const
