@@ -12,6 +12,8 @@ enum class State
 	Focused
 };
 
+class Display;
+
 class Element : public sf::Drawable
 {
 public:
@@ -40,8 +42,11 @@ public:
 	// bool single: if r g and b should be the same number
 	sf::Color getRandomColor(int lower = 100, int upper = 255, bool single = false);
 
-	virtual void setState(State newState) { state = newState; };
+	virtual void setState(State newState);
 	State getState() const { return state; };
+
+	void setParent(Display* display);
+	Display* getParent() const;
 
 	void setSelectable(bool selectable);
 
@@ -58,10 +63,14 @@ public:
 	virtual void onKeyReleased(const sf::Keyboard::Key& key);
 	virtual void onTextEntered(const sf::Uint32& unicode);
 
+	void triggerCallback();
+
 private:
 	State state;
-	int id;
+	int id = -1;
 	bool selectable;
+
+	Display* parent;
 };
 
 #endif // !ELEMENT_HPP

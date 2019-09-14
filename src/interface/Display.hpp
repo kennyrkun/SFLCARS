@@ -29,11 +29,12 @@ public:
 
 	int onEvent(const sf::Event& event);
 
-    void HandleEvents();
+    int HandleEvents();
     void Update();
     void Draw();
 
     const int id;
+	Element* triggered = nullptr;
 
 private:
 	SFLCARS* application;

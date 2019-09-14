@@ -104,19 +104,17 @@ int Display::onEvent(const sf::Event& event)
 		}
 	}
 
-	/*
-	if (m_triggered != NULL)
+	if (triggered != nullptr)
 	{
-		int id = m_triggered->getID();
-		m_triggered = NULL;
+		int id = triggered->getID();
+		triggered = nullptr;
 		return id;
 	}
-	*/
 
 	return -1;
 }
 
-void Display::HandleEvents()
+int Display::HandleEvents()
 {
     sf::Event event;
     if (window->isOpen())
@@ -132,7 +130,10 @@ void Display::HandleEvents()
             window->setView(sf::View(visibleArea));
         }
 
-		onEvent(event);
+		int id = onEvent(event);
+
+		if (id >= 0)
+			return id;
     }
 }
 
