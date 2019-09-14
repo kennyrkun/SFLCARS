@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Define sources and executable
 set(PROJECT_NAME "SFLCARS")
 set(CMAKE_DEBUG_POSTFIX "-d")
-add_executable(${PROJECT_NAME} ./src/SFLCARS.hpp ./src/SFLCARS.cpp ./src/utility/RoundRectangle.hpp ./src/utility/RoundRectangle.cpp ./src/interface/Bar.hpp ./src/interface/Bar.cpp ./src/interface/Button.hpp ./src/interface/Button.cpp ./src/interface/Element.hpp ./src/interface/Element.cpp ./src/interface/IconButton.hpp ./src/interface/IconButton.cpp ./src/interface/TextButton.hpp ./src/interface/TextButton.cpp ./src/main.cpp ./src/interface/Display.hpp ./src/interface/Display.cpp ./src/interface/TextBar.hpp ./src/interface/TextBar.cpp)
+add_executable(${PROJECT_NAME} ./src/SFLCARS.hpp ./src/SFLCARS.cpp ./src/utility/RoundRectangle.hpp ./src/utility/RoundRectangle.cpp ./src/interface/Bar.hpp ./src/interface/Bar.cpp ./src/interface/Button.hpp ./src/interface/Button.cpp ./src/interface/Element.hpp ./src/interface/Element.cpp ./src/interface/IconButton.hpp ./src/interface/IconButton.cpp ./src/interface/TextButton.hpp ./src/interface/TextButton.cpp ./src/main.cpp ./src/interface/Display.hpp ./src/interface/Display.cpp ./src/interface/TextBar.hpp ./src/interface/TextBar.cpp ./src/interface/Spacer.hpp ./src/interface/Spacer.cpp)
 
 # Detect and add SFML
 # only do this on unix, because I don't know if it works on other platforms and toolchains
