@@ -2,6 +2,7 @@
 #include "interface/TextBar.hpp"
 #include "interface/Button.hpp"
 #include "interface/Spacer.hpp"
+#include "interface/String.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,9 +19,8 @@ int calculator()
 	TextBar bar("CALCULATOR");
 	display->addElement(&bar);
 
-	Spacer spacer(sf::FloatRect(sf::Vector2f(0, 0), sf::Vector2f(0, 0)));
-	display->addElement(&spacer);
-	spacer.setSize(sf::Vector2f(100, 100));
+	String string("this is a chicken string");
+	display->addElement(&string);
 
 	Button rad("Rad");
 	Button deg("Deg");
