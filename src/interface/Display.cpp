@@ -34,7 +34,7 @@ float Display::getPadding()
 	return 0.0f;
 }
 
-void Display::addElement(Element* element, ElementAlignment align)
+void Display::addElement(Element* element, Layout align)
 {
 	std::cout << "adding new element" << std::endl;
 	std::cout << elements.size() << std::endl;
@@ -46,12 +46,12 @@ void Display::addElement(Element* element, ElementAlignment align)
 		element->setPosition(sf::Vector2f(padding, padding));
 	else
 	{
-		if (align == ElementAlignment::Vertical)
+		if (align == Layout::Vertical)
 		{
 			std::cout << "aligning element vertically" << std::endl;
 			element->setPosition(sf::Vector2f(padding, elements.back()->getPosition().y + elements.back()->getSize().y + padding));
 		}
-		else if (align == ElementAlignment::Horizontal)
+		else if (align == Layout::Horizontal)
 		{
 			std::cout << "aligning element horizontally" << std::endl;
 			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + padding, elements.back()->getPosition().y));

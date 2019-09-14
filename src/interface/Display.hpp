@@ -8,7 +8,7 @@
 
 class SFLCARS;
 
-enum class ElementAlignment
+enum class Layout
 {
 	Horizontal,
 	Vertical
@@ -25,7 +25,7 @@ public:
 
 	bool isOpen() { return window->isOpen(); }
 
-	void addElement(Element* element, ElementAlignment align = ElementAlignment::Vertical);
+	void addElement(Element* element, Layout align = Layout::Vertical);
 
 	int onEvent(const sf::Event& event);
 
