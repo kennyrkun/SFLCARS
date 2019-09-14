@@ -10,8 +10,23 @@
 
 int calculator()
 {
+	enum Callback
+	{
+		Return,
+	};
+
+	enum ApplicationDisplay
+	{
+		Calculator,
+	};
+
+	sf::SoundBuffer buffer;
+	sf::Sound beep;
+	buffer.loadFromFile("./interface/resources/sounds/error_input1.ogg");
+	beep.setBuffer(buffer);
+
 	SFLCARS* lcars = new SFLCARS;
-	Display* display = lcars->newDisplay(sf::VideoMode(400, 350), sf::Vector2i(100, 100));
+	Display* display = lcars->newDisplay(sf::VideoMode(400, 350), sf::Vector2i(100, 100), ApplicationDisplay::Calculator);
 
 	display->setPadding(5);
 
@@ -41,7 +56,7 @@ int calculator()
 	Button leftParenthesis("(", sf::Keyboard::Key::LBracket);
 	Button rightParenthesis(")", sf::Keyboard::Key::RBracket);
 	Button percent("%");
-	Button clear("C", sf::Keyboard::Key::C);
+	Button clear("C", { sf::Keyboard::Key::C, sf::Keyboard::Key::Escape });
 
 	Button seven("7", sf::Keyboard::Key::Numpad7);
 	Button eight("8", sf::Keyboard::Key::Numpad8);
@@ -59,7 +74,7 @@ int calculator()
 	Button subtract("-", sf::Keyboard::Key::Subtract);
 
 	Button zero("0", sf::Keyboard::Key::Numpad0);
-	Button decimal(".", sf::Keyboard::Key::Delete);
+	Button decimal(".", sf::Keyboard::Key::Period);
 	Button equals("=", {sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
 	Button add("+", sf::Keyboard::Key::Add);
 
@@ -105,12 +120,35 @@ int calculator()
 
 	display->addElement(&zero, Layout::Horizontal);
 	display->addElement(&decimal, Layout::Horizontal);
-	display->addElement(&equals, Layout::Horizontal);
+	display->addElement(&equals, Layout::Horizontal, Callback::Return);
 	display->addElement(&add, Layout::Horizontal);
 
 	while (lcars->isRunning())
 	{
-		lcars->HandleEvents();
+		for (auto& x : lcars->HandleEvents())
+		{
+			switch (x.first)
+			{
+			case ApplicationDisplay::Calculator:
+			{
+				switch (x.second)
+				{
+				case Callback::Return:
+				{
+					sf::sleep(sf::milliseconds(10));
+					beep.play();
+					break;
+				}
+				default:
+					break;
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
 		lcars->Update();
 		lcars->Draw();
 	}
