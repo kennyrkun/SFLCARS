@@ -25,7 +25,7 @@ public:
 
 	bool isOpen() { return window->isOpen(); }
 
-	void addElement(Element* element, Layout align = Layout::Vertical);
+	Element* addElement(Element* element, Layout align = Layout::Vertical, int id = -1);
 
 	int onEvent(const sf::Event& event);
 

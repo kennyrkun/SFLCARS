@@ -13,7 +13,7 @@ class SFLCARS
 public:
     SFLCARS();
 
-    Display* newDisplay(const sf::VideoMode& size, const sf::Vector2i& position);
+    Display* newDisplay(const sf::VideoMode& size, const sf::Vector2i& position, const int id = -1);
 
     void HandleEvents();
     void Update();

@@ -7,9 +7,9 @@ SFLCARS::SFLCARS()
     running = true;
 }
 
-Display* SFLCARS::newDisplay(const sf::VideoMode& size, const sf::Vector2i& position)
+Display* SFLCARS::newDisplay(const sf::VideoMode& size, const sf::Vector2i& position, const int id)
 {
-	Display* newDisplay = new Display(this, size, position, -1);
+	Display* newDisplay = new Display(this, size, position, id);
 	displays.push_back(newDisplay);
 
 	return displays.back();

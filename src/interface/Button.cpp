@@ -143,5 +143,4 @@ void Button::reposition()
 	box.setCornersRadius(16);
 
 	text.setPosition(sf::Vector2f(box.getPosition().x + (box.getSize().x / 2), box.getPosition().y + (box.getSize().y / 2)));
-//	text.setPosition(box.getPosition());
 }

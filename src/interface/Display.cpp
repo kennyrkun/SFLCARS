@@ -34,10 +34,11 @@ float Display::getPadding()
 	return 0.0f;
 }
 
-void Display::addElement(Element* element, Layout align)
+Element* Display::addElement(Element* element, Layout align, int id)
 {
-	std::cout << "adding new element" << std::endl;
-	std::cout << elements.size() << std::endl;
+	std::cout << "adding element with id " << id << " to display" << this->id << std::endl;
+
+	element->setID(id);
 
 	element->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	element->setPosition(sf::Vector2f(padding, padding)); // HACK: get it to calculate it's geometry before we start moving things
@@ -45,20 +46,13 @@ void Display::addElement(Element* element, Layout align)
 	if (elements.empty())
 		element->setPosition(sf::Vector2f(padding, padding));
 	else
-	{
 		if (align == Layout::Vertical)
-		{
-			std::cout << "aligning element vertically" << std::endl;
 			element->setPosition(sf::Vector2f(padding, elements.back()->getPosition().y + elements.back()->getSize().y + padding));
-		}
 		else if (align == Layout::Horizontal)
-		{
-			std::cout << "aligning element horizontally" << std::endl;
 			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + padding, elements.back()->getPosition().y));
-		}
-	}
 
 	elements.push_back(element);
+	return element;
 }
 
 int Display::onEvent(const sf::Event& event)
