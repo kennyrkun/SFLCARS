@@ -25,8 +25,8 @@ int calculator()
 	buffer.loadFromFile("./interface/resources/sounds/error_input1.ogg");
 	beep.setBuffer(buffer);
 
-	SFLCARS* lcars = new SFLCARS;
-	Display* display = lcars->newDisplay(sf::VideoMode(400, 350), sf::Vector2i(100, 100), ApplicationDisplay::Calculator);
+	SFLCARS* sflcars = new SFLCARS;
+	Display* display = sflcars->newDisplay(sf::VideoMode(400, 350), sf::Vector2i(100, 100), ApplicationDisplay::Calculator);
 
 	display->setPadding(5);
 
@@ -123,9 +123,9 @@ int calculator()
 	display->addElement(&equals, Layout::Horizontal, Callback::Return);
 	display->addElement(&add, Layout::Horizontal);
 
-	while (lcars->isRunning())
+	while (sflcars->isRunning())
 	{
-		for (auto& x : lcars->HandleEvents())
+		for (auto& x : sflcars->HandleEvents())
 		{
 			switch (x.first)
 			{
@@ -149,11 +149,11 @@ int calculator()
 			}
 		}
 
-		lcars->Update();
-		lcars->Draw();
+		sflcars->Update();
+		sflcars->Draw();
 	}
 
-	delete lcars;
+	delete sflcars;
 
 	return 0;
 }

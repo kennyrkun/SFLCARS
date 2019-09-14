@@ -1,5 +1,5 @@
-#ifndef LCARS_HPP
-#define LCARS_HPP
+#ifndef SFLCARS_HPP
+#define SFLCARS_HPP
 
 #include "interface/Element.hpp"
 #include "interface/Display.hpp"
@@ -29,4 +29,4 @@ private:
 	bool running = false;
 };
 
-#endif // !LCARS_HPP
+#endif // !SFLCARS_HPP
