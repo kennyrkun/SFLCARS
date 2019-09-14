@@ -6,18 +6,28 @@
 class String : public Element
 {
 public:
-	String(const sf::FloatRect& shapeAndSize);
+	String(const std::string& string);
 
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 
-	void setSize(const sf::Vector2f& newSize);
+	void setSize(const sf::Vector2f& newSize) {};
 	sf::Vector2f getSize() const;
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const {};
+	void setCharacterSize(float newSize);
+	float getCharacterSize() const;
+
+	void setFont();
+	sf::Font getFont() const;
+
+	void setFillColor(const sf::Color& color);
+	const sf::Color& getColor() const;
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-	sf::FloatRect shape;
+	sf::Font font;
+	sf::Text text;
 };
 
 #endif // !STRING_HPP
