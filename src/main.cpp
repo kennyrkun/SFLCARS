@@ -79,59 +79,59 @@ int calculator()
 	Button add("+", sf::Keyboard::Key::Add);
 
 	display->addElement(&rad);
-	display->addElement(&deg, Layout::Horizontal);
-	display->addElement(&x, Layout::Horizontal);
+	display->addElement(&deg, Display::Layout::Horizontal);
+	display->addElement(&x, Display::Layout::Horizontal);
 
-	display->addElement(&leftParenthesis, Layout::Horizontal);
-	display->addElement(&rightParenthesis, Layout::Horizontal);
-	display->addElement(&percent, Layout::Horizontal);
-	display->addElement(&clear, Layout::Horizontal);
+	display->addElement(&leftParenthesis, Display::Layout::Horizontal);
+	display->addElement(&rightParenthesis, Display::Layout::Horizontal);
+	display->addElement(&percent, Display::Layout::Horizontal);
+	display->addElement(&clear, Display::Layout::Horizontal);
 
 	display->addElement(&inv);
-	display->addElement(&sin, Layout::Horizontal);
-	display->addElement(&ln, Layout::Horizontal);
+	display->addElement(&sin, Display::Layout::Horizontal);
+	display->addElement(&ln, Display::Layout::Horizontal);
 
-	display->addElement(&seven, Layout::Horizontal);
-	display->addElement(&eight, Layout::Horizontal);
-	display->addElement(&nine, Layout::Horizontal);
-	display->addElement(&divide, Layout::Horizontal);
+	display->addElement(&seven, Display::Layout::Horizontal);
+	display->addElement(&eight, Display::Layout::Horizontal);
+	display->addElement(&nine, Display::Layout::Horizontal);
+	display->addElement(&divide, Display::Layout::Horizontal);
 
 	display->addElement(&pi);
-	display->addElement(&cos, Layout::Horizontal);
-	display->addElement(&log, Layout::Horizontal);
+	display->addElement(&cos, Display::Layout::Horizontal);
+	display->addElement(&log, Display::Layout::Horizontal);
 
-	display->addElement(&four, Layout::Horizontal);
-	display->addElement(&five, Layout::Horizontal);
-	display->addElement(&six, Layout::Horizontal);
-	display->addElement(&multiply, Layout::Horizontal);
+	display->addElement(&four, Display::Layout::Horizontal);
+	display->addElement(&five, Display::Layout::Horizontal);
+	display->addElement(&six, Display::Layout::Horizontal);
+	display->addElement(&multiply, Display::Layout::Horizontal);
 
 	display->addElement(&e);
-	display->addElement(&tan, Layout::Horizontal);
-	display->addElement(&sqrt, Layout::Horizontal);
+	display->addElement(&tan, Display::Layout::Horizontal);
+	display->addElement(&sqrt, Display::Layout::Horizontal);
 
-	display->addElement(&one, Layout::Horizontal);
-	display->addElement(&two, Layout::Horizontal);
-	display->addElement(&three, Layout::Horizontal);
-	display->addElement(&subtract, Layout::Horizontal);
+	display->addElement(&one, Display::Layout::Horizontal);
+	display->addElement(&two, Display::Layout::Horizontal);
+	display->addElement(&three, Display::Layout::Horizontal);
+	display->addElement(&subtract, Display::Layout::Horizontal);
 
 	display->addElement(&ans);
-	display->addElement(&exp, Layout::Horizontal);
-	display->addElement(&xy, Layout::Horizontal);
+	display->addElement(&exp, Display::Layout::Horizontal);
+	display->addElement(&xy, Display::Layout::Horizontal);
 
-	display->addElement(&zero, Layout::Horizontal);
-	display->addElement(&decimal, Layout::Horizontal);
-	display->addElement(&equals, Layout::Horizontal, Callback::Return);
-	display->addElement(&add, Layout::Horizontal);
+	display->addElement(&zero, Display::Layout::Horizontal);
+	display->addElement(&decimal, Display::Layout::Horizontal);
+	display->addElement(&equals, Display::Layout::Horizontal, Callback::Return);
+	display->addElement(&add, Display::Layout::Horizontal);
 
 	while (sflcars->isRunning())
 	{
-		for (auto& x : sflcars->HandleEvents())
+		for (auto& event : sflcars->HandleEvents())
 		{
-			switch (x.first)
+			switch (event.displayID)
 			{
 			case ApplicationDisplay::Calculator:
 			{
-				switch (x.second)
+				switch (event.elementCallbackID)
 				{
 				case Callback::Return:
 				{

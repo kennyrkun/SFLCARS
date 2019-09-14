@@ -15,7 +15,7 @@ public:
 
     Display* newDisplay(const sf::VideoMode& size, const sf::Vector2i& position, const int id = -1);
 
-    std::vector<std::pair<int, int>> HandleEvents();
+    std::vector<DisplayEvent> HandleEvents();
     void Update();
     void Draw();
 

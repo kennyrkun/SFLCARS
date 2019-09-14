@@ -115,8 +115,11 @@ int Display::onEvent(const sf::Event& event)
 	return -1;
 }
 
-int Display::HandleEvents()
+DisplayEvent Display::HandleEvents()
 {
+	DisplayEvent displayEvent;
+	displayEvent.displayID = id;
+
     sf::Event event;
     if (window->isOpen())
     {
@@ -129,12 +132,12 @@ int Display::HandleEvents()
             // update the view to the new size of the window
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             window->setView(sf::View(visibleArea));
-        }
+		}
 
-		int id = onEvent(event);
+		displayEvent.elementCallbackID = onEvent(event);
 
-		if (id >= 0)
-			return id;
+		displayEvent.event = event;
+		return displayEvent;
     }
 }
 

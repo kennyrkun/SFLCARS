@@ -8,10 +8,12 @@
 
 class SFLCARS;
 
-enum class Layout
+struct DisplayEvent
 {
-	Horizontal,
-	Vertical
+	int displayID = -1;
+
+	sf::Event event;
+	int elementCallbackID;
 };
 
 class Display
@@ -19,6 +21,12 @@ class Display
 public:
 	Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id);
 	~Display();
+
+	enum class Layout
+	{
+		Horizontal,
+		Vertical
+	};
 
 	void setPadding(float padding);
 	float getPadding();
@@ -29,7 +37,7 @@ public:
 
 	int onEvent(const sf::Event& event);
 
-    int HandleEvents();
+    DisplayEvent HandleEvents();
     void Update();
     void Draw();
 
