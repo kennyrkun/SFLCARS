@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+namespace sflcars
+{
+
 TextBar::TextBar(std::string text, TextAlignment align) : align(align)
 {
 	font.loadFromFile(".//resources/fonts/Okuda.otf");
@@ -82,4 +85,6 @@ void TextBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(rightEdge);
 	target.draw(rightEdgeLeft);
 	target.draw(text);
+}
+
 }

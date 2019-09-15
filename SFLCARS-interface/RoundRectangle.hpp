@@ -19,8 +19,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef ROUNDEDRECTANGLESHAPE_HPP
-#define ROUNDEDRECTANGLESHAPE_HPP
+#ifndef SFLCARS_ROUNDEDRECTANGLESHAPE_HPP
+#define SFLCARS_ROUNDEDRECTANGLESHAPE_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers

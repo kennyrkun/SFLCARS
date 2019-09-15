@@ -1,9 +1,12 @@
-#ifndef TEXT_BAR_HPP
-#define TEXT_BAR_HPP
+#ifndef SFLCARS_TEXT_BAR_HPP
+#define SFLCARS_TEXT_BAR_HPP
 
 #include "Bar.hpp"
 
 #include "RoundRectangle.hpp"
+
+namespace sflcars
+{
 
 class TextBar : public Bar
 {
@@ -36,4 +39,6 @@ private:
 	sf::Font font;
 };
 
-#endif // !TEXT_BAR_HPP
+}
+
+#endif // !SFLCARS_TEXT_BAR_HPP

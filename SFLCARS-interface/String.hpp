@@ -1,7 +1,10 @@
-#ifndef STRING_HPP
-#define STRING_HPP
+#ifndef SFLCARS_STRING_HPP
+#define SFLCARS_STRING_HPP
 
 #include "Element.hpp"
+
+namespace sflcars
+{
 
 class String : public Element
 {
@@ -30,4 +33,6 @@ private:
 	sf::Text text;
 };
 
-#endif // !STRING_HPP
+}
+
+#endif // !SFLCARS_STRING_HPP

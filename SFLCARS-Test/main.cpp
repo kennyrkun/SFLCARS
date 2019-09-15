@@ -8,6 +8,8 @@
 
 #include <iostream>
 
+using namespace sflcars;
+
 int calculator()
 {
 	enum Callback

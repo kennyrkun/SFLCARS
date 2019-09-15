@@ -1,5 +1,5 @@
-#ifndef BUTTON_HPP
-#define BUTTON_HPP
+#ifndef SFLCARS_BUTTON_HPP
+#define SFLCARS_BUTTON_HPP
 
 #include "Element.hpp"
 #include "RoundRectangle.hpp"
@@ -13,6 +13,9 @@
 
 // TODO: button can be on the left or right side of a bar
 // TODO: register listeners for each button or something
+
+namespace sflcars
+{
 
 // This is a base class for all Buttons.
 class Button : public Element
@@ -63,4 +66,6 @@ private:
 	bool depressed = false;
 };
 
-#endif // !BUTTON_HPP
+}
+
+#endif // !SFLCARS_BUTTON_HPP

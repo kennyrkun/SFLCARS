@@ -1,7 +1,10 @@
-#ifndef SPACER_HPP
-#define SPACER_HPP
+#ifndef SFLCARS_SPACER_HPP
+#define SFLCARS_SPACER_HPP
 
 #include "Element.hpp"
+
+namespace sflcars
+{
 
 class Spacer : public Element
 {
@@ -20,4 +23,6 @@ private:
 	sf::FloatRect shape;
 };
 
-#endif // !SPACER_HPP
+}
+
+#endif // !SFLCARS_SPACER_HPP

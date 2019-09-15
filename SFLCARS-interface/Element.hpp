@@ -1,9 +1,12 @@
-#ifndef ELEMENT_HPP
-#define ELEMENT_HPP
+#ifndef SFLCARS_ELEMENT_HPP
+#define SFLCARS_ELEMENT_HPP
 
 #include <SFML/Graphics.hpp>
 
 #include <vector>
+
+namespace sflcars
+{
 
 enum class State
 {
@@ -77,4 +80,6 @@ private:
 	Display* parent;
 };
 
-#endif // !ELEMENT_HPP
+}
+
+#endif // !SFLCARS_ELEMENT_HPP

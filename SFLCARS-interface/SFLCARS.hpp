@@ -1,5 +1,5 @@
-#ifndef SFLCARS_HPP
-#define SFLCARS_HPP
+#ifndef SFLCARS_SFLCARS_HPP
+#define SFLCARS_SFLCARS_HPP
 
 #include "Element.hpp"
 #include "Display.hpp"
@@ -7,6 +7,9 @@
 #include <SFML/Graphics.hpp>
 
 #include <vector>
+
+namespace sflcars
+{
 
 class SFLCARS
 {
@@ -29,4 +32,6 @@ private:
 	bool running = false;
 };
 
-#endif // !SFLCARS_HPP
+}
+
+#endif // !SFLCARS_SFLCARS_HPP

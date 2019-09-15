@@ -1,5 +1,8 @@
 #include "Spacer.hpp"
 
+namespace sflcars
+{
+
 Spacer::Spacer(const sf::FloatRect& shapeAndSize)
 {
 	shape = shapeAndSize;
@@ -28,3 +31,4 @@ sf::Vector2f Spacer::getSize() const
 	// TODO: insert return statement here
 }
 
+}

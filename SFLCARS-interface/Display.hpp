@@ -1,10 +1,13 @@
-#ifndef DISPLAY_HPP
-#define DISPLAY_HPP
+#ifndef SFLCARS_DISPLAY_HPP
+#define SFLCARS_DISPLAY_HPP
 
 #include "Element.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+
+namespace sflcars
+{
 
 class SFLCARS;
 
@@ -55,4 +58,6 @@ private:
 	float padding = 20;
 };
 
-#endif // !DISPLAY_HPP
+}
+
+#endif // !SFLCARS_DISPLAY_HPP

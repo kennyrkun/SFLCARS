@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+namespace sflcars
+{
+
 Bar::Bar()
 {
 	std::cout << "created bar" << std::endl;
@@ -74,4 +77,6 @@ void Bar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(middle, states);
 	target.draw(rightEdge, states);
 	target.draw(rightEdgeLeft, states);
+}
+
 }

@@ -1,8 +1,11 @@
-#ifndef BAR_HPP
-#define BAR_HPP
+#ifndef SFLCARS_BAR_HPP
+#define SFLCARS_BAR_HPP
 
 #include "Element.hpp"
 #include "RoundRectangle.hpp"
+
+namespace sflcars
+{
 
 class Bar : public Element
 {
@@ -43,4 +46,6 @@ private:
 	virtual void reposition();
 };
 
-#endif // !BAR_HPP
+}
+
+#endif // !SFLCARS_BAR_HPP

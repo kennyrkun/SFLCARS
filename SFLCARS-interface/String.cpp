@@ -1,5 +1,8 @@
 #include "String.hpp"
 
+namespace sflcars
+{
+
 String::String(const std::string& string)
 {
 	font.loadFromFile(".//resources/fonts/Okuda.otf");
@@ -59,4 +62,6 @@ const sf::Color& String::getColor() const
 void String::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(text);
+}
+
 }

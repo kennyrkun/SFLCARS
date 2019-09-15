@@ -3,6 +3,9 @@
 
 #include <random>
 
+namespace sflcars
+{
+
 void Element::setID(int id)
 {
 	this->id = id;
@@ -30,7 +33,7 @@ sf::Color Element::getRandomColor(int lower, int upper, bool single)
 
 void Element::setState(State newState)
 {
-	state = newState; 
+	state = newState;
 	onStateChanged(state);
 }
 
@@ -74,4 +77,6 @@ void Element::onTextEntered(const sf::Uint32&) {}
 void Element::triggerCallback()
 {
 	parent->triggered = this;
+}
+
 }

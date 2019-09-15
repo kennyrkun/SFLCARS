@@ -8,6 +8,9 @@
 
 float padding = 4;
 
+namespace sflcars
+{
+
 InputBox::InputBox(float width) : cursorPos(0), maxCharacters(-1), blinkPeriod(1.0f)
 {
 	font.loadFromFile(".//resources/fonts/Okuda.otf");
@@ -251,4 +254,6 @@ void InputBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 		target.draw(cursor, states);
 	}
+}
+
 }

@@ -23,6 +23,7 @@
     <ProjectGuid>{2e9483b4-9543-4c93-bd7d-21eb4d8c50ab}</ProjectGuid>
     <RootNamespace>SFLCARS</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>SFLCARS-interface</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -134,7 +135,6 @@
     <ClCompile Include="IconButton.cpp" />
     <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="Layout.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="RoundRectangle.cpp" />
     <ClCompile Include="SFLCARS.cpp" />
     <ClCompile Include="Spacer.cpp" />

@@ -1,5 +1,8 @@
 #include "Layout.hpp"
 
+namespace sflcars
+{
+
 Layout::Layout(Display* display) : parentDisplay(display)
 {
 }
@@ -24,4 +27,6 @@ TextBar* Layout::addTextBar(const std::string& text)
 Element* Layout::addElement(Element* element)
 {
 	return element;
+}
+
 }

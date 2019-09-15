@@ -1,5 +1,5 @@
-#ifndef INPUT_BOY_HPP
-#define INPUT_BOY_HPP
+#ifndef SFLCARS_INPUT_BOX_HPP
+#define SFLCARS_INPUT_BOX_HPP
 
 #include "Element.hpp"
 
@@ -14,6 +14,9 @@
 // Select Word
 // Select All
 // Move selected
+
+namespace sflcars
+{
 
  // Single-line text editor.
 class InputBox : public Element
@@ -67,4 +70,6 @@ private:
 	size_t cursorPos;
 };
 
-#endif // !INPUT_BOY_HPP
+}
+
+#endif // !SFLCARS_INPUT_BOX_HPP

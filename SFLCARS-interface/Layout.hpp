@@ -1,11 +1,14 @@
-#ifndef LAYOUT_HPP
-#define LAYOUT_HPP
+#ifndef SFLCARS_LAYOUT_HPP
+#define SFLCARS_LAYOUT_HPP
 
 #include "Display.hpp"
 
 #include "Element.hpp"
 #include "Button.hpp"
 #include "TextBar.hpp"
+
+namespace sflcars
+{
 
 class Layout : public Element
 {
@@ -22,4 +25,6 @@ private:
 	Display* parentDisplay;
 };
 
-#endif // !LAYOUT_HPP
+}
+
+#endif // !SFLCARS_LAYOUT_HPP

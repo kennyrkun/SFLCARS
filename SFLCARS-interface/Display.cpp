@@ -8,6 +8,9 @@
 #include <iterator>
 #include <iostream>
 
+namespace sflcars
+{
+
 Display::Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id) : application(application), id(id)
 {
 	sf::ContextSettings context;
@@ -159,4 +162,6 @@ void Display::Draw()
 		window->draw(*elements[i]);
 
     window->display();
+}
+
 }

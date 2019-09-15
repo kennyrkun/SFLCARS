@@ -2,6 +2,9 @@
 
 #include <random>
 
+namespace sflcars
+{
+
 Button::Button(const std::string& string)
 {
 	font.loadFromFile(".//resources/fonts/Okuda.otf");
@@ -147,4 +150,6 @@ void Button::reposition()
 	box.setCornersRadius(16);
 
 	text.setPosition(sf::Vector2f(box.getPosition().x + (box.getSize().x / 2), box.getPosition().y + (box.getSize().y / 2)));
+}
+
 }

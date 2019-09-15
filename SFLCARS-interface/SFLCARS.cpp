@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+namespace sflcars
+{
+
 SFLCARS::SFLCARS()
 {
     running = true;
@@ -52,4 +55,6 @@ void SFLCARS::Draw()
 {
     for (int i = 0; i < displays.size(); i++)
         displays[i]->Draw();
+}
+
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS", "SFLCARS\SFLCARS.vcxproj", "{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-interface", "SFLCARS-interface\SFLCARS-interface.vcxproj", "{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-Test", "SFLCARS-Test\SFLCARS-Test.vcxproj", "{A5DA8CCA-7D45-4641-BBDA-E13550B14983}"
 EndProject
