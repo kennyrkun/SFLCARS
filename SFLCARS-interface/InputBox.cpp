@@ -3,6 +3,7 @@
 #endif
 
 #include "InputBox.hpp"
+#include "Theme.hpp"
 
 #include <iostream>
 
@@ -21,7 +22,7 @@ InputBox::InputBox(float width) : cursorPos(0), maxCharacters(-1), blinkPeriod(1
 
 	box.setSize(sf::Vector2f(width, font.getLineSpacing(text.getCharacterSize())));
 	box.setFillColor(sf::Color::Transparent);
-	box.setOutlineColor(getRandomColor());
+	box.setOutlineColor(Theme::getRandomColor());
 	box.setOutlineThickness(-4);
 
 	signed int outlineThickness = std::abs(box.getOutlineThickness());

@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "Theme.hpp"
 
 #include <random>
 
@@ -12,7 +13,7 @@ Button::Button(const std::string& string)
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 
-	box.setFillColor(getRandomColor());
+	box.setFillColor(Theme::getRandomColor());
 
 	std::string sounds[4] = { "beep", "beep2", "beep3", "beep4" };
 
@@ -93,7 +94,7 @@ void Button::press()
 void Button::release()
 {
 	depressed = false;
-	box.setFillColor(getRandomColor());
+	box.setFillColor(Theme::getRandomColor());
 }
 
 void Button::onMousePressed(const sf::Vector2f& position)

@@ -43,6 +43,9 @@
     <ClCompile Include="SFLCARS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Theme.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Spacer.hpp">
@@ -79,6 +82,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SFLCARS.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Theme.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

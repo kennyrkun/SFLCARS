@@ -1,5 +1,5 @@
-#ifndef THEME_HPP
-#define THEME_HPP
+#ifndef SFLCARS_THEME_HPP
+#define SFLCARS_THEME_HPP
 
 #include <map>
 #include <string>
@@ -7,6 +7,9 @@
 #include <SFML/Graphics/Font.hpp>
 
 // TODO: make this a static namespace
+
+namespace sflcars
+{
 
 class Theme
 {
@@ -32,6 +35,12 @@ public:
 	static float getLineSpacing();
 
 	static sf::Color hexToRgb(std::string hexcolor);
+
+	// TODO: add upper and lower bounds to this
+	// int lower: the lower boundary for colour
+	// int upper: the upper boundary for colour
+	// bool single: if r g and b should be the same number
+	static sf::Color getRandomColor(int lower = 100, int upper = 255, bool single = false);
 
 	static size_t textCharacterSize;
 
@@ -77,4 +86,6 @@ private:
 	static sf::Font    m_font;
 };
 
-#endif // !THEME_HPP
+}
+
+#endif // !SFLCARS_THEME_HPP

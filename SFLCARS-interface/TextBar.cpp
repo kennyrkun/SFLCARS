@@ -1,4 +1,5 @@
 #include "TextBar.hpp"
+#include "Theme.hpp"
 
 #include <iostream>
 
@@ -12,10 +13,10 @@ TextBar::TextBar(std::string text, TextAlignment align) : align(align)
 	this->text.setCharacterSize(36);
 	this->text.setString(text);
 
-	leftEdge.setFillColor(getRandomColor());
+	leftEdge.setFillColor(Theme::getRandomColor());
 	leftEdgeRight.setFillColor(leftEdge.getFillColor());
-	middle.setFillColor(getRandomColor());
-	rightEdge.setFillColor(getRandomColor());
+	middle.setFillColor(Theme::getRandomColor());
+	rightEdge.setFillColor(Theme::getRandomColor());
 	rightEdgeLeft.setFillColor(rightEdge.getFillColor());
 	
 	std::cout << "created textbar" << std::endl;
