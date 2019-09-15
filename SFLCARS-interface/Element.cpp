@@ -50,7 +50,7 @@ bool Element::isFocused() const
 // callbacks
 
 void Element::onStateChanged(State) {}
-//void Element::onWindowResized(const sf::Vector2f&) {}
+void Element::onWindowResized(sf::Event::SizeEvent) {}
 void Element::onMouseMoved(const sf::Vector2f&) {}
 void Element::onMousePressed(const sf::Vector2f&) {}
 void Element::onMouseReleased(const sf::Vector2f&) {}

@@ -108,6 +108,8 @@ int Display::onEvent(const sf::Event& event)
 		case sf::Event::TextEntered:
 			x->onTextEntered(event.text.unicode);
 			break;
+		case sf::Event::Resized:
+			x->onWindowResized(event.size);
 		default:
 			break;
 		}

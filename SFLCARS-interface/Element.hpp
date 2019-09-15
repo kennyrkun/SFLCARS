@@ -24,9 +24,6 @@ public:
 	void setID(int id);
 	int getID() const;
 
-	// required
-	virtual void HandleEvents(const sf::Event& event, sf::RenderWindow& window) {};
-
 	// optional
 	virtual void setSize(const sf::Vector2f& newSize) { return; }
 	// optional
@@ -55,7 +52,7 @@ protected:
 	friend class Display;
 
 	virtual void onStateChanged(State state);
-	//void Element::onWindowResized(const sf::Vector2f& newSize);
+	virtual void onWindowResized(sf::Event::SizeEvent size);
 	virtual void onMouseMoved(const sf::Vector2f& position);
 	virtual void onMousePressed(const sf::Vector2f& position);
 	virtual void onMouseReleased(const sf::Vector2f& position);
