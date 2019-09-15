@@ -6,12 +6,12 @@
 namespace sflcars
 {
 
-TextBar::TextBar(std::string text, TextAlignment align) : align(align)
+TextBar::TextBar(const std::string& string, const TextAlignment align) : align(align)
 {
-	font.loadFromFile(".//resources/fonts/Okuda.otf");
-	this->text.setFont(font);
-	this->text.setCharacterSize(36);
-	this->text.setString(text);
+	font.loadFromFile("./resources/fonts/Okuda.otf");
+	text.setFont(font);
+	text.setCharacterSize(36);
+	text.setString(string);
 
 	leftEdge.setFillColor(Theme::getRandomColor());
 	leftEdgeRight.setFillColor(leftEdge.getFillColor());
@@ -57,6 +57,16 @@ sf::Vector2f TextBar::getSize() const
 	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
 }
 
+void TextBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(leftEdge);
+	target.draw(leftEdgeRight);
+	target.draw(middle);
+	target.draw(rightEdge);
+	target.draw(rightEdgeLeft);
+	target.draw(text);
+}
+
 void TextBar::reposition()
 {
 	leftEdge.setPosition(position.x, position.y);
@@ -76,16 +86,6 @@ void TextBar::reposition()
 	}
 
 	rightEdgeLeft.setPosition(rightEdge.getPosition().x, position.y);
-}
-
-void TextBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	target.draw(leftEdge);
-	target.draw(leftEdgeRight);
-	target.draw(middle);
-	target.draw(rightEdge);
-	target.draw(rightEdgeLeft);
-	target.draw(text);
 }
 
 }

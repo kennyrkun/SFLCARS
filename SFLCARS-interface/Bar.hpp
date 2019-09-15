@@ -11,9 +11,6 @@ class Bar : public Element
 {
 public:
 	Bar();
-	Bar(const sf::Vector2f& pos);
-
-	void HandleEvents(const sf::Event& event, sf::RenderWindow& window);
 
 	// TODO: make this just setLength(float length);
 	virtual void setSize(const sf::Vector2f& newSize);
@@ -41,6 +38,8 @@ protected:
 	sf::Vector2f usableSize;
 
 	sf::Vector2f position;
+
+	void onWindowResized(sf::Event::SizeEvent newSize);
 
 private:
 	virtual void reposition();

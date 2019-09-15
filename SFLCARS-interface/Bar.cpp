@@ -10,19 +10,6 @@ Bar::Bar()
 	std::cout << "created bar" << std::endl;
 }
 
-Bar::Bar(const sf::Vector2f& pos)
-{
-	setPosition(pos);
-
-	std::cout << "created bar at position " << std::endl;
-}
-
-void Bar::HandleEvents(const sf::Event& event, sf::RenderWindow& window)
-{
-	if (event.type == sf::Event::EventType::Resized)
-		setSize(sf::Vector2f(event.size.width, event.size.height));
-}
-
 void Bar::setSize(const sf::Vector2f& newSize)
 {
 	std::cout << "updating bar size" << std::endl;
@@ -59,6 +46,11 @@ void Bar::setPosition(const sf::Vector2f& newPosition)
 	position = newPosition;
 
 	reposition();
+}
+
+void Bar::onWindowResized(sf::Event::SizeEvent newSize)
+{
+	setSize(sf::Vector2f(newSize.width, barHeight));
 }
 
 void Bar::reposition()

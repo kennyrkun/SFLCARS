@@ -39,7 +39,7 @@ int calculator()
 
 	sf::SoundBuffer buffer;
 	sf::Sound beep;
-	buffer.loadFromFile(".//resources/sounds/bosun_whistle.ogg");
+	buffer.loadFromFile("./resources/sounds/bosun_whistle.ogg");
 	beep.setBuffer(buffer);
 
 	SFLCARS* sflcars = new SFLCARS;
@@ -47,7 +47,8 @@ int calculator()
 
 	display->setPadding(5);
 
-	TextBar bar("CALCULATOR");
+//	TextBar bar("CALCULATOR");
+	Bar bar;
 	display->addElement(&bar);
 
 	InputBox inputBox(330);
@@ -220,13 +221,11 @@ int calculator()
 	return 0;
 }
 
-void sendMessage();
-
 int notifier()
 {
 	sf::SoundBuffer buffer;
 	sf::Sound whistle;
-	buffer.loadFromFile("./interface/resources/sounds/bosun_whistle.ogg");
+	buffer.loadFromFile("./resources/sounds/processing2.ogg");
 	whistle.setBuffer(buffer);
 	whistle.setVolume(50);
 
@@ -247,6 +246,7 @@ int notifier()
 			{
 			case 1:
 			{
+				sf::sleep(sf::milliseconds(100));
 				messageBox.setText("");
 				whistle.play();
 				break;
@@ -264,14 +264,14 @@ int notifier()
 int main()
 {
 	notifier();
-	return EXIT_SUCCESS;
+	//return EXIT_SUCCESS;
 
 	SFLCARS* lcars = new SFLCARS;
 	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
-
+	
 	TextBar bar("SFLCARS");
-	TextBar bar2("bar2");
-	TextBar bar3("bar3");
+	TextBar bar2("bar2", TextBar::TextAlignment::Right);
+	Bar bar3;
 
 	Button button("button1");
 	Button button2("button2");

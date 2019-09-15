@@ -110,6 +110,7 @@ int Display::onEvent(const sf::Event& event)
 			break;
 		case sf::Event::Resized:
 			x->onWindowResized(event.size);
+			break;
 		default:
 			break;
 		}

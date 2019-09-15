@@ -2,8 +2,9 @@
 #define SFLCARS_TEXT_BAR_HPP
 
 #include "Bar.hpp"
-
 #include "RoundRectangle.hpp"
+
+#include <string>
 
 namespace sflcars
 {
@@ -17,15 +18,15 @@ public:
 		Right
 	};
 
-	TextBar(std::string text, TextAlignment align = TextAlignment::Left);
+	TextBar(const std::string& string, const TextAlignment align = TextAlignment::Left);
 
 	void setAlignment(TextAlignment align);
-	TextAlignment getAlignment() { return align; }
+	TextAlignment getAlignment() const { return align; }
 
 	void setSize(const sf::Vector2f& newSize) override;
 	sf::Vector2f getSize() const;
 
-	void setText(std::string text) { this->text.setString(text); }
+	void setText(const std::string& text) { this->text.setString(text); }
 	std::string getText() const { return text.getString(); }
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
