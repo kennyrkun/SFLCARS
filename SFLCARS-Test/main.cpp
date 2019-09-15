@@ -223,11 +223,16 @@ int calculator()
 
 int notifier()
 {
-	sf::SoundBuffer buffer;
+	sf::SoundBuffer buffer_start;
+	sf::SoundBuffer buffer_loop;
+	sf::SoundBuffer buffer_end;
 	sf::Sound whistle;
-	buffer.loadFromFile("./resources/sounds/processing2.ogg");
-	whistle.setBuffer(buffer);
 	whistle.setVolume(50);
+	buffer_start.loadFromFile("./resources/sounds/processing2_1.ogg");
+	buffer_loop.loadFromFile("./resources/sounds/processing2_2.ogg");
+	buffer_end.loadFromFile("./resources/sounds/processing2_3.ogg");
+
+	whistle.setBuffer(buffer_start);
 
 	SFLCARS sflcars;
 	Display* display = sflcars.newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
@@ -249,6 +254,20 @@ int notifier()
 				sf::sleep(sf::milliseconds(100));
 				messageBox.setText("");
 				whistle.play();
+
+				while (whistle.getStatus() != sf::Sound::Status::Stopped)
+					continue;
+
+				whistle.setBuffer(buffer_loop);
+				whistle.setLoop(true);
+				whistle.play();
+
+				sf::sleep(sf::seconds(1));
+
+				whistle.setBuffer(buffer_end);
+				whistle.setLoop(false);
+				whistle.play();
+
 				break;
 			}
 			}
@@ -264,10 +283,10 @@ int notifier()
 int main()
 {
 	notifier();
-	//return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 
-	SFLCARS* lcars = new SFLCARS;
-	Display* display = lcars->newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+	SFLCARS lcars;
+	Display* display = lcars.newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
 	
 	TextBar bar("SFLCARS");
 	TextBar bar2("bar2", TextBar::TextAlignment::Right);
@@ -290,14 +309,12 @@ int main()
 	display->addElement(&bar3);
 	display->addElement(&button5);
 
-	while (lcars->isRunning())
+	while (lcars.isRunning())
 	{
-		lcars->HandleEvents();
-		lcars->Update();
-		lcars->Draw();
+		lcars.HandleEvents();
+		lcars.Update();
+		lcars.Draw();
 	}
-
-	delete lcars;
 
 	return EXIT_SUCCESS;
 }
