@@ -19,9 +19,6 @@
     <ClCompile Include="TextBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,9 +55,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="TextBar.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextButton.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="InputBox.hpp">

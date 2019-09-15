@@ -140,7 +140,6 @@
     <ClCompile Include="Spacer.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="TextBar.cpp" />
-    <ClCompile Include="TextButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bar.hpp" />
@@ -155,7 +154,6 @@
     <ClInclude Include="Spacer.hpp" />
     <ClInclude Include="String.hpp" />
     <ClInclude Include="TextBar.hpp" />
-    <ClInclude Include="TextButton.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
