@@ -37,7 +37,7 @@ int calculator()
 
 	sf::SoundBuffer buffer;
 	sf::Sound beep;
-	buffer.loadFromFile("./interface/resources/sounds/error_input1.ogg");
+	buffer.loadFromFile("./interface/resources/sounds/bosun_whistle.ogg");
 	beep.setBuffer(buffer);
 
 	SFLCARS* sflcars = new SFLCARS;
@@ -218,9 +218,50 @@ int calculator()
 	return 0;
 }
 
+void sendMessage();
+
+int notifier()
+{
+	sf::SoundBuffer buffer;
+	sf::Sound whistle;
+	buffer.loadFromFile("./interface/resources/sounds/bosun_whistle.ogg");
+	whistle.setBuffer(buffer);
+	whistle.setVolume(50);
+
+	SFLCARS sflcars;
+	Display* display = sflcars.newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+
+	InputBox messageBox;
+	display->addElement(&messageBox);
+
+	Button send("Send");
+	display->addElement(&send, Display::Layout::Horizontal, 1);
+
+	while (sflcars.isRunning())
+	{
+		for (const auto& event : sflcars.HandleEvents())
+		{
+			switch (event.elementCallbackID)
+			{
+			case 1:
+			{
+				messageBox.setText("");
+				whistle.play();
+				break;
+			}
+			}
+		}
+
+		sflcars.Update();
+		sflcars.Draw();
+	}
+
+	return 0;
+}
+
 int main()
 {
-	calculator();
+	notifier();
 	return EXIT_SUCCESS;
 
 	SFLCARS* lcars = new SFLCARS;
