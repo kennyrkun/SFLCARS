@@ -1,8 +1,7 @@
 #include "SFLCARS.hpp"
 #include "interface/TextBar.hpp"
 #include "interface/Button.hpp"
-#include "interface/Spacer.hpp"
-#include "interface/String.hpp"
+#include "interface/InputBox.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -13,7 +12,22 @@ int calculator()
 {
 	enum Callback
 	{
-		Return,
+		cReturn,
+		cRad,
+		cDeg,
+		cInv,
+		csin,
+		ccos,
+		ctan,
+		cpi,
+		ce,
+		cEXP,
+		cans,
+		cxy,
+		csqrt,
+		clog,
+		cln,
+		cx,
 	};
 
 	enum ApplicationDisplay
@@ -34,8 +48,8 @@ int calculator()
 	TextBar bar("CALCULATOR");
 	display->addElement(&bar);
 
-	String string("this is a chicken string");
-	display->addElement(&string);
+	InputBox inputBox(330);
+	display->addElement(&inputBox);
 
 	Button rad("Rad");
 	Button deg("Deg");
@@ -78,49 +92,49 @@ int calculator()
 	Button equals("=", {sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
 	Button add("+", sf::Keyboard::Key::Add);
 
-	display->addElement(&rad);
-	display->addElement(&deg, Display::Layout::Horizontal);
-	display->addElement(&x, Display::Layout::Horizontal);
+	display->addElement(&rad, Callback::cRad);
+	display->addElement(&deg, Display::Layout::Horizontal, Callback::cDeg);
+	display->addElement(&x, Display::Layout::Horizontal, Callback::cx);
 
 	display->addElement(&leftParenthesis, Display::Layout::Horizontal);
 	display->addElement(&rightParenthesis, Display::Layout::Horizontal);
 	display->addElement(&percent, Display::Layout::Horizontal);
 	display->addElement(&clear, Display::Layout::Horizontal);
 
-	display->addElement(&inv);
-	display->addElement(&sin, Display::Layout::Horizontal);
-	display->addElement(&ln, Display::Layout::Horizontal);
+	display->addElement(&inv, Callback::cInv);
+	display->addElement(&sin, Display::Layout::Horizontal, Callback::csin);
+	display->addElement(&ln, Display::Layout::Horizontal, Callback::cln);
 
 	display->addElement(&seven, Display::Layout::Horizontal);
 	display->addElement(&eight, Display::Layout::Horizontal);
 	display->addElement(&nine, Display::Layout::Horizontal);
 	display->addElement(&divide, Display::Layout::Horizontal);
 
-	display->addElement(&pi);
-	display->addElement(&cos, Display::Layout::Horizontal);
-	display->addElement(&log, Display::Layout::Horizontal);
+	display->addElement(&pi, Callback::cpi);
+	display->addElement(&cos, Display::Layout::Horizontal, Callback::ccos);
+	display->addElement(&log, Display::Layout::Horizontal, Callback::clog);
 
 	display->addElement(&four, Display::Layout::Horizontal);
 	display->addElement(&five, Display::Layout::Horizontal);
 	display->addElement(&six, Display::Layout::Horizontal);
 	display->addElement(&multiply, Display::Layout::Horizontal);
 
-	display->addElement(&e);
-	display->addElement(&tan, Display::Layout::Horizontal);
-	display->addElement(&sqrt, Display::Layout::Horizontal);
+	display->addElement(&e, Callback::ce);
+	display->addElement(&tan, Display::Layout::Horizontal, Callback::ctan);
+	display->addElement(&sqrt, Display::Layout::Horizontal, Callback::csqrt);
 
 	display->addElement(&one, Display::Layout::Horizontal);
 	display->addElement(&two, Display::Layout::Horizontal);
 	display->addElement(&three, Display::Layout::Horizontal);
 	display->addElement(&subtract, Display::Layout::Horizontal);
 
-	display->addElement(&ans);
-	display->addElement(&exp, Display::Layout::Horizontal);
-	display->addElement(&xy, Display::Layout::Horizontal);
+	display->addElement(&ans, Callback::cans);
+	display->addElement(&exp, Display::Layout::Horizontal, Callback::cEXP);
+	display->addElement(&xy, Display::Layout::Horizontal, Callback::cxy);
 
 	display->addElement(&zero, Display::Layout::Horizontal);
 	display->addElement(&decimal, Display::Layout::Horizontal);
-	display->addElement(&equals, Display::Layout::Horizontal, Callback::Return);
+	display->addElement(&equals, Display::Layout::Horizontal, Callback::cReturn);
 	display->addElement(&add, Display::Layout::Horizontal);
 
 	while (sflcars->isRunning())
@@ -133,12 +147,58 @@ int calculator()
 			{
 				switch (event.elementCallbackID)
 				{
-				case Callback::Return:
+				case Callback::cReturn:
 				{
+					inputBox.setText("");
 					sf::sleep(sf::milliseconds(10));
 					beep.play();
 					break;
 				}
+				case Callback::cans:
+					inputBox.addText("ans");
+					break;
+				case Callback::ccos:
+					inputBox.addText("cos(");
+					break;
+				case Callback::cDeg:
+					inputBox.addText("deg(");
+					break;
+				case Callback::ce:
+					inputBox.addText("e(");
+					break;
+				case Callback::cEXP:
+					inputBox.addText("exp(");
+					break;
+				case Callback::cInv:
+					inputBox.addText("inv(");
+					break;
+				case Callback::cln:
+					inputBox.addText("ln(");
+					break;
+				case Callback::clog:
+					inputBox.addText("log(");
+					break;
+				case Callback::cpi:
+					inputBox.addText("pi");
+					break;
+				case Callback::cRad:
+					inputBox.addText("rad(");
+					break;
+				case Callback::csin:
+					inputBox.addText("sin(");
+					break;
+				case Callback::csqrt:
+					inputBox.addText("sqrt(");
+					break;
+				case Callback::ctan:
+					inputBox.addText("tan(");
+					break;
+				case Callback::cx:
+					inputBox.addText("x(");
+					break;
+				case Callback::cxy:
+					inputBox.addText("x^y(");
+					break;
 				default:
 					break;
 				}

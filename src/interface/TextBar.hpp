@@ -14,8 +14,10 @@ public:
 		Right
 	};
 
-	void setAlignment(Alignment align);
-	Alignment getAlignment() { return align; }
+	TextBar(std::string text, TextAlignment align = TextAlignment::Left);
+
+	void setAlignment(TextAlignment align);
+	TextAlignment getAlignment() { return align; }
 
 	void setSize(const sf::Vector2f& newSize) override;
 	sf::Vector2f getSize() const;
@@ -28,7 +30,7 @@ public:
 private:
 	void reposition() override;
 
-	Alignment align;
+	TextAlignment align;
 
 	sf::Text text;
 	sf::Font font;

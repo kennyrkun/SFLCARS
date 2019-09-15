@@ -33,7 +33,8 @@ public:
 
 	bool isOpen() { return window->isOpen(); }
 
-	Element* addElement(Element* element, Layout align = Layout::Vertical, int id = -1);
+	Element* addElement(Element* element, int id = -1);
+	Element* addElement(Element* element, Layout align, int id = -1);
 
 	int onEvent(const sf::Event& event);
 

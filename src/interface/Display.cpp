@@ -34,6 +34,11 @@ float Display::getPadding()
 	return 0.0f;
 }
 
+Element* Display::addElement(Element* element, int id)
+{
+	return addElement(element, Layout::Vertical, id);
+}
+
 Element* Display::addElement(Element* element, Layout align, int id)
 {
 	std::cout << "[display" << this->id << "] adding element with id " << id << " to display" << this->id << std::endl;
