@@ -1,10 +1,10 @@
 #ifndef SFLCARS_THEME_HPP
 #define SFLCARS_THEME_HPP
 
-#include <map>
-#include <string>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/Font.hpp>
+
+#include <string>
 
 // TODO: make this a static namespace
 
@@ -19,14 +19,6 @@ public:
 	// Load the GUI global font from an already loaded font.
 	static bool loadFont(const sf::Font* font);
 	static const sf::Font& getFont();
-
-	// Load the GUI spritesheet from a file
-	// debug: load the texture's debug strip.
-	static bool loadTexture(const std::string& path, bool debug = false);
-	// Load the GUI spritesheet from an already loaded texture.
-	// debug: load the texture's debug strip.
-	static bool loadTexture(const sf::Texture* texture, bool debug = false);
-	static const sf::Texture& getTexture();
 
 	// Widget height based on text size
 	static float getBoxHeight();
@@ -47,7 +39,7 @@ public:
 	// Properties of visual text
 	struct TextStyle
 	{
-		sf::Color default; // regular text
+		sf::Color normal; // regular text
 		sf::Color hovered; // text when hovered
 		sf::Color focused; // text when focused
 		sf::Color pressed; // text when pressed

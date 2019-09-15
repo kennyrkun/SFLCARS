@@ -100,7 +100,12 @@ void Button::release()
 void Button::onMousePressed(const sf::Vector2f& position)
 {
 	if (box.getGlobalBounds().contains(position))
+	{
 		press();
+
+		if (!Theme::triggerCallbacksOnRelease)
+			triggerCallback();
+	}
 }
 
 void Button::onMouseReleased(const sf::Vector2f& position)
@@ -108,7 +113,10 @@ void Button::onMouseReleased(const sf::Vector2f& position)
 	if (depressed)
 	{
 		release();
-		triggerCallback();
+
+		if (Theme::triggerCallbacksOnRelease)
+			if (box.getGlobalBounds().contains(position))
+				triggerCallback();
 	}
 }
 
