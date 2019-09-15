@@ -1,7 +1,7 @@
 #include "SFLCARS.hpp"
-#include "interface/TextBar.hpp"
-#include "interface/Button.hpp"
-#include "interface/InputBox.hpp"
+#include "TextBar.hpp"
+#include "Button.hpp"
+#include "InputBox.hpp"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -37,7 +37,7 @@ int calculator()
 
 	sf::SoundBuffer buffer;
 	sf::Sound beep;
-	buffer.loadFromFile("./interface/resources/sounds/error_input1.ogg");
+	buffer.loadFromFile(".//resources/sounds/error_input1.ogg");
 	beep.setBuffer(buffer);
 
 	SFLCARS* sflcars = new SFLCARS;
@@ -89,7 +89,7 @@ int calculator()
 
 	Button zero("0", sf::Keyboard::Key::Numpad0);
 	Button decimal(".", sf::Keyboard::Key::Period);
-	Button equals("=", {sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
+	Button equals("=", { sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
 	Button add("+", sf::Keyboard::Key::Add);
 
 	display->addElement(&rad, Callback::cRad);

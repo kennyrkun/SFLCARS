@@ -2,7 +2,7 @@
 #define BAR_HPP
 
 #include "Element.hpp"
-#include "../utility/RoundRectangle.hpp"
+#include "RoundRectangle.hpp"
 
 class Bar : public Element
 {

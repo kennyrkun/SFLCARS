@@ -1,8 +1,8 @@
 #ifndef SFLCARS_HPP
 #define SFLCARS_HPP
 
-#include "interface/Element.hpp"
-#include "interface/Display.hpp"
+#include "Element.hpp"
+#include "Display.hpp"
 
 #include <SFML/Graphics.hpp>
 

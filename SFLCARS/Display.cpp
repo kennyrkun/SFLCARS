@@ -1,6 +1,6 @@
 #include "Display.hpp"
 
-#include "../SFLCARS.hpp"
+#include "SFLCARS.hpp"
 
 #include <iostream>
 #include <random>

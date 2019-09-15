@@ -2,7 +2,7 @@
 
 String::String(const std::string& string)
 {
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	font.loadFromFile(".//resources/fonts/Okuda.otf");
 	text.setFont(font);
 	text.setCharacterSize(36);
 	text.setString(string);
@@ -53,7 +53,7 @@ void String::setFillColor(const sf::Color& color)
 
 const sf::Color& String::getColor() const
 {
-	return text.getColor();
+	return text.getFillColor();
 }
 
 void String::draw(sf::RenderTarget& target, sf::RenderStates states) const

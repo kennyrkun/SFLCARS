@@ -4,7 +4,7 @@
 
 TextBar::TextBar(std::string text, TextAlignment align) : align(align)
 {
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	font.loadFromFile(".//resources/fonts/Okuda.otf");
 	this->text.setFont(font);
 	this->text.setCharacterSize(36);
 	this->text.setString(text);

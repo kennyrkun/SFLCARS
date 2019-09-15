@@ -3,7 +3,7 @@
 
 #include "Bar.hpp"
 
-#include "../utility/RoundRectangle.hpp"
+#include "RoundRectangle.hpp"
 
 class TextBar : public Bar
 {

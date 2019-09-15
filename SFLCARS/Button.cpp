@@ -4,7 +4,7 @@
 
 Button::Button(const std::string& string)
 {
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	font.loadFromFile(".//resources/fonts/Okuda.otf");
 	text.setFont(font);
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
@@ -19,7 +19,7 @@ Button::Button(const std::string& string)
 
 	int i = dist(rng);
 
-	buffer.loadFromFile("./interface/resources/sounds/" + sounds[i] + ".ogg");
+	buffer.loadFromFile(".//resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
 
 	setString(string);

@@ -2,7 +2,7 @@
 #define BUTTON_HPP
 
 #include "Element.hpp"
-#include "../utility/RoundRectangle.hpp"
+#include "RoundRectangle.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

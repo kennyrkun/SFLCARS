@@ -10,7 +10,7 @@ float padding = 4;
 
 InputBox::InputBox(float width) : cursorPos(0), maxCharacters(-1), blinkPeriod(1.0f)
 {
-	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
+	font.loadFromFile(".//resources/fonts/Okuda.otf");
 
 	text.setFont(font);
 	text.setFillColor(sf::Color::White);
