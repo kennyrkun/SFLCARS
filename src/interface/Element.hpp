@@ -7,6 +7,7 @@
 
 enum class State
 {
+	Default,
 	Hovered,
 	Pressed,
 	Focused
@@ -52,6 +53,9 @@ public:
 
 	bool isSelectable() const;
 	bool isFocused() const;
+
+protected:
+	friend class Display;
 
 	virtual void onStateChanged(State state);
 	//void Element::onWindowResized(const sf::Vector2f& newSize);

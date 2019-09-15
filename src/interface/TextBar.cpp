@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-TextBar::TextBar(std::string text, Alignment align) : align(align)
+TextBar::TextBar(std::string text, TextAlignment align) : align(align)
 {
 	font.loadFromFile("./interface/resources/fonts/Okuda.otf");
 	this->text.setFont(font);
@@ -18,7 +18,7 @@ TextBar::TextBar(std::string text, Alignment align) : align(align)
 	std::cout << "created textbar" << std::endl;
 }
 
-void TextBar::setAlignment(Alignment align)
+void TextBar::setAlignment(TextAlignment align)
 {
 	this->align = align;
 	reposition();
@@ -58,13 +58,13 @@ void TextBar::reposition()
 	leftEdge.setPosition(position.x, position.y);
 	leftEdgeRight.setPosition(leftEdge.getPosition().x + (barEdgeWidth / 2), position.y);
 
-	if (align == Alignment::Left)
+	if (align == TextAlignment::Left)
 	{
 		text.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y - 7);
 		middle.setPosition(text.getPosition().x + text.getGlobalBounds().width + padding, position.y);
 		rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y);
 	}
-	else if (align == Alignment::Right)
+	else if (align == TextAlignment::Right)
 	{
 		middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y);
 		text.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y - 7);

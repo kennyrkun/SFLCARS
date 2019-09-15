@@ -5,16 +5,14 @@
 
 #include "../utility/RoundRectangle.hpp"
 
-enum class Alignment
-{
-	Left,
-	Right
-};
-
 class TextBar : public Bar
 {
 public:
-	TextBar(std::string text, Alignment align = Alignment::Left);
+	enum class TextAlignment
+	{
+		Left,
+		Right
+	};
 
 	void setAlignment(Alignment align);
 	Alignment getAlignment() { return align; }
