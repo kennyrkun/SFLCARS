@@ -345,7 +345,3 @@ MigrationBackup/
 
 # custom ignores
 SFML
-build-dir/
-
-src/interface/openal32.dll
-src/interface/SFLCARS.exe
