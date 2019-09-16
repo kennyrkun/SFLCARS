@@ -1,4 +1,5 @@
 #include "Bar.hpp"
+#include "Theme.hpp"
 
 #include <iostream>
 
@@ -8,6 +9,13 @@ namespace sflcars
 Bar::Bar()
 {
 	std::cout << "created bar" << std::endl;
+
+	leftEdge.setFillColor(Theme::getRandomColor());
+	leftEdgeRight.setFillColor(leftEdge.getFillColor());
+	middle.setFillColor(Theme::getRandomColor());
+	rightEdge.setFillColor(Theme::getRandomColor());
+	rightEdgeLeft.setFillColor(rightEdge.getFillColor());
+
 }
 
 void Bar::setSize(const sf::Vector2f& newSize)
@@ -20,7 +28,6 @@ void Bar::setSize(const sf::Vector2f& newSize)
 	leftEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	leftEdge.setCornerPointCount(16);
 	leftEdge.setCornersRadius(16);
-
 	leftEdgeRight.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
 	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (padding * 2)), barHeight));
@@ -28,7 +35,6 @@ void Bar::setSize(const sf::Vector2f& newSize)
 	rightEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	rightEdge.setCornerPointCount(16);
 	rightEdge.setCornersRadius(16);
-
 	rightEdgeLeft.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
 	reposition();

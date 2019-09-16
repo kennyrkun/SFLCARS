@@ -1,7 +1,7 @@
-#include "SFLCARS.hpp"
-#include "TextBar.hpp"
-#include "Button.hpp"
-#include "InputBox.hpp"
+#include <Display.hpp>
+#include <TextBar.hpp>
+#include <Button.hpp>
+#include <InputBox.hpp>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -42,12 +42,11 @@ int calculator()
 	buffer.loadFromFile("./resources/sounds/bosun_whistle.ogg");
 	beep.setBuffer(buffer);
 
-	SFLCARS* sflcars = new SFLCARS;
-	Display* display = sflcars->newDisplay(sf::VideoMode(400, 350), sf::Vector2i(100, 100), ApplicationDisplay::Calculator);
+	Display* display = new Display(sf::VideoMode(400, 350), sf::Vector2i(100, 100), ApplicationDisplay::Calculator);
 
 	display->setPadding(5);
 
-//	TextBar bar("CALCULATOR");
+	//	TextBar bar("CALCULATOR");
 	Bar bar;
 	display->addElement(&bar);
 
@@ -140,83 +139,80 @@ int calculator()
 	display->addElement(&equals, Display::Layout::Horizontal, Callback::cReturn);
 	display->addElement(&add, Display::Layout::Horizontal);
 
-	while (sflcars->isRunning())
+	while (display->isOpen())
 	{
-		for (auto& event : sflcars->HandleEvents())
+		DisplayEvent event = display->HandleEvents();
+
+		switch (event.displayID)
 		{
-			switch (event.displayID)
+		case ApplicationDisplay::Calculator:
+		{
+			switch (event.elementCallbackID)
 			{
-			case ApplicationDisplay::Calculator:
+			case Callback::cReturn:
 			{
-				switch (event.elementCallbackID)
-				{
-				case Callback::cReturn:
-				{
-					inputBox.setText("");
-					sf::sleep(sf::milliseconds(10));
-					beep.play();
-					break;
-				}
-				case Callback::cans:
-					inputBox.addText("ans");
-					break;
-				case Callback::ccos:
-					inputBox.addText("cos(");
-					break;
-				case Callback::cDeg:
-					inputBox.addText("deg(");
-					break;
-				case Callback::ce:
-					inputBox.addText("e(");
-					break;
-				case Callback::cEXP:
-					inputBox.addText("exp(");
-					break;
-				case Callback::cInv:
-					inputBox.addText("inv(");
-					break;
-				case Callback::cln:
-					inputBox.addText("ln(");
-					break;
-				case Callback::clog:
-					inputBox.addText("log(");
-					break;
-				case Callback::cpi:
-					inputBox.addText("pi");
-					break;
-				case Callback::cRad:
-					inputBox.addText("rad(");
-					break;
-				case Callback::csin:
-					inputBox.addText("sin(");
-					break;
-				case Callback::csqrt:
-					inputBox.addText("sqrt(");
-					break;
-				case Callback::ctan:
-					inputBox.addText("tan(");
-					break;
-				case Callback::cx:
-					inputBox.addText("x(");
-					break;
-				case Callback::cxy:
-					inputBox.addText("x^y(");
-					break;
-				default:
-					break;
-				}
+				inputBox.setText("");
+				sf::sleep(sf::milliseconds(10));
+				beep.play();
 				break;
 			}
+			case Callback::cans:
+				inputBox.addText("ans");
+				break;
+			case Callback::ccos:
+				inputBox.addText("cos(");
+				break;
+			case Callback::cDeg:
+				inputBox.addText("deg(");
+				break;
+			case Callback::ce:
+				inputBox.addText("e(");
+				break;
+			case Callback::cEXP:
+				inputBox.addText("exp(");
+				break;
+			case Callback::cInv:
+				inputBox.addText("inv(");
+				break;
+			case Callback::cln:
+				inputBox.addText("ln(");
+				break;
+			case Callback::clog:
+				inputBox.addText("log(");
+				break;
+			case Callback::cpi:
+				inputBox.addText("pi");
+				break;
+			case Callback::cRad:
+				inputBox.addText("rad(");
+				break;
+			case Callback::csin:
+				inputBox.addText("sin(");
+				break;
+			case Callback::csqrt:
+				inputBox.addText("sqrt(");
+				break;
+			case Callback::ctan:
+				inputBox.addText("tan(");
+				break;
+			case Callback::cx:
+				inputBox.addText("x(");
+				break;
+			case Callback::cxy:
+				inputBox.addText("x^y(");
+				break;
 			default:
 				break;
 			}
+			break;
+		}
+		default:
+			break;
 		}
 
-		sflcars->Update();
-		sflcars->Draw();
+		display->Update();
+		display->Draw();
 	}
-
-	delete sflcars;
 
 	return 0;
 }
@@ -234,8 +230,7 @@ int notifier()
 
 	whistle.setBuffer(buffer_start);
 
-	SFLCARS sflcars;
-	Display* display = sflcars.newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+	Display* display = new Display(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
 
 	InputBox messageBox;
 	display->addElement(&messageBox);
@@ -243,38 +238,37 @@ int notifier()
 	Button send("Send");
 	display->addElement(&send, Display::Layout::Horizontal, 1);
 
-	while (sflcars.isRunning())
+	while (display->isOpen())
 	{
-		for (const auto& event : sflcars.HandleEvents())
+		DisplayEvent event = display->HandleEvents();
+
+		switch (event.elementCallbackID)
 		{
-			switch (event.elementCallbackID)
-			{
-			case 1:
-			{
-				sf::sleep(sf::milliseconds(100));
-				messageBox.setText("");
-				whistle.play();
+		case 1:
+		{
+			sf::sleep(sf::milliseconds(100));
+			messageBox.setText("");
+			whistle.play();
 
-				while (whistle.getStatus() != sf::Sound::Status::Stopped)
-					continue;
+			while (whistle.getStatus() != sf::Sound::Status::Stopped)
+				continue;
 
-				whistle.setBuffer(buffer_loop);
-				whistle.setLoop(true);
-				whistle.play();
+			whistle.setBuffer(buffer_loop);
+			whistle.setLoop(true);
+			whistle.play();
 
-				sf::sleep(sf::seconds(1));
+			sf::sleep(sf::seconds(1));
 
-				whistle.setBuffer(buffer_end);
-				whistle.setLoop(false);
-				whistle.play();
+			whistle.setBuffer(buffer_end);
+			whistle.setLoop(false);
+			whistle.play();
 
-				break;
-			}
-			}
+			break;
+		}
 		}
 
-		sflcars.Update();
-		sflcars.Draw();
+		display->Update();
+		display->Draw();
 	}
 
 	return 0;
@@ -285,8 +279,7 @@ int main()
 	notifier();
 	return EXIT_SUCCESS;
 
-	SFLCARS lcars;
-	Display* display = lcars.newDisplay(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+	Display* display = new Display(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
 	
 	TextBar bar("SFLCARS");
 	TextBar bar2("bar2", TextBar::TextAlignment::Right);
@@ -309,12 +302,6 @@ int main()
 	display->addElement(&bar3);
 	display->addElement(&button5);
 
-	while (lcars.isRunning())
-	{
-		lcars.HandleEvents();
-		lcars.Update();
-		lcars.Draw();
-	}
 
 	return EXIT_SUCCESS;
 }

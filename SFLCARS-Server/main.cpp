@@ -45,6 +45,8 @@ public:
 					newClient.socket = new sf::TcpSocket;
 					if (listener.accept(*newClient.socket) == sf::Socket::Status::Done)
 					{
+						// authentication
+
 						newClient.id = totalClients++;
 						newClient.ip = newClient.socket->getRemoteAddress();
 						selector.add(*newClient.socket);

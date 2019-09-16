@@ -346,3 +346,4 @@ MigrationBackup/
 # custom ignores
 SFML
 SFLCARS-Test/resources
+SFLCARS-main/resources
