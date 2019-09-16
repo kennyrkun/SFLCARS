@@ -3,13 +3,12 @@
 
 #include "Element.hpp"
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include <vector>
 
 namespace sflcars
 {
-
-class SFLCARS;
 
 struct DisplayEvent
 {
@@ -22,7 +21,7 @@ struct DisplayEvent
 class Display
 {
 public:
-	Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id);
+	Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id = -1);
 	~Display();
 
 	enum class Layout
@@ -49,8 +48,6 @@ public:
 	Element* triggered = nullptr;
 
 private:
-	SFLCARS* application;
-
     sf::RenderWindow* window;
 
 	std::vector<Element*> elements;

@@ -6,12 +6,18 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-interface", "SFLCARS-interface\SFLCARS-interface.vcxproj", "{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-Test", "SFLCARS-Test\SFLCARS-Test.vcxproj", "{A5DA8CCA-7D45-4641-BBDA-E13550B14983}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB} = {2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-Server", "SFLCARS-Server\SFLCARS-Server.vcxproj", "{553AD8D4-5148-48AA-8C5F-984A2A9F5D96}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-commandline", "SFLCARS-commandline\SFLCARS-commandline.vcxproj", "{6A6EBFCB-24FA-4E7A-9471-457F9C4C36EE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-main", "SFLCARS-main\SFLCARS-main.vcxproj", "{69F2CCCA-9662-49D3-B92D-1586CFC728B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB} = {2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

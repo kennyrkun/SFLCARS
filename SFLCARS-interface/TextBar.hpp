@@ -26,7 +26,7 @@ public:
 	void setSize(const sf::Vector2f& newSize) override;
 	sf::Vector2f getSize() const;
 
-	void setText(const std::string& text) { this->text.setString(text); }
+	void setText(const std::string& string) { text.setString(string); }
 	std::string getText() const { return text.getString(); }
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

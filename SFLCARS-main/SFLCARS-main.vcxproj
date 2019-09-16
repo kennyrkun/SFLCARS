@@ -18,6 +18,16 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AppEngine.cpp" />
+    <ClCompile Include="entry.cpp" />
+    <ClCompile Include="LoginState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AppEngine.hpp" />
+    <ClInclude Include="AppState.hpp" />
+    <ClInclude Include="LoginState.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{69f2ccca-9662-49d3-b92d-1586cfc728b0}</ProjectGuid>
@@ -127,9 +137,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

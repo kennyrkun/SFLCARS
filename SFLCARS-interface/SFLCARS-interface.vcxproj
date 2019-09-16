@@ -140,7 +140,6 @@
     <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="Layout.cpp" />
     <ClCompile Include="RoundRectangle.cpp" />
-    <ClCompile Include="SFLCARS.cpp" />
     <ClCompile Include="Spacer.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="TextBar.cpp" />
@@ -155,7 +154,6 @@
     <ClInclude Include="InputBox.hpp" />
     <ClInclude Include="Layout.hpp" />
     <ClInclude Include="RoundRectangle.hpp" />
-    <ClInclude Include="SFLCARS.hpp" />
     <ClInclude Include="Spacer.hpp" />
     <ClInclude Include="String.hpp" />
     <ClInclude Include="TextBar.hpp" />

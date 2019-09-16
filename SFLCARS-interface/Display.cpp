@@ -1,17 +1,15 @@
 #include "Display.hpp"
 
-#include "SFLCARS.hpp"
-
-#include <iostream>
-#include <random>
 #include <algorithm>
+#include <iostream>
 #include <iterator>
 #include <iostream>
+#include <random>
 
 namespace sflcars
 {
 
-Display::Display(SFLCARS* application, const sf::VideoMode& size, const sf::Vector2i& position, const int id) : application(application), id(id)
+Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id) : id(id)
 {
 	sf::ContextSettings context;
 	context.antialiasingLevel = 1;

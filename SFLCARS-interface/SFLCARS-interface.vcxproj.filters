@@ -40,9 +40,6 @@
     <ClCompile Include="RoundRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SFLCARS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Theme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -79,9 +76,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Layout.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SFLCARS.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Theme.hpp">
