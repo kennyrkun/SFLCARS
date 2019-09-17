@@ -21,11 +21,13 @@
   <ItemGroup>
     <ClCompile Include="AppEngine.cpp" />
     <ClCompile Include="entry.cpp" />
+    <ClCompile Include="Listener.cpp" />
     <ClCompile Include="LoginState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp" />
     <ClInclude Include="AppState.hpp" />
+    <ClInclude Include="Listener.hpp" />
     <ClInclude Include="LoginState.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
