@@ -21,6 +21,7 @@ struct DisplayEvent
 class Display
 {
 public:
+	// TODO: optionally accept an already created renderwindow
 	Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id = -1);
 	~Display();
 
@@ -31,12 +32,14 @@ public:
 	};
 
 	void setPadding(float padding);
-	float getPadding();
+	float getPadding() const;
 
-	bool isOpen() { return window->isOpen(); }
+	bool isOpen() const;
 
 	Element* addElement(Element* element, int id = -1);
 	Element* addElement(Element* element, Layout align, int id = -1);
+
+	std::vector<Element*> getElements() const;
 
 	int onEvent(const sf::Event& event);
 
@@ -46,6 +49,8 @@ public:
 
     const int id;
 	Element* triggered = nullptr;
+	Element* focused = nullptr;
+	Element* hovered = nullptr;
 
 private:
     sf::RenderWindow* window;

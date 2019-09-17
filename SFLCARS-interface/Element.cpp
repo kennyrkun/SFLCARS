@@ -47,6 +47,15 @@ bool Element::isFocused() const
 	return (state == State::Focused);
 }
 
+bool Element::containsPoint(const sf::Vector2f& point) const
+{
+	sf::Vector2f position = getPosition();
+	sf::Vector2f size = getSize();
+	sf::FloatRect rect(position.x, position.y, size.x, size.y);
+
+	return rect.contains(point);
+}
+
 // callbacks
 
 void Element::onStateChanged(State) {}

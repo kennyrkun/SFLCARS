@@ -48,8 +48,11 @@ public:
 	bool isSelectable() const;
 	bool isFocused() const;
 
+	bool containsPoint(const sf::Vector2f& point) const;
+
 protected:
 	friend class Display;
+	friend class Layout;
 
 	virtual void onStateChanged(State state);
 	virtual void onWindowResized(sf::Event::SizeEvent size);

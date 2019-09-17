@@ -30,9 +30,14 @@ void Display::setPadding(float padding)
 	this->padding = padding;
 }
 
-float Display::getPadding()
+float Display::getPadding() const
 {
-	return 0.0f;
+	return padding;
+}
+
+bool Display::isOpen() const
+{
+	return window->isOpen();
 }
 
 Element* Display::addElement(Element* element, int id)
@@ -60,6 +65,11 @@ Element* Display::addElement(Element* element, Layout align, int id)
 
 	elements.push_back(element);
 	return element;
+}
+
+std::vector<Element*> Display::getElements() const
+{
+	return elements;
 }
 
 int Display::onEvent(const sf::Event& event)

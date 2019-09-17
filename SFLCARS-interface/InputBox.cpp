@@ -241,7 +241,7 @@ void InputBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 #endif
 
 	// Show cursor if focused
-//	if (isFocused())
+	if (isFocused())
 	{
 		float timer = cursorTimer.getElapsedTime().asSeconds();
 		if (timer >= blinkPeriod)
