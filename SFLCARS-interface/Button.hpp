@@ -23,8 +23,8 @@ class Button : public Element
 public:
 	// todo: have fewer constructors
 	Button(const std::string& string);
-	Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys);
 	Button(const std::string& string, const sf::Keyboard::Key& hotkey);
+	Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys);
 
 	void addHotkey(const sf::Keyboard::Key& key);
 	std::vector<sf::Keyboard::Key> getHotkeys() const;

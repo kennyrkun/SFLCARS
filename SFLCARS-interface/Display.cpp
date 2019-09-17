@@ -162,7 +162,6 @@ DisplayEvent Display::HandleEvents()
 
 void Display::Update()
 {
-
 }
 
 void Display::Draw()

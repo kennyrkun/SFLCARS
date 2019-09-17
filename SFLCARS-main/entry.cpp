@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
 
 	while (app.isRunning())
 	{
-		app.Update();
 		app.HandleEvents();
+		app.Update();
 		app.Draw();
 	}
 

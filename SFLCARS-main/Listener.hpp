@@ -4,10 +4,20 @@
 #include <SFML/Network.hpp>
 
 #include <vector>
+#include <ctime>
 
 struct NetworkEvent
 {
-	time_t receivedTime;
+	enum class Command
+	{
+		None,
+
+		Ping,
+		Disconnect,
+		MessageDeliver,
+	} command;
+
+	time_t receivedTime = 0;
 	sf::Packet packet;
 };
 
@@ -16,11 +26,14 @@ class Listener
 public:
 	Listener();
 
+	bool connectToServer(const sf::IpAddress& address, const int port);
+
 	sf::TcpSocket socket;
 
-	void Update();
+	bool sendToServer(sf::Packet packet);
 
-	std::vector<NetworkEvent> eventQueue;
+	void pollNetworkEvent(NetworkEvent& event);
+
 private:
 	sf::SocketSelector selector;
 };

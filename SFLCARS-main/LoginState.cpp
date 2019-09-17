@@ -5,6 +5,14 @@
 
 #include <iostream>
 
+enum Callbacks
+{
+	UsernameBox,
+	PasswordBox,
+	SubmitButton,
+	QuitButton
+};
+
 void LoginState::Init(AppEngine* app_)
 {
 	std::cout << "Initialising LoginState" << std::endl;
@@ -16,10 +24,10 @@ void LoginState::Init(AppEngine* app_)
 	interface = new Interface;
 
 	display->addElement(interface->topbar);
-	display->addElement(interface->usernameBox);
-	display->addElement(interface->passwordBox);
-	display->addElement(interface->submitButton);
-	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal);
+	display->addElement(interface->usernameBox, Callbacks::UsernameBox);
+	display->addElement(interface->passwordBox, Callbacks::PasswordBox);
+	display->addElement(interface->submitButton, Callbacks::SubmitButton);
+	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::QuitButton);
 	display->addElement(interface->bottombar);
 
 	std::cout << "LoginState ready." << std::endl;
@@ -59,10 +67,38 @@ void LoginState::HandleEvents()
 			std::cout << "cl_debug set to " + std::to_string(app->settings.debug) << std::endl;
 		}
 	}
+
+	switch (event.elementCallbackID)
+	{
+	case Callbacks::SubmitButton:
+	{
+		sf::Packet packet;
+		packet << "ping";
+		app->listener.sendToServer(packet);
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void LoginState::Update()
 {
+	NetworkEvent event;
+	app->listener.pollNetworkEvent(event);
+
+	if (event.receivedTime != 0)
+	{
+		std::string total;
+
+		while (!event.packet.endOfPacket())
+		{
+			event.packet << "\n" + total;
+		}
+
+		std::cout << "server: " << total << std::endl;
+	}
+
 	display->Update();
 }
 
