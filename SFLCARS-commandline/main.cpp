@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 int main()
 {
@@ -24,6 +25,8 @@ int main()
 	else
 		remotePort = std::stoi(port);
 
+	int id = -1;
+
 	sf::TcpSocket tcpSocket;
 
 	std::cout << "attempting to connect to SFLCARS server at " << remoteAddress << " on port " << remotePort << std::endl;
@@ -32,30 +35,48 @@ int main()
 		std::cerr << "failed to connect to SFLCARS server" << std::endl;
 	else
 	{
-		std::cout << "connected successfully" << std::endl;
+		std::cout << "connection was successful" << std::endl;
+
+		{
+			sf::Packet packet;
+			tcpSocket.receive(packet);
+
+			std::string command;
+			packet >> command;
+
+			std::cout << "server: " << command << std::endl;
+
+			if (command != "connectionAccepted")
+			{
+				std::cerr << "connection was rejected by the server" << std::endl;
+				return -1;
+			}
+		}
 
 		while (true)
 		{
 			if (tcpSocket.getRemoteAddress() == sf::IpAddress::None)
 			{ 
 				std::cerr << "not connected" << std::endl;
-				return 0;
+				break;
 			}
 
-			std::string command;
+			std::string rawCommand, command;
 		
 			std::cout << "> ";
 
-			std::getline(std::cin, command);
+			std::getline(std::cin, rawCommand);
 
-			if (command == "/quit")
+			if (rawCommand == "/quit")
 			{
 				tcpSocket.disconnect();
 				break;
 			}
 
 			sf::Packet packet;
-			packet << command;
+			std::stringstream iss(rawCommand);
+			while (iss >> command)
+				packet << command;
 
 			if (tcpSocket.send(packet) != sf::Socket::Status::Done)
 				std::cerr << "failed to send command packet to server" << std::endl;
@@ -71,8 +92,18 @@ int main()
 					std::cerr << "failed to recieve response from server" << std::endl;
 				else
 				{
-					recievedPacket >> serverCommand;
-					std::cout << "\rserver: " << serverCommand << std::endl;
+					std::string packet;
+
+					recievedPacket >> packet;
+
+					while (!recievedPacket.endOfPacket())
+					{
+						std::string temp;
+						recievedPacket >> temp;
+						packet += ("\n" + temp);
+					}
+
+					std::cout << "\rserver: " << packet << std::endl;
 				}
 			}
 		}
