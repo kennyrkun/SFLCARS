@@ -5,6 +5,12 @@
 
 #include <iostream>
 
+enum Callbacks
+{
+	Login,
+	Quit
+};
+
 void LoginState::Init(AppEngine* app_)
 {
 	std::cout << "Initialising LoginState" << std::endl;
@@ -18,8 +24,8 @@ void LoginState::Init(AppEngine* app_)
 	display->addElement(interface->topbar);
 	display->addElement(interface->usernameBox);
 	display->addElement(interface->passwordBox);
-	display->addElement(interface->submitButton);
-	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal);
+	display->addElement(interface->submitButton, Callbacks::Login);
+	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::Quit);
 	display->addElement(interface->bottombar);
 
 	std::cout << "LoginState ready." << std::endl;
@@ -58,6 +64,17 @@ void LoginState::HandleEvents()
 
 			std::cout << "cl_debug set to " + std::to_string(app->settings.debug) << std::endl;
 		}
+	}
+
+	switch (event.elementCallbackID)
+	{
+	case Callbacks::Login:
+		break;
+	case Callbacks::Quit:
+		app->Quit();
+		return;
+	default:
+		break;
 	}
 }
 
