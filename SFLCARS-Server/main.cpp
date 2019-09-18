@@ -5,10 +5,20 @@
 
 struct Client
 {
+	std::string name;
+
 	sf::IpAddress ip;
 	int id;
 
 	sf::TcpSocket* socket;
+};
+
+enum class Command
+{
+	Shutdown,
+	Status,
+	Information,
+	ListClients
 };
 
 class Server
@@ -47,11 +57,43 @@ public:
 					{
 						// authentication
 
-						newClient.id = totalClients++;
 						newClient.ip = newClient.socket->getRemoteAddress();
-						selector.add(*newClient.socket);
-						clients.push_back(newClient);
-						std::cout << "accepted new client" << std::endl;
+
+						bool duplicateClient = false;
+						for (const auto& client : clients)
+							if (client.ip == newClient.ip)
+							{
+								duplicateClient = true;
+								break;
+							}
+
+						sf::Packet notifyPacket;
+
+						if (duplicateClient)
+						{
+							notifyPacket << "connectionRejected";
+							notifyPacket << "duplicateClient";
+							notifyPacket << "A client with this IP address is already connected.";
+						}
+						else
+						{
+							newClient.id = totalClients++;
+							selector.add(*newClient.socket);
+							clients.push_back(newClient);
+
+							notifyPacket << "connectionAccepted";
+						}
+
+						if (newClient.socket->send(notifyPacket) != sf::Socket::Status::Done)
+							std::cerr << "failed to send return packet to client" << std::endl;
+
+						if (duplicateClient)
+						{
+							newClient.socket->disconnect();
+							delete newClient.socket;
+						}
+						else
+							std::cout << "accepted new client" << std::endl;
 					}
 					else
 						delete newClient.socket;
@@ -73,23 +115,77 @@ public:
 							if (command == "shutdown")
 							{
 								std::cout << "shutting down" << std::endl;
-								responseCommand = "\"" + command + "\" acknowledged, shutting down";
-
-								// let the client know we got their command
+								responseCommand = "shutting the heck down boys";
 								responsePacket << responseCommand;
-								if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
-									std::cerr << "failed to send return packet to client" << std::endl;
 
 								running = false;
+							}
+							else if (command == "listClients")
+							{
+								std::cout << "sending a list of clients" << std::endl;
+
+								responseCommand = "clientList";
+								responsePacket << responseCommand;
+
+								for (const auto& client : clients)
+								{
+									std::string clientinformation(std::to_string(client.id) + ";" + client.ip.toString() + ";");
+									responsePacket << clientinformation;
+								}
+							}
+							else if (command == "ping")
+							{
+								responseCommand = "pong";
+								responsePacket << responseCommand;
+							}
+							else if (command == "getVersion")
+							{
+								responseCommand = "giveVersion";
+								responsePacket << responseCommand;
+								responsePacket << version;
+							}
+							else if (command == "messageSend")
+							{
+								std::string who, what;
+
+								packet >> who;
+								packet >> what;
+
+								std::cout << "sending " << who << ": " << what << std::endl;
+
+								sf::Packet message;
+								message << "messageDeliver";
+								message << (std::to_string(client.id) + ";" + client.ip.toString());
+								message << what;
+
+								if (who == "everyone")
+								{
+									for (const auto& client : clients)
+									{
+										if (client.socket->send(message) != sf::Socket::Status::Done)
+											std::cerr << "failed to send return packet to client" << std::endl;
+									}
+
+									responseCommand = "messageSent";
+									responsePacket << "The message has been sent to everyone.";
+								}
+								else
+								{
+									// find specific ip address
+
+									responseCommand = "messageInvalid";
+									responsePacket << responseCommand;
+									responsePacket << ("The who \"" + who + "\" is not recognised.");
+								}
 							}
 							else
 							{
 								responseCommand = "\"" + command + "\" acknowledged; command unknown";
-
 								responsePacket << responseCommand;
-								if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
-									std::cerr << "failed to send return packet to client" << std::endl;
 							}
+
+							if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
+								std::cerr << "failed to send return packet to client" << std::endl;
 						}
 					}
 				}
@@ -103,10 +199,11 @@ public:
 		// let all the clients know we're shutting down
 		for (auto& client : clients)
 		{
-			std::string responseCommand = "shutting down";
+			std::string responseCommand = "disconnect";
 
 			sf::Packet responsePacket;
 			responsePacket << responseCommand;
+			responsePacket << "shuttingDown";
 			if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
 				std::cerr << "failed to send return packet to client" << std::endl;
 
@@ -118,6 +215,7 @@ public:
 		std::cin.get();
 	}
 
+private:
 	unsigned int totalClients = 0;
 
 	bool running = true;
@@ -127,6 +225,8 @@ public:
 	sf::SocketSelector selector;
 
 	std::vector<Client> clients;
+
+	std::string version = "1";
 };
 
 int main()
