@@ -2,6 +2,7 @@
 #define LISTENER_HPP
 
 #include <SFML/Network.hpp>
+#include <SFML/Audio.hpp>
 
 #include <vector>
 #include <ctime>
@@ -36,6 +37,9 @@ public:
 
 private:
 	sf::SocketSelector selector;
+
+	sf::Sound updateBeep;
+	sf::SoundBuffer buffer;
 };
 
 #endif // !LISTENER_HPP

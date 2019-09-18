@@ -85,16 +85,14 @@ void LoginState::HandleEvents()
 void LoginState::Update()
 {
 	NetworkEvent event;
-	app->listener.pollNetworkEvent(event);
+	app->listener.pollNetworkEvent(event); 
 
 	if (event.receivedTime != 0)
 	{
 		std::string total;
 
 		while (!event.packet.endOfPacket())
-		{
 			event.packet << "\n" + total;
-		}
 
 		std::cout << "server: " << total << std::endl;
 	}
