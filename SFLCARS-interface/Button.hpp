@@ -42,6 +42,7 @@ public:
 	void press();
 	void release();
 
+protected:
 	void onMousePressed(const sf::Vector2f& position);
 	void onMouseReleased(const sf::Vector2f& position);
 	void onKeyPressed(const sf::Keyboard::Key& key);

@@ -4,10 +4,13 @@
 
 Listener::Listener()
 {
-	selector.add(socket);
-
-	buffer.loadFromFile("./resources/sounds/beep_set.ogg");
+	buffer.loadFromFile("./resources/sounds/beep3.ogg");
 	updateBeep.setBuffer(buffer);
+}
+
+Listener::~Listener()
+{
+	socket.disconnect();
 }
 
 bool Listener::connectToServer(const sf::IpAddress& address, const int port)
@@ -15,6 +18,7 @@ bool Listener::connectToServer(const sf::IpAddress& address, const int port)
 	if (socket.connect(address, port, sf::seconds(10)) != sf::Socket::Done)
 		return false;
 
+	selector.add(socket);
 	return true;
 }
 
@@ -25,12 +29,22 @@ bool Listener::sendToServer(sf::Packet packet)
 
 void Listener::pollNetworkEvent(NetworkEvent& event)
 {
-	if (selector.wait(sf::seconds(1.0f)))
+	if (socket.getRemoteAddress() == sf::IpAddress::None)
+		abort();
+
+	sf::Packet packet;
+	if (socket.receive(packet) == sf::Socket::Done)
+		std::cout << "received data" << std::endl;
+
+	std::cout << "waiting for data" << std::endl;
+	if (selector.wait())
 	{
-		std::cout << "selector is ready: " << std::endl;
+		abort();
 
 		if (selector.isReady(socket))
 		{
+			abort();
+
 			std::cout << "socket is ready: " << std::endl;
 
 			sf::Packet packet;
@@ -44,4 +58,7 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 			std::cout << "stuff stuff" << std::endl;
 		}
 	}
+	else
+		std::cout << "no data available" << std::endl;
+	std::cout << "finished with network data" << std::endl;
 }

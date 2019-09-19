@@ -80,12 +80,16 @@ void LoginState::HandleEvents()
 	default:
 		break;
 	}
+
+	sf::Packet packet;
+	packet << "ping";
+	app->listener.sendToServer(packet);
 }
 
 void LoginState::Update()
 {
 	NetworkEvent event;
-	app->listener.pollNetworkEvent(event); 
+	app->listener.pollNetworkEvent(event);
 
 	if (event.receivedTime != 0)
 	{

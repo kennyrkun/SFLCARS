@@ -26,6 +26,7 @@ class Listener
 {
 public:
 	Listener();
+	~Listener();
 
 	bool connectToServer(const sf::IpAddress& address, const int port);
 

@@ -28,7 +28,7 @@ public:
 	{
 		std::cout << "starting SFLCARS server" << std::endl;
 
-		if (listener.listen(51425) != sf::Socket::Status::Done)
+		if (listener.listen(12345) != sf::Socket::Status::Done)
 		{
 			std::cerr << "failed to bind listener to port" << std::endl;
 			return;
@@ -44,7 +44,7 @@ public:
 		{
 			// selector.wait returns true if something inside of it is ready
 			// returns false if nothing is ready
-			if (selector.wait(sf::seconds(1.0f)))
+			if (selector.wait())
 			{
 				std::cout << "something is ready:" << std::endl;
 
@@ -185,13 +185,30 @@ public:
 							}
 
 							if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
+							{
 								std::cerr << "failed to send return packet to client" << std::endl;
+
+								if (client.socket->send(responsePacket) == sf::Socket::Status::Disconnected)
+								{
+									std::cout << "client disconnected" << std::endl;
+									client.socket->disconnect();
+									delete client.socket;
+									//clients.erase(std::remove(clients.begin(), clients.end(), client));
+								}
+								else if (client.socket->getRemoteAddress() == sf::IpAddress::None)
+								{
+									std::cout << "client disconnected" << std::endl;
+									client.socket->disconnect();
+									delete client.socket;
+									// TODO: delete client
+								}
+							}
 						}
 					}
 				}
 			}
 
-			sf::sleep(sf::seconds(1));
+			sf::sleep(sf::milliseconds(100));
 		}
 
 		std::cout << "exiting SFLCARS server." << std::endl;
@@ -234,6 +251,8 @@ int main()
 	Server server;
 
 	server.run();
+
+	std::cin.get();
 
 	return 0;
 }
