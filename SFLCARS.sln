@@ -4,20 +4,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-interface", "SFLCARS-interface\SFLCARS-interface.vcxproj", "{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84} = {16899D7D-9EDF-4E69-944D-87874BFCFB84}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-Test", "SFLCARS-Test\SFLCARS-Test.vcxproj", "{A5DA8CCA-7D45-4641-BBDA-E13550B14983}"
 	ProjectSection(ProjectDependencies) = postProject
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84} = {16899D7D-9EDF-4E69-944D-87874BFCFB84}
 		{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB} = {2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-Server", "SFLCARS-Server\SFLCARS-Server.vcxproj", "{553AD8D4-5148-48AA-8C5F-984A2A9F5D96}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84} = {16899D7D-9EDF-4E69-944D-87874BFCFB84}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-commandline", "SFLCARS-commandline\SFLCARS-commandline.vcxproj", "{6A6EBFCB-24FA-4E7A-9471-457F9C4C36EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84} = {16899D7D-9EDF-4E69-944D-87874BFCFB84}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-main", "SFLCARS-main\SFLCARS-main.vcxproj", "{69F2CCCA-9662-49D3-B92D-1586CFC728B0}"
 	ProjectSection(ProjectDependencies) = postProject
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84} = {16899D7D-9EDF-4E69-944D-87874BFCFB84}
 		{2E9483B4-9543-4C93-BD7D-21EB4D8C50AB} = {2E9483B4-9543-4C93-BD7D-21EB4D8C50AB}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFLCARS-utility", "SFLCARS-utility\SFLCARS-utility.vcxproj", "{16899D7D-9EDF-4E69-944D-87874BFCFB84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +80,14 @@ Global
 		{69F2CCCA-9662-49D3-B92D-1586CFC728B0}.Release|x64.Build.0 = Release|x64
 		{69F2CCCA-9662-49D3-B92D-1586CFC728B0}.Release|x86.ActiveCfg = Release|Win32
 		{69F2CCCA-9662-49D3-B92D-1586CFC728B0}.Release|x86.Build.0 = Release|Win32
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Debug|x64.ActiveCfg = Debug|x64
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Debug|x64.Build.0 = Debug|x64
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Debug|x86.ActiveCfg = Debug|Win32
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Debug|x86.Build.0 = Debug|Win32
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Release|x64.ActiveCfg = Release|x64
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Release|x64.Build.0 = Release|x64
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Release|x86.ActiveCfg = Release|Win32
+		{16899D7D-9EDF-4E69-944D-87874BFCFB84}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
