@@ -19,7 +19,7 @@ void LoginState::Init(AppEngine* app_)
 
 	app = app_;
 
-	display = new sflcars::Display(sf::VideoMode(300, 310), sf::Vector2i(0, 0));
+	display = new sflcars::Display(sf::VideoMode(300, 310));
 
 	interface = new Interface;
 

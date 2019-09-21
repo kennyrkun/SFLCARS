@@ -9,19 +9,22 @@
 namespace sflcars
 {
 
-Display::Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id) : id(id)
+Display::Display(const sf::VideoMode& size, const int id) : id(id)
 {
 	sf::ContextSettings context;
 	context.antialiasingLevel = 1;
 
 	window = new sf::RenderWindow(size, "SFLCARS", sf::Style::Default, context);
-    window->setPosition(position);
 
 	std::cout << "created Display" << id << std::endl;
 }
 
 Display::~Display()
 {
+	clearElements();
+
+	delete window;
+
 	std::cout << "destroyed Display" << id << std::endl;
 }
 
@@ -70,6 +73,15 @@ Element* Display::addElement(Element* element, Layout align, int id)
 std::vector<Element*> Display::getElements() const
 {
 	return elements;
+}
+
+void Display::clearElements()
+{
+	for (size_t i = 0; i < elements.size(); i++)
+		if (elements[i] != nullptr)
+			delete elements[i];
+
+	elements.clear();
 }
 
 int Display::onEvent(const sf::Event& event)

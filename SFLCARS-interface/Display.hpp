@@ -22,7 +22,7 @@ class Display
 {
 public:
 	// TODO: optionally accept an already created renderwindow
-	Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id = -1);
+	Display(const sf::VideoMode& size, const int id = -1);
 	~Display();
 
 	enum class Layout
@@ -40,6 +40,8 @@ public:
 	Element* addElement(Element* element, Layout align, int id = -1);
 
 	std::vector<Element*> getElements() const;
+
+	void clearElements();
 
 	int onEvent(const sf::Event& event);
 

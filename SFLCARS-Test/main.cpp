@@ -42,7 +42,7 @@ int calculator()
 	buffer.loadFromFile("./resources/sounds/bosun_whistle.ogg");
 	beep.setBuffer(buffer);
 
-	Display* display = new Display(sf::VideoMode(400, 350), sf::Vector2i(100, 100), ApplicationDisplay::Calculator);
+	Display* display = new Display(sf::VideoMode(400, 350), ApplicationDisplay::Calculator);
 
 	display->setPadding(5);
 
@@ -230,7 +230,7 @@ int notifier()
 
 	whistle.setBuffer(buffer_start);
 
-	Display* display = new Display(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+	Display* display = new Display(sf::VideoMode(600, 400));
 
 	InputBox messageBox;
 	display->addElement(&messageBox);
@@ -279,7 +279,7 @@ int main()
 	notifier();
 	return EXIT_SUCCESS;
 
-	Display* display = new Display(sf::VideoMode(600, 400), sf::Vector2i(100, 100));
+	Display* display = new Display(sf::VideoMode(600, 400));
 	
 	TextBar bar("SFLCARS");
 	TextBar bar2("bar2", TextBar::TextAlignment::Right);

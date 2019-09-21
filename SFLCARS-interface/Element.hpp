@@ -1,6 +1,8 @@
 #ifndef SFLCARS_ELEMENT_HPP
 #define SFLCARS_ELEMENT_HPP
 
+#include "Theme.hpp"
+
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -55,6 +57,7 @@ protected:
 	friend class Layout;
 
 	virtual void onStateChanged(State state);
+
 	virtual void onWindowResized(sf::Event::SizeEvent size);
 	virtual void onMouseMoved(const sf::Vector2f& position);
 	virtual void onMousePressed(const sf::Vector2f& position);
