@@ -1,25 +1,12 @@
+#include "Client.hpp"
+
 #include <SFML/Network.hpp>
 
 #include <iostream>
 #include <vector>
+#include <string>
 
-struct Client
-{
-	std::string name;
-
-	sf::IpAddress ip;
-	int id;
-
-	sf::TcpSocket* socket;
-};
-
-enum class Command
-{
-	Shutdown,
-	Status,
-	Information,
-	ListClients
-};
+// TODO: send commands instead of strings
 
 class Server
 {
@@ -59,41 +46,39 @@ public:
 
 						newClient.ip = newClient.socket->getRemoteAddress();
 
-						bool duplicateClient = false;
 						for (const auto& client : clients)
 							if (client.ip == newClient.ip)
 							{
-								duplicateClient = true;
+								sf::Packet notifyPacket;
+
+								notifyPacket << "connectionRejected";
+								notifyPacket << "duplicateClient";
+								notifyPacket << "A client with this IP address is already connected.";
+
+								if (newClient.socket->send(notifyPacket) != sf::Socket::Status::Done)
+									std::cerr << "failed to send return packet to client" << std::endl;
+
+								newClient.socket->disconnect();
+								delete newClient.socket;
+
+								std::cout << "denied duplicate client" << std::endl;
+
 								break;
 							}
 
+
 						sf::Packet notifyPacket;
 
-						if (duplicateClient)
-						{
-							notifyPacket << "connectionRejected";
-							notifyPacket << "duplicateClient";
-							notifyPacket << "A client with this IP address is already connected.";
-						}
-						else
-						{
-							newClient.id = totalClients++;
-							selector.add(*newClient.socket);
-							clients.push_back(newClient);
+						newClient.id = totalClients++;
+						selector.add(*newClient.socket);
+						clients.push_back(newClient);
 
-							notifyPacket << "connectionAccepted";
-						}
+						notifyPacket << "connectionAccepted";
 
 						if (newClient.socket->send(notifyPacket) != sf::Socket::Status::Done)
 							std::cerr << "failed to send return packet to client" << std::endl;
 
-						if (duplicateClient)
-						{
-							newClient.socket->disconnect();
-							delete newClient.socket;
-						}
-						else
-							std::cout << "accepted new client" << std::endl;
+						std::cout << "accepted new client" << std::endl;
 					}
 					else
 						delete newClient.socket;
@@ -192,8 +177,8 @@ public:
 								{
 									std::cout << "client disconnected" << std::endl;
 									client.socket->disconnect();
+									//std::remove(clients.begin(), clients.end(), client);
 									delete client.socket;
-									//clients.erase(std::remove(clients.begin(), clients.end(), client));
 								}
 								else if (client.socket->getRemoteAddress() == sf::IpAddress::None)
 								{
@@ -225,7 +210,6 @@ public:
 				std::cerr << "failed to send return packet to client" << std::endl;
 
 			client.socket->disconnect();
-
 			delete client.socket;
 		}
 
