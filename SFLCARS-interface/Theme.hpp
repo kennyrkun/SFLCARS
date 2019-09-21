@@ -18,6 +18,7 @@ public:
 	static bool loadFont(const std::string& path);
 	// Load the GUI global font from an already loaded font.
 	static bool loadFont(const sf::Font* font);
+
 	static const sf::Font& getFont();
 
 	// Widget height based on text size
@@ -54,6 +55,14 @@ public:
 	static TextStyle button;
 	// Used for text in InputBoxes
 	static TextStyle input;
+
+	struct MouseInput
+	{
+		sf::Mouse::Button clickButton = sf::Mouse::Button::Left;
+		sf::Mouse::Button contextButton = sf::Mouse::Button::Right;
+	};
+
+	static MouseInput mouse;
 
 	static sf::Color windowBgColor;
 
