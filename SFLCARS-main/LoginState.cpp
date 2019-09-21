@@ -80,10 +80,6 @@ void LoginState::HandleEvents()
 	default:
 		break;
 	}
-
-	sf::Packet packet;
-	packet << "ping";
-	app->listener.sendToServer(packet);
 }
 
 void LoginState::Update()
@@ -91,12 +87,18 @@ void LoginState::Update()
 	NetworkEvent event;
 	app->listener.pollNetworkEvent(event);
 
-	if (event.receivedTime != 0)
+	if (event.packet.getDataSize() > 0)
 	{
+		std::cout << "processing packet" << std::endl;
+
 		std::string total;
 
 		while (!event.packet.endOfPacket())
-			event.packet << "\n" + total;
+		{
+			std::string temp;
+			event.packet >> temp;
+			total += ("\n" + temp);
+		}
 
 		std::cout << "server: " << total << std::endl;
 	}

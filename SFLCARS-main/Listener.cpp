@@ -4,8 +4,10 @@
 
 Listener::Listener()
 {
-	buffer.loadFromFile("./resources/sounds/beep3.ogg");
-	updateBeep.setBuffer(buffer);
+	failBuffer.loadFromFile("./resources/sounds/error.ogg");
+	fail.setBuffer(failBuffer);
+	updateBuffer.loadFromFile("./resources/sounds/information_available.ogg");
+	update.setBuffer(updateBuffer);
 }
 
 Listener::~Listener()
@@ -30,35 +32,29 @@ bool Listener::sendToServer(sf::Packet packet)
 void Listener::pollNetworkEvent(NetworkEvent& event)
 {
 	if (socket.getRemoteAddress() == sf::IpAddress::None)
-		abort();
+		return;
 
-	sf::Packet packet;
-	if (socket.receive(packet) == sf::Socket::Done)
-		std::cout << "received data" << std::endl;
-
-	std::cout << "waiting for data" << std::endl;
-	if (selector.wait())
+	if (selector.wait(sf::milliseconds(10)))
 	{
-		abort();
+		std::cout << "something is ready: " << std::endl;
 
 		if (selector.isReady(socket))
 		{
-			abort();
-
 			std::cout << "socket is ready: " << std::endl;
 
 			sf::Packet packet;
-			if (socket.receive(packet) != sf::Socket::Done)
+			sf::Socket::Status status = socket.receive(packet);
+			if (status != sf::Socket::Status::Done)
+			{
 				std::cerr << "failed to receive packed from server" << std::endl;
-
-			event = { NetworkEvent::Command::None, time_t(0), packet };
-
-			updateBeep.play();
-
-			std::cout << "stuff stuff" << std::endl;
+				fail.play();
+			}
+			else
+			{
+				event = { NetworkEvent::Command::None, time_t(0), packet };
+				update.play();
+				std::cout << "received and processed packet" << std::endl;
+			}
 		}
 	}
-	else
-		std::cout << "no data available" << std::endl;
-	std::cout << "finished with network data" << std::endl;
 }

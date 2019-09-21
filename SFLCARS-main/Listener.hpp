@@ -39,8 +39,10 @@ public:
 private:
 	sf::SocketSelector selector;
 
-	sf::Sound updateBeep;
-	sf::SoundBuffer buffer;
+	sf::Sound update;
+	sf::Sound fail;
+	sf::SoundBuffer updateBuffer;
+	sf::SoundBuffer failBuffer;
 };
 
 #endif // !LISTENER_HPP
