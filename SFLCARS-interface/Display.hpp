@@ -56,8 +56,6 @@ private:
     sf::RenderWindow* window;
 
 	std::vector<Element*> elements;
-
-	float padding = 20;
 };
 
 }

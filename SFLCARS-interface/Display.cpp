@@ -27,12 +27,12 @@ Display::~Display()
 
 void Display::setPadding(float padding)
 {
-	this->padding = padding;
+	Theme::PADDING = padding;
 }
 
 float Display::getPadding() const
 {
-	return padding;
+	return Theme::PADDING;
 }
 
 bool Display::isOpen() const
@@ -53,15 +53,15 @@ Element* Display::addElement(Element* element, Layout align, int id)
 	element->setID(id);
 
 	element->setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	element->setPosition(sf::Vector2f(padding, padding)); // HACK: get it to calculate it's geometry before we start moving things
+	element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING)); // HACK: get it to calculate it's geometry before we start moving things
 
 	if (elements.empty())
-		element->setPosition(sf::Vector2f(padding, padding));
+		element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING));
 	else
 		if (align == Layout::Vertical)
-			element->setPosition(sf::Vector2f(padding, elements.back()->getPosition().y + elements.back()->getSize().y + padding));
+			element->setPosition(sf::Vector2f(Theme::PADDING, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::PADDING));
 		else if (align == Layout::Horizontal)
-			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + padding, elements.back()->getPosition().y));
+			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::PADDING, elements.back()->getPosition().y));
 
 	elements.push_back(element);
 	return element;
