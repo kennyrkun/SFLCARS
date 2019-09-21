@@ -6,8 +6,10 @@ Listener::Listener()
 {
 	failBuffer.loadFromFile("./resources/sounds/error.ogg");
 	fail.setBuffer(failBuffer);
-	updateBuffer.loadFromFile("./resources/sounds/information_available.ogg");
+	fail.setVolume(50.0f);
+	updateBuffer.loadFromFile("./resources/sounds/set.ogg");
 	update.setBuffer(updateBuffer);
+	update.setVolume(50.0f);
 }
 
 Listener::~Listener()
@@ -15,10 +17,13 @@ Listener::~Listener()
 	socket.disconnect();
 }
 
-bool Listener::connectToServer(const sf::IpAddress& address, const int port)
+bool Listener::connectToServer(const sf::IpAddress& address, const unsigned short port)
 {
-	if (socket.connect(address, port, sf::seconds(10)) != sf::Socket::Done)
+	if (socket.connect(address, port, sf::seconds(3)) != sf::Socket::Done)
+	{
+		fail.play();
 		return false;
+	}
 
 	selector.add(socket);
 	return true;
