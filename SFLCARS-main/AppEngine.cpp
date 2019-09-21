@@ -31,14 +31,6 @@ void AppEngine::Init(std::string title_, AppSettings settings_)
 	if (!fs::exists("./sflcars"))
 		fs::create_directory("./sflcars");
 
-	if (!listener.connectToServer(sf::IpAddress::LocalHost, 12345))
-	{
-		std::cerr << "failed to connect to server" << std::endl;
-		settings.offline = true;
-	}
-	else
-		std::cout << "connected to server" << std::endl;
-
 	running = true;
 
 	std::cout << "AppEngine ready" << std::endl;

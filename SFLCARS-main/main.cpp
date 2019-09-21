@@ -1,6 +1,6 @@
 #include "AppEngine.hpp"
 
-#include "LoginState.hpp"
+#include "InitialiseState.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	AppEngine app;
 	app.Init("SFLCARS-AppEngine", settings);
 
-	app.PushState(new LoginState);
+	app.PushState(new InitialiseState);
 
 	while (app.isRunning())
 	{
