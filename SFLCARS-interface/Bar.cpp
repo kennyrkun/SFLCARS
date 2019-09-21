@@ -23,14 +23,14 @@ void Bar::setSize(const sf::Vector2f& newSize)
 	std::cout << "updating bar size" << std::endl;
 
 	// TODO: replace 40 with a global edge size somehow
-	usableSize.x = newSize.x - (40);
+	usableSize.x = newSize.x - (Theme::PADDING * 2);
 
 	leftEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	leftEdge.setCornerPointCount(16);
 	leftEdge.setCornersRadius(16);
 	leftEdgeRight.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
-	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (padding * 2)), barHeight));
+	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (Theme::MARGIN * 2)), barHeight));
 
 	rightEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	rightEdge.setCornerPointCount(16);
@@ -42,7 +42,7 @@ void Bar::setSize(const sf::Vector2f& newSize)
 
 sf::Vector2f Bar::getSize() const
 {
-	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
+	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (Theme::MARGIN * 2), barHeight);
 }
 
 void Bar::setPosition(const sf::Vector2f& newPosition)
@@ -63,8 +63,8 @@ void Bar::reposition()
 {
 	leftEdge.setPosition(position.x, position.y);
 	leftEdgeRight.setPosition(leftEdge.getPosition().x + (barEdgeWidth / 2), position.y);
-	middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y);
-	rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y);
+	middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + Theme::MARGIN, position.y);
+	rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + Theme::MARGIN, position.y);
 	rightEdgeLeft.setPosition(rightEdge.getPosition().x, position.y);
 }
 

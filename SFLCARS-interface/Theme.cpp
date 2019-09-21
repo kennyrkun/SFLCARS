@@ -10,10 +10,10 @@ Theme::TextStyle Theme::label;
 Theme::TextStyle Theme::button;
 Theme::TextStyle Theme::input;
 sf::Color Theme::windowBgColor;
-float     Theme::borderSize = 1.f;
+float     Theme::borderSize = 1.0f;
 //float     Theme::minWidgetWidth = 86;
-float     Theme::PADDING = 1.f;
-float     Theme::MARGIN = 7.f;
+float     Theme::PADDING = 20.0f;
+float     Theme::MARGIN = 7.0f;
 bool Theme::triggerCallbacksOnRelease = true;
 
 sf::Keyboard::Key Theme::nextWidgetKey = sf::Keyboard::Down;

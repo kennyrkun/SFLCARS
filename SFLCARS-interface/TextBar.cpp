@@ -26,7 +26,7 @@ void TextBar::setSize(const sf::Vector2f& newSize)
 	std::cout << "updating bar size" << std::endl;
 
 	// TODO: get 40 from somewhere else
-	usableSize.x = newSize.x - (40);
+	usableSize.x = newSize.x - (Theme::PADDING * 2);
 
 	leftEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	leftEdge.setCornerPointCount(16);
@@ -34,7 +34,7 @@ void TextBar::setSize(const sf::Vector2f& newSize)
 
 	leftEdgeRight.setSize(sf::Vector2f(barEdgeWidth / 2, barHeight));
 
-	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (padding * 3) + text.getLocalBounds().width), barHeight));
+	middle.setSize(sf::Vector2f(usableSize.x - ((barEdgeWidth * 2) + (Theme::MARGIN * 3) + text.getLocalBounds().width), barHeight));
 
 	rightEdge.setSize(sf::Vector2f(barEdgeWidth, barHeight));
 	rightEdge.setCornerPointCount(16);
@@ -47,7 +47,7 @@ void TextBar::setSize(const sf::Vector2f& newSize)
 
 sf::Vector2f TextBar::getSize() const
 {
-	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (padding * 2), barHeight);
+	return sf::Vector2f(leftEdge.getSize().x + middle.getSize().x + rightEdge.getSize().x + (Theme::MARGIN * 2), barHeight);
 }
 
 void TextBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -67,15 +67,15 @@ void TextBar::reposition()
 
 	if (align == TextAlignment::Left)
 	{
-		text.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y - 7);
-		middle.setPosition(text.getPosition().x + text.getGlobalBounds().width + padding, position.y);
-		rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y);
+		text.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + Theme::MARGIN, position.y - 7);
+		middle.setPosition(text.getPosition().x + text.getGlobalBounds().width + Theme::MARGIN, position.y);
+		rightEdge.setPosition(middle.getPosition().x + middle.getSize().x + Theme::MARGIN, position.y);
 	}
 	else if (align == TextAlignment::Right)
 	{
-		middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + padding, position.y);
-		text.setPosition(middle.getPosition().x + middle.getSize().x + padding, position.y - 7);
-		rightEdge.setPosition(text.getPosition().x + text.getGlobalBounds().width + padding, position.y);
+		middle.setPosition(leftEdge.getPosition().x + leftEdge.getSize().x + Theme::MARGIN, position.y);
+		text.setPosition(middle.getPosition().x + middle.getSize().x + Theme::MARGIN, position.y - 7);
+		rightEdge.setPosition(text.getPosition().x + text.getGlobalBounds().width + Theme::MARGIN, position.y);
 	}
 
 	rightEdgeLeft.setPosition(rightEdge.getPosition().x, position.y);
