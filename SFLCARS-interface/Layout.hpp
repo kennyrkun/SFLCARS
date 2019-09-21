@@ -16,8 +16,11 @@ public:
 	Layout(Display* display);
 	~Layout();
 
+	Element* add(Element* element);
+
 	Button* addButton(const std::string& text);
 	TextBar* addTextBar(const std::string& text);
+	Bar* addBar();
 
 	Element* addElement(Element* element);
 

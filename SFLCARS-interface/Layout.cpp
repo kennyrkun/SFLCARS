@@ -12,15 +12,29 @@ Layout::~Layout()
 
 }
 
+Element* Layout::add(Element* element)
+{
+	return element;
+}
+
 Button* Layout::addButton(const std::string& text)
 {
 	Button* button = new Button(text);
+	add(button);
 	return button;
 }
 
 TextBar* Layout::addTextBar(const std::string& text)
 {
 	TextBar* bar = new TextBar(text);
+	add(bar);
+	return bar;
+}
+
+Bar* Layout::addBar()
+{
+	Bar* bar = new Bar;
+	add(bar);
 	return bar;
 }
 
@@ -44,12 +58,10 @@ void Layout::onStateChanged(State state)
 void Layout::onMouseMoved(const sf::Vector2f& position)
 {
 	// Pressed elements still receive mouse move events even when not hovered if mouse is pressed
-	// Example: moving a slider's handle
-	// TODO: Theme::interactMouseButton
-	// TODO: Theme::contextMouseButton
-	if (focused != nullptr && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	// for things like sliders and scrollbars, which might move without the mouse being overtop of them.
+	if (focused != nullptr && sf::Mouse::isButtonPressed(Theme::mouse.clickButton))
 	{
-		focused->onMouseMoved(sf::Vector2f(position.x - focused->getPosition().x, position.y - focused->getPosition().y));
+		focused->onMouseMoved(sf::Vector2f(focused->getPosition().x, focused->getPosition().y));
 	}
 	else
 	{
@@ -67,15 +79,11 @@ void Layout::onMouseMoved(const sf::Vector2f& position)
 
 					// Don't send Hovered state if element is already focused
 					if (hovered != focused)
-					{
 						element->setState(State::Hovered);
-					}
 				}
-				else
-				{
+				else	// Hovered element was already hovered
 					// Hovered element was already hovered
 					element->onMouseMoved(position);
-				}
 
 				return;
 			}
