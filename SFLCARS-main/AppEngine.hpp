@@ -19,6 +19,8 @@ struct AppSettings
 	bool console = false;
 	int maxfps = 60;
 
+	bool offline = false;
+
 	struct CommandLineArguments
 	{
 		int argc;
