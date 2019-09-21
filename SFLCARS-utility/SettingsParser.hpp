@@ -18,10 +18,10 @@
 // 3. This notice may not be removed or altered from any source distribution.
 ////////////////////////////////////////////////////////////
 
-// Revision 8
+// Revision 9
 
-#ifndef SETTINGSPARSER_INCLUDE
-#define SETTINGSPARSER_INCLUDE
+#ifndef SETTINGS_PARSER_INCLUDE
+#define SETTINGS_PARSER_INCLUDE
 
 #include <iostream>
 #include <map>
@@ -434,4 +434,4 @@ inline void SettingsParser::set(const std::string &key, const std::vector<T> val
 }
 }
 
-#endif // !SETTINGSPARSER_INCLUDE
+#endif // !SETTINGS_PARSER_INCLUDE
