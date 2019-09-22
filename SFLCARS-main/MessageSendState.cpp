@@ -65,10 +65,68 @@ void MessageSendState::HandleEvents()
 			std::cout << "cl_debug set to " + std::to_string(app->settings.debug) << std::endl;
 		}
 	}
+
+	switch (event.elementCallbackID)
+	{
+	case Callbacks::Login:
+	{
+		std::string who = interface->destinationBox->getText().toAnsiString();
+		std::string what = interface->messageBox->getText().toAnsiString();
+
+		sf::Packet packet;
+		packet << "messageSend";
+		packet << who;
+		packet << what;
+
+		app->listener.sendToServer(packet);
+		break;
+	}
+	case Callbacks::Quit:
+	{
+		app->Quit();
+		return;
+	}
+	default:
+		break;
+	}
 }
 
 void MessageSendState::Update()
 {
+	NetworkEvent event;
+	app->listener.pollNetworkEvent(event);
+
+	if (event.packet.getDataSize() > 0)
+	{
+		std::string total;
+
+		event.packet >> total;
+
+		if (total == "messageDeliver")
+		{
+			std::cout << "message recieved" << std::endl;
+
+			std::string from, message;
+			event.packet >> from;
+			event.packet >> message;
+
+			std::cout << from << ": " << message << std::endl;
+		}
+		else
+		{
+
+		}
+
+		while (!event.packet.endOfPacket())
+		{
+			std::string temp;
+			event.packet >> temp;
+			total += ("\n" + temp);
+		}
+
+		std::cout << "server: " << total << std::endl;
+	}
+
 	display->Update();
 }
 
