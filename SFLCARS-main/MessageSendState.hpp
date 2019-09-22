@@ -29,8 +29,8 @@ private:
 		Interface();
 		~Interface();
 
-		sflcars::InputBox* usernameBox;
-		sflcars::InputBox* passwordBox;
+		sflcars::InputBox* destinationBox;
+		sflcars::InputBox* messageBox;
 		sflcars::Button* submitButton;
 		sflcars::Button* quitButton;
 		sflcars::TextBar* topbar;

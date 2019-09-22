@@ -22,8 +22,8 @@ void MessageSendState::Init(AppEngine* app_)
 	interface = new Interface;
 
 	display->addElement(interface->topbar);
-	display->addElement(interface->usernameBox);
-	display->addElement(interface->passwordBox);
+	display->addElement(interface->destinationBox);
+	display->addElement(interface->messageBox);
 	display->addElement(interface->submitButton, Callbacks::Login);
 	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::Quit);
 	display->addElement(interface->bottombar);
@@ -79,10 +79,10 @@ void MessageSendState::Draw()
 
 MessageSendState::Interface::Interface()
 {
-	topbar = new sflcars::TextBar("Login");
-	usernameBox = new sflcars::InputBox;
-	passwordBox = new sflcars::InputBox;
-	submitButton = new sflcars::Button("Submit", sf::Keyboard::Key::Return);
+	topbar = new sflcars::TextBar("Send Message");
+	destinationBox = new sflcars::InputBox;
+	messageBox = new sflcars::InputBox;
+	submitButton = new sflcars::Button("Send", sf::Keyboard::Key::Return);
 	quitButton = new sflcars::Button("Quit", sf::Keyboard::Key::Escape);
 	bottombar = new sflcars::Bar;
 }
@@ -90,8 +90,8 @@ MessageSendState::Interface::Interface()
 MessageSendState::Interface::~Interface()
 {
 	delete topbar;
-	delete usernameBox;
-	delete passwordBox;
+	delete destinationBox;
+	delete messageBox;
 	delete submitButton;
 	delete quitButton;
 	delete bottombar;
