@@ -14,6 +14,8 @@ public:
 	int id;
 
 	sf::TcpSocket* socket;
+
+	bool clientAuthenticated = false;
 };
 
 #endif // !CLIENT_HPP

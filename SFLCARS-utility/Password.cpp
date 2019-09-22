@@ -1,5 +1,6 @@
-#include "PicoSHA256.hpp"
+#include "Password.hpp"
 #include "SettingsParser.hpp"
+#include "PicoSHA256.hpp"
 
 #include <string>
 #include <ctime>
@@ -11,43 +12,21 @@ namespace utility
 
 namespace password
 {
-	std::string generateHashedPassword(const std::string& username, const std::string& password)
+	SaltedPassword hashPasswordWithSalt(const std::string& password, const std::string& salt)
 	{
-		std::time_t now = time(0);
+		std::string hash_hex_str = picosha2::hash256_hex_string(password + salt);
 
-		std::stringstream ss;
-		ss << now;
-
-		std::string hash_hex_str = picosha2::hash256_hex_string(password + ss.str());
-
-		SettingsParser parser("./resources/admin/" + username + ".dat");
-		parser.set("hash", hash_hex_str);
-		parser.set("salt", ss.str());
-
-		return hash_hex_str;
+		return { hash_hex_str, salt };
 	}
 
-	std::string getSavedPasswordHash(const std::string& username)
+	std::string hashString(const std::string& string)
 	{
-		SettingsParser parser("./resources/admin/" + username + ".dat");
-
-		std::string savedPasswordHash;
-		parser.get("hash", savedPasswordHash);
-
-		return savedPasswordHash;
+		return picosha2::hash256_hex_string(string);
 	}
 
-	bool validatePassword(const std::string& username, const std::string& password)
+	bool validatePassword(const std::string& password1, const std::string& password2)
 	{
-		std::string salt = "unable to find salt";
-
-		SettingsParser parser("./resources/admin/" + username + ".dat");
-		parser.get("salt", salt);
-
-		std::string providedPasswordHash = picosha2::hash256_hex_string(password + salt);
-		std::string savedPasswordHash = getSavedPasswordHash(username);
-
-		return providedPasswordHash == savedPasswordHash;
+		return (password1 == password2);
 	}
 }
 

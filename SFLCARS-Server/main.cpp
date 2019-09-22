@@ -1,16 +1,64 @@
 #include "Client.hpp"
 
+#include <Password.hpp>
+#include <SettingsParser.hpp>
+#include <Utility.hpp>
+
 #include <SFML/Network.hpp>
 
+#include <filesystem>
+#include <fstream>
 #include <iostream>
-#include <vector>
+#include <random>
 #include <string>
+#include <vector>
 
 // TODO: send commands instead of strings
+
+namespace fs = std::filesystem;
+namespace util = sflcars::utility;
+namespace pass = sflcars::utility::password;
 
 class Server
 {
 public:
+	Server()
+	{
+		const std::string BASE = "./sflcars_server/";
+		const std::string ACCOUNTS = BASE + "accounts/";
+
+		if (!fs::exists(BASE))
+			fs::create_directory(BASE);
+
+		if (!fs::exists(ACCOUNTS))
+			fs::create_directory(ACCOUNTS);
+
+		if (fs::is_empty(ACCOUNTS))
+		{
+			std::cout << "no user accounts are present" << std::endl;
+
+			std::string username = "admin";
+			std::string password = "admin";
+			std::string hashedPassword = pass::hashString(password);
+
+			fs::create_directory(ACCOUNTS + username);
+
+			std::ofstream createAccountFile(ACCOUNTS + username + "/account.dat", std::ios::trunc);
+
+			if (!createAccountFile.is_open())
+			{
+				std::cerr << "failed to create default account file" << std::endl;
+				abort();
+			}
+			else
+				createAccountFile.close();
+
+			util::SettingsParser parser(ACCOUNTS + username + "/account.dat");
+			parser.set("username", username);
+			parser.set("hashed_password", hashedPassword);
+		}
+	}
+
 	void run()
 	{
 		std::cout << "starting SFLCARS server" << std::endl;
@@ -95,9 +143,58 @@ public:
 							client.socket->receive(packet);
 							packet >> command;
 
-							std::cout << "client" + client.id << ": " << command << std::endl;
+							std::cout << client.ip.toString() << ": " << command << std::endl;
 
-							if (command == "shutdown")
+							if (command == "login")
+							{
+								std::string step;
+								packet >> step;
+
+								if (step == "step1")
+								{
+									std::cout << "step1, sending client a random number" << std::endl;
+
+									responseCommand = "login";
+									responsePacket << responseCommand;
+									responsePacket << "step2";
+									responsePacket << util::getRandomNumber(0, std::numeric_limits<size_t>::max());
+								}
+								else if (step == "step4")
+								{
+									std::cout << "step4, testing password" << std::endl;
+
+									std::string username, randoHash, superHash;
+
+									packet >> username;
+									packet >> randoHash;
+									packet >> superHash;
+
+									// step 5
+									util::SettingsParser parser("./sflcars_server/accounts/" + username + "/account.dat");
+
+									std::string local_passwordHash;
+									parser.get("hashed_password", local_passwordHash);
+
+									std::string local_superHash = pass::hashString(local_passwordHash + randoHash);
+
+									// step 6
+									if (local_superHash == superHash)
+									{
+										std::cout << "success!" << std::endl;
+
+										responseCommand = "loginSuccess";
+										responsePacket << responseCommand;
+
+										client.clientAuthenticated = true;
+									}
+									else
+									{
+										responseCommand = "loginFailure";
+										responsePacket << "The password did not match the locally stored password.";
+									}
+								}
+							}
+							else if (command == "shutdown")
 							{
 								std::cout << "shutting down" << std::endl;
 								responseCommand = "shutting the heck down boys";
@@ -134,6 +231,8 @@ public:
 								std::string who, what;
 
 								packet >> who;
+
+								// FIXME: we need to loop over the packet and make sure we get everything in what
 								packet >> what;
 
 								std::cout << "sending " << who << ": " << what << std::endl;

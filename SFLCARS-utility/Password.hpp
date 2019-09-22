@@ -10,9 +10,15 @@ namespace utility
 
 namespace password
 {
-    std::string generateHashedPassword(const std::string& username, const std::string& password);
+	struct SaltedPassword
+	{
+		std::string hash;
+		std::string salt;
+	};
 
-    std::string getSavedPasswordHash(const std::string& username);
+	SaltedPassword hashPasswordWithSalt(const std::string& password, const std::string& salt);
+
+	std::string hashString(const std::string& string);
 
     bool validatePassword(const std::string& username, const std::string& password);
 }

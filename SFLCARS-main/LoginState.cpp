@@ -1,5 +1,8 @@
 #include "AppEngine.hpp"
 #include "LoginState.hpp"
+#include "MessageSendState.hpp"
+
+#include <Password.hpp>
 
 #include <Display.hpp>
 
@@ -72,10 +75,24 @@ void LoginState::HandleEvents()
 	{
 	case Callbacks::SubmitButton:
 	{
+		// TODO: hide the boxes while authenticating
+		username = interface->usernameBox->getText().toAnsiString();
+		password = interface->passwordBox->getText().toAnsiString();
+
 		sf::Packet packet;
-		packet << "ping";
+		packet << "login";
+		packet << "step1";
+		packet << username;
+
+//		interface->submitButton->disable();
+
 		app->listener.sendToServer(packet);
 		break;
+	}
+	case Callbacks::QuitButton:
+	{
+		app->Quit();
+		return;
 	}
 	default:
 		break;
@@ -89,9 +106,44 @@ void LoginState::Update()
 
 	if (event.packet.getDataSize() > 0)
 	{
-		std::cout << "processing packet" << std::endl;
-
 		std::string total;
+
+		event.packet >> total;
+
+		if (total == "login")
+		{
+			std::string loginStep;
+			event.packet >> loginStep;
+
+			if (loginStep == "step2")
+			{
+				std::cout << "we need ot encrypt the rando numbo" << std::endl;
+
+				std::string randoHash;
+				event.packet >> randoHash;
+
+				// step 3
+				std::string password = interface->passwordBox->getText().toAnsiString();
+				std::string passwordHash = sflcars::utility::password::hashString(password);
+				std::string superHash = sflcars::utility::password::hashString(passwordHash + randoHash);
+
+				sf::Packet response;
+				response << "login";
+				response << "step4";
+				response << username;
+				response << randoHash;
+				response << superHash;
+
+				app->listener.sendToServer(response);
+			}
+		}
+		else if (total == "loginSuccess")
+		{
+			std::cout << "login successful!" << std::endl;
+
+			app->ChangeState(new MessageSendState);
+			return;
+		}
 
 		while (!event.packet.endOfPacket())
 		{
