@@ -1,3 +1,4 @@
+#include <Layout.hpp>
 #include <Display.hpp>
 #include <TextBar.hpp>
 #include <Button.hpp>
@@ -46,12 +47,14 @@ int calculator()
 
 	display->setPadding(5);
 
+	Layout* layout = display->getLayout();
+
 	//	TextBar bar("CALCULATOR");
 	Bar bar;
-	display->addElement(&bar);
+	layout->add(&bar);
 
 	InputBox inputBox(330);
-	display->addElement(&inputBox);
+	layout->add(&inputBox);
 
 	Button rad("Rad");
 	Button deg("Deg");
@@ -94,50 +97,50 @@ int calculator()
 	Button equals("=", { sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
 	Button add("+", sf::Keyboard::Key::Add);
 
-	display->addElement(&rad, Callback::cRad);
-	display->addElement(&deg, Display::Layout::Horizontal, Callback::cDeg);
-	display->addElement(&x, Display::Layout::Horizontal, Callback::cx);
+	layout->add(&rad, Callback::cRad);
+	layout->add(&deg, Layout::Alignment::Horizontal, Callback::cDeg);
+	layout->add(&x, Layout::Alignment::Horizontal, Callback::cx);
 
-	display->addElement(&leftParenthesis, Display::Layout::Horizontal);
-	display->addElement(&rightParenthesis, Display::Layout::Horizontal);
-	display->addElement(&percent, Display::Layout::Horizontal);
-	display->addElement(&clear, Display::Layout::Horizontal);
+	layout->add(&leftParenthesis, Layout::Alignment::Horizontal);
+	layout->add(&rightParenthesis, Layout::Alignment::Horizontal);
+	layout->add(&percent, Layout::Alignment::Horizontal);
+	layout->add(&clear, Layout::Alignment::Horizontal);
 
-	display->addElement(&inv, Callback::cInv);
-	display->addElement(&sin, Display::Layout::Horizontal, Callback::csin);
-	display->addElement(&ln, Display::Layout::Horizontal, Callback::cln);
+	layout->add(&inv, Callback::cInv);
+	layout->add(&sin, Layout::Alignment::Horizontal, Callback::csin);
+	layout->add(&ln, Layout::Alignment::Horizontal, Callback::cln);
 
-	display->addElement(&seven, Display::Layout::Horizontal);
-	display->addElement(&eight, Display::Layout::Horizontal);
-	display->addElement(&nine, Display::Layout::Horizontal);
-	display->addElement(&divide, Display::Layout::Horizontal);
+	layout->add(&seven, Layout::Alignment::Horizontal);
+	layout->add(&eight, Layout::Alignment::Horizontal);
+	layout->add(&nine, Layout::Alignment::Horizontal);
+	layout->add(&divide, Layout::Alignment::Horizontal);
 
-	display->addElement(&pi, Callback::cpi);
-	display->addElement(&cos, Display::Layout::Horizontal, Callback::ccos);
-	display->addElement(&log, Display::Layout::Horizontal, Callback::clog);
+	layout->add(&pi, Callback::cpi);
+	layout->add(&cos, Layout::Alignment::Horizontal, Callback::ccos);
+	layout->add(&log, Layout::Alignment::Horizontal, Callback::clog);
 
-	display->addElement(&four, Display::Layout::Horizontal);
-	display->addElement(&five, Display::Layout::Horizontal);
-	display->addElement(&six, Display::Layout::Horizontal);
-	display->addElement(&multiply, Display::Layout::Horizontal);
+	layout->add(&four, Layout::Alignment::Horizontal);
+	layout->add(&five, Layout::Alignment::Horizontal);
+	layout->add(&six, Layout::Alignment::Horizontal);
+	layout->add(&multiply, Layout::Alignment::Horizontal);
 
-	display->addElement(&e, Callback::ce);
-	display->addElement(&tan, Display::Layout::Horizontal, Callback::ctan);
-	display->addElement(&sqrt, Display::Layout::Horizontal, Callback::csqrt);
+	layout->add(&e, Callback::ce);
+	layout->add(&tan, Layout::Alignment::Horizontal, Callback::ctan);
+	layout->add(&sqrt, Layout::Alignment::Horizontal, Callback::csqrt);
 
-	display->addElement(&one, Display::Layout::Horizontal);
-	display->addElement(&two, Display::Layout::Horizontal);
-	display->addElement(&three, Display::Layout::Horizontal);
-	display->addElement(&subtract, Display::Layout::Horizontal);
+	layout->add(&one, Layout::Alignment::Horizontal);
+	layout->add(&two, Layout::Alignment::Horizontal);
+	layout->add(&three, Layout::Alignment::Horizontal);
+	layout->add(&subtract, Layout::Alignment::Horizontal);
 
-	display->addElement(&ans, Callback::cans);
-	display->addElement(&exp, Display::Layout::Horizontal, Callback::cEXP);
-	display->addElement(&xy, Display::Layout::Horizontal, Callback::cxy);
+	layout->add(&ans, Callback::cans);
+	layout->add(&exp, Layout::Alignment::Horizontal, Callback::cEXP);
+	layout->add(&xy, Layout::Alignment::Horizontal, Callback::cxy);
 
-	display->addElement(&zero, Display::Layout::Horizontal);
-	display->addElement(&decimal, Display::Layout::Horizontal);
-	display->addElement(&equals, Display::Layout::Horizontal, Callback::cReturn);
-	display->addElement(&add, Display::Layout::Horizontal);
+	layout->add(&zero, Layout::Alignment::Horizontal);
+	layout->add(&decimal, Layout::Alignment::Horizontal);
+	layout->add(&equals, Layout::Alignment::Horizontal, Callback::cReturn);
+	layout->add(&add, Layout::Alignment::Horizontal);
 
 	while (display->isOpen())
 	{
@@ -232,11 +235,13 @@ int notifier()
 
 	Display* display = new Display(sf::VideoMode(600, 400));
 
+	Layout* layout = display->getLayout();
+
 	InputBox messageBox;
-	display->addElement(&messageBox);
+	layout->add(&messageBox);
 
 	Button send("Send");
-	display->addElement(&send, Display::Layout::Horizontal, 1);
+	layout->add(&send, Layout::Alignment::Horizontal, 1);
 
 	while (display->isOpen())
 	{
@@ -280,7 +285,9 @@ int main()
 	return EXIT_SUCCESS;
 
 	Display* display = new Display(sf::VideoMode(600, 400));
-	
+
+	Layout* layout = display->getLayout();
+
 	TextBar bar("SFLCARS");
 	TextBar bar2("bar2", TextBar::TextAlignment::Right);
 	Bar bar3;
@@ -291,16 +298,16 @@ int main()
 	Button button4("button4");
 	Button button5("button5");
 
-	display->addElement(&bar);
-	display->addElement(&button);
-	display->addElement(&button2);
-	display->addElement(&button3);
+	layout->add(&bar);
+	layout->add(&button);
+	layout->add(&button2);
+	layout->add(&button3);
 
-	display->addElement(&bar2);
-	display->addElement(&button4);
+	layout->add(&bar2);
+	layout->add(&button4);
 
-	display->addElement(&bar3);
-	display->addElement(&button5);
+	layout->add(&bar3);
+	layout->add(&button5);
 
 
 	return EXIT_SUCCESS;

@@ -31,7 +31,7 @@ int main()
 
 	std::cout << "attempting to connect to SFLCARS server at " << remoteAddress << " on port " << remotePort << std::endl;
 
-	if (tcpSocket.connect(remoteAddress, remotePort, sf::seconds(15)) != sf::Socket::Status::Done)
+	if (tcpSocket.connect(remoteAddress, remotePort, sf::seconds(5)) != sf::Socket::Status::Done)
 		std::cerr << "failed to connect to SFLCARS server" << std::endl;
 	else
 	{

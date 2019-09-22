@@ -1,14 +1,14 @@
 #ifndef SFLCARS_DISPLAY_HPP
 #define SFLCARS_DISPLAY_HPP
 
-#include "Element.hpp"
-
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <vector>
 
 namespace sflcars
 {
+
+class Layout;
 
 struct DisplayEvent
 {
@@ -25,39 +25,28 @@ public:
 	Display(const sf::VideoMode& size, const int id = -1);
 	~Display();
 
-	enum class Layout
-	{
-		Horizontal,
-		Vertical
-	};
+	void setLayout(Layout* layout);
+	Layout* getLayout() const;
+
+	sf::Vector2u getWindowSize() const;
+
+	sf::Vector2f getMousePosition() const;
 
 	void setPadding(float padding);
 	float getPadding() const;
 
 	bool isOpen() const;
 
-	Element* addElement(Element* element, int id = -1);
-	Element* addElement(Element* element, Layout align, int id = -1);
-
-	std::vector<Element*> getElements() const;
-
-	void clearElements();
-
-	int onEvent(const sf::Event& event);
-
     DisplayEvent HandleEvents();
     void Update();
     void Draw();
 
     const int id;
-	Element* triggered = nullptr;
-	Element* focused = nullptr;
-	Element* hovered = nullptr;
 
 private:
     sf::RenderWindow* window;
 
-	std::vector<Element*> elements;
+	Layout* layout;
 };
 
 }

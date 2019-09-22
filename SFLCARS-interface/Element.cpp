@@ -1,7 +1,8 @@
 #include "Element.hpp"
 #include "Display.hpp"
+#include "Layout.hpp"
 
-#include <random>
+#include <iostream>
 
 namespace sflcars
 {
@@ -22,12 +23,12 @@ void Element::setState(State newState)
 	onStateChanged(state);
 }
 
-void Element::setParent(Display* display)
+void Element::setParent(Element* element)
 {
-	this->parent = display;
+	parent = element;
 }
 
-Display* Element::getParent() const
+Element* Element::getParent() const
 {
 	return parent;
 }

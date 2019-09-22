@@ -2,6 +2,7 @@
 #include "InitialiseState.hpp"
 #include "LoginState.hpp"
 
+#include <Layout.hpp>
 #include <Display.hpp>
 
 #include <iostream>
@@ -21,12 +22,15 @@ void InitialiseState::Init(AppEngine* app_)
 	app = app_;
 
 	display = new sflcars::Display(sf::VideoMode(800, 600));
+	sflcars::Layout* layout = display->getLayout();
 
-	interface = new Interface;
+	topbar = new sflcars::TextBar("SFLCARS");
+	text = new sflcars::String("Initialising");
+	bottombar = new sflcars::Bar;
 
-	display->addElement(interface->topbar);
-	display->addElement(interface->continueButton, Callbacks::SubmitButton);
-	display->addElement(interface->bottombar);
+	layout->add(topbar, 10);
+	layout->add(text, Callbacks::SubmitButton);
+	layout->add(bottombar);
 
 	std::cout << "InitialiseState ready." << std::endl;
 }
@@ -35,7 +39,6 @@ void InitialiseState::Cleanup()
 {
 	std::cout << "Cleaning up InitialiseState." << std::endl;
 
-//	delete interface;
 	delete display;
 
 	std::cout << "Cleaned up InitialiseState." << std::endl;
@@ -66,19 +69,6 @@ void InitialiseState::HandleEvents()
 			std::cout << "cl_debug set to " + std::to_string(app->settings.debug) << std::endl;
 		}
 	}
-
-	switch (event.elementCallbackID)
-	{
-	case Callbacks::SubmitButton:
-	{
-		sf::Packet packet;
-		packet << "ping";
-		app->listener.sendToServer(packet);
-		break;
-	}
-	default:
-		break;
-	}
 }
 
 void InitialiseState::Update()
@@ -96,14 +86,14 @@ void InitialiseState::Update()
 				std::cerr << "failed to connect to server (" << updates << ")" << std::endl;
 				app->settings.offline = true;
 			}
-			else
+			else // success
 			{
 				std::cout << "connected to server" << std::endl;
 				app->ChangeState(new LoginState);
 				return;
 			}
 		}
-		else
+		else // connected to server
 		{
 			app->ChangeState(new LoginState);
 			return;
@@ -120,19 +110,3 @@ void InitialiseState::Draw()
 	display->Draw();
 }
 
-InitialiseState::Interface::Interface()
-{
-	topbar = new sflcars::TextBar("SFLCARS");
-	continueButton = new sflcars::String("Initialising");
-	bottombar = new sflcars::Bar;
-}
-
-InitialiseState::Interface::~Interface()
-{
-	delete topbar;
-	topbar = nullptr;
-	delete continueButton;
-	continueButton = nullptr;
-	delete bottombar;
-	bottombar = nullptr;
-}

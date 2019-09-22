@@ -1,46 +1,66 @@
 #include "Layout.hpp"
+#include "Display.hpp"
+#include "Button.hpp"
+#include "Bar.hpp"
+#include "TextBar.hpp"
+#include "Theme.hpp"
 
 namespace sflcars
 {
 
-Layout::Layout(Display* display) : parentDisplay(display)
+Layout::Layout(Display* display) : display(display)
 {
 }
 
 Layout::~Layout()
 {
-
 }
 
-Element* Layout::add(Element* element)
+void Layout::setSize(const sf::Vector2f& newSize)
 {
+}
+
+sf::Vector2f Layout::getSize() const
+{
+	return sf::Vector2f();
+}
+
+void Layout::setPosition(const sf::Vector2f& newPosition)
+{
+}
+
+sf::Vector2f Layout::getPosition() const
+{
+	return sf::Vector2f();
+}
+
+Element* Layout::add(Element* element, Alignment align, int id)
+{
+	std::cout << "[Layout] adding element with id " << id << std::endl;
+
+	element->setParent(this);
+	element->setID(id);
+
+	sf::Vector2u size = display->getWindowSize();
+
+	element->setSize(sf::Vector2f(size.x, size.y));
+	element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING)); // HACK: get it to calculate it's geometry before we start moving things
+
+	if (elements.empty())
+		element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING));
+	else
+		if (align == Alignment::Vertical)
+			element->setPosition(sf::Vector2f(Theme::PADDING, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::PADDING));
+		else if (align == Alignment::Horizontal)
+			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::PADDING, elements.back()->getPosition().y));
+
+	elements.push_back(element);
 	return element;
 }
 
-Button* Layout::addButton(const std::string& text)
+Element* Layout::add(Element* element, int id)
 {
-	Button* button = new Button(text);
-	add(button);
-	return button;
-}
-
-TextBar* Layout::addTextBar(const std::string& text)
-{
-	TextBar* bar = new TextBar(text);
-	add(bar);
-	return bar;
-}
-
-Bar* Layout::addBar()
-{
-	Bar* bar = new Bar;
-	add(bar);
-	return bar;
-}
-
-Element* Layout::addElement(Element* element)
-{
-	return element;
+	return add(element, Alignment::Vertical, id);
 }
 
 void Layout::onStateChanged(State state)
@@ -55,6 +75,63 @@ void Layout::onStateChanged(State state)
 	}
 }
 
+int Layout::onEvent(const sf::Event& event)
+{
+	for (auto& x : elements)
+	{
+		// TODO: test events for subwindows
+
+		sf::Vector2f mouse = display->getMousePosition();
+
+		switch (event.type)
+		{
+		case sf::Event::MouseMoved:
+		{
+			x->onMouseMoved(mouse);
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+				x->onMousePressed(mouse);
+			break;
+		}
+		case sf::Event::MouseButtonReleased:
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+				x->onMouseReleased(mouse);
+			break;
+		}
+		case sf::Event::MouseWheelMoved:
+			x->onMouseWheelMoved(event.mouseWheel.delta);
+			break;
+		case sf::Event::KeyPressed:
+			x->onKeyPressed(event.key.code);
+			break;
+		case sf::Event::KeyReleased:
+			x->onKeyReleased(event.key.code);
+			break;
+		case sf::Event::TextEntered:
+			x->onTextEntered(event.text.unicode);
+			break;
+		case sf::Event::Resized:
+			x->onWindowResized(event.size);
+			break;
+		default:
+			break;
+		}
+	}
+
+	if (triggered != nullptr)
+	{
+		int id = triggered->getID();
+		triggered = nullptr;
+		return id;
+	}
+
+	return -1;
+}
+
 void Layout::onMouseMoved(const sf::Vector2f& position)
 {
 	// Pressed elements still receive mouse move events even when not hovered if mouse is pressed
@@ -65,7 +142,7 @@ void Layout::onMouseMoved(const sf::Vector2f& position)
 	}
 	else
 	{
-		for (auto& element : parentDisplay->getElements())
+		for (auto& element : elements)
 		{
 			if (element->containsPoint(position))
 			{
@@ -189,6 +266,12 @@ bool Layout::focusElement(Element* element, State state)
 	}
 
 	return false;
+}
+
+void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (const auto element : elements)
+		target.draw(*element, states);
 }
 
 }

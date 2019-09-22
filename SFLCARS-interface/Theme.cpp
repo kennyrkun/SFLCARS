@@ -19,7 +19,7 @@ bool Theme::triggerCallbacksOnRelease = true;
 sf::Keyboard::Key Theme::nextWidgetKey = sf::Keyboard::Down;
 sf::Keyboard::Key Theme::previousWidgetKey = sf::Keyboard::Up;
 
-Theme::MouseInput mouse;
+Theme::MouseInput Theme::mouse;
 
 sf::Font Theme::m_font;
 

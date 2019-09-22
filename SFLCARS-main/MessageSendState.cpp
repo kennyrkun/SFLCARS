@@ -2,6 +2,7 @@
 #include "MessageSendState.hpp"
 
 #include <Display.hpp>
+#include <Layout.hpp>
 
 #include <iostream>
 
@@ -17,16 +18,29 @@ void MessageSendState::Init(AppEngine* app_)
 
 	app = app_;
 
+	if (display != nullptr)
+	{
+		delete display;
+		display = nullptr;
+	}
+
 	display = new sflcars::Display(sf::VideoMode(300, 310));
 
-	interface = new Interface;
+	topbar = new sflcars::TextBar("Send Message");
+	destinationBox = new sflcars::InputBox;
+	messageBox = new sflcars::InputBox;
+	submitButton = new sflcars::Button("Send", sf::Keyboard::Key::Return);
+	quitButton = new sflcars::Button("Quit", sf::Keyboard::Key::Escape);
+	bottombar = new sflcars::Bar;
 
-	display->addElement(interface->topbar);
-	display->addElement(interface->destinationBox);
-	display->addElement(interface->messageBox);
-	display->addElement(interface->submitButton, Callbacks::Login);
-	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::Quit);
-	display->addElement(interface->bottombar);
+	sflcars::Layout& layout = *display->getLayout();
+
+	layout.add(topbar);
+	layout.add(destinationBox);
+	layout.add(messageBox);
+	layout.add(submitButton, Callbacks::Login);
+	layout.add(quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);
+	layout.add(bottombar);
 
 	std::cout << "MessageSendState ready." << std::endl;
 }
@@ -34,8 +48,6 @@ void MessageSendState::Init(AppEngine* app_)
 void MessageSendState::Cleanup()
 {
 	std::cout << "Cleaning up MessageSendState." << std::endl;
-
-	delete interface;
 
 	std::cout << "Cleaned up MessageSendState." << std::endl;
 }
@@ -70,8 +82,8 @@ void MessageSendState::HandleEvents()
 	{
 	case Callbacks::Login:
 	{
-		std::string who = interface->destinationBox->getText().toAnsiString();
-		std::string what = interface->messageBox->getText().toAnsiString();
+		std::string who = destinationBox->getText().toAnsiString();
+		std::string what = messageBox->getText().toAnsiString();
 
 		sf::Packet packet;
 		packet << "messageSend";
@@ -129,24 +141,4 @@ void MessageSendState::Update()
 void MessageSendState::Draw()
 {
 	display->Draw();
-}
-
-MessageSendState::Interface::Interface()
-{
-	topbar = new sflcars::TextBar("Send Message");
-	destinationBox = new sflcars::InputBox;
-	messageBox = new sflcars::InputBox;
-	submitButton = new sflcars::Button("Send", sf::Keyboard::Key::Return);
-	quitButton = new sflcars::Button("Quit", sf::Keyboard::Key::Escape);
-	bottombar = new sflcars::Bar;
-}
-
-MessageSendState::Interface::~Interface()
-{
-	delete topbar;
-	delete destinationBox;
-	delete messageBox;
-	delete submitButton;
-	delete quitButton;
-	delete bottombar;
 }

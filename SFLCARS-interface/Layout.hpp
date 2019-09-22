@@ -1,32 +1,37 @@
 #ifndef SFLCARS_LAYOUT_HPP
 #define SFLCARS_LAYOUT_HPP
 
-#include "Display.hpp"
-
 #include "Element.hpp"
-#include "Button.hpp"
-#include "TextBar.hpp"
+
+#include <vector>
 
 namespace sflcars
 {
 
+class Display;
+
 class Layout : public Element
 {
 public:
+	enum class Alignment
+	{
+		Horizontal,
+		Vertical
+	};
+
 	Layout(Display* display);
 	~Layout();
 
-	Element* add(Element* element);
+	void setSize(const sf::Vector2f& newSize);
+	sf::Vector2f getSize() const;
 
-	Button* addButton(const std::string& text);
-	TextBar* addTextBar(const std::string& text);
-	Bar* addBar();
+	void setPosition(const sf::Vector2f& newPosition);
+	sf::Vector2f getPosition() const;
 
-	Element* addElement(Element* element);
+	Element* add(Element* element, Alignment align, int id = -1);
+	Element* add(Element* element, int id = -1);
 
-	Element* triggered = nullptr;
-	Element* focused = nullptr;
-	Element* hovered = nullptr;
+	int onEvent(const sf::Event& event);
 
 protected:
 	void onStateChanged(State state);
@@ -41,8 +46,12 @@ protected:
 	void onKeyReleased(const sf::Keyboard::Key& key);
 	void onTextEntered(const sf::Uint32& unicode);
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 private:
-	Display* parentDisplay;
+	std::vector<Element*> elements;
+
+	Display* display;
 };
 
 }

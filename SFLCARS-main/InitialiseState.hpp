@@ -4,7 +4,6 @@
 #include "AppState.hpp"
 
 #include <Bar.hpp>
-#include <Button.hpp>
 #include <TextBar.hpp>
 #include <String.hpp>
 
@@ -24,17 +23,9 @@ public:
 	void Draw();
 
 private:
-	struct Interface
-	{
-		Interface();
-		~Interface();
-
-		sflcars::TextBar* topbar;
-		sflcars::String* continueButton;
-		sflcars::Bar* bottombar;
-	};
-
-	Interface* interface;
+	sflcars::TextBar* topbar;
+	sflcars::String* text;
+	sflcars::Bar* bottombar;
 };
 
 #endif // !INITIALISE_STATE_HPP

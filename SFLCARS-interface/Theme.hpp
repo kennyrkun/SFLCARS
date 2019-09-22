@@ -1,8 +1,7 @@
 #ifndef SFLCARS_THEME_HPP
 #define SFLCARS_THEME_HPP
 
-#include <SFML/Window.hpp>
-#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <string>
 

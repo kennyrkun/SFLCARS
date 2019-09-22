@@ -123,7 +123,6 @@ public:
 								break;
 							}
 
-
 						sf::Packet notifyPacket;
 
 						newClient.id = totalClients++;

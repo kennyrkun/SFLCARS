@@ -5,6 +5,7 @@
 #include <Password.hpp>
 
 #include <Display.hpp>
+#include <Layout.hpp>
 
 #include <iostream>
 
@@ -26,12 +27,14 @@ void LoginState::Init(AppEngine* app_)
 
 	interface = new Interface;
 
-	display->addElement(interface->topbar);
-	display->addElement(interface->usernameBox, Callbacks::UsernameBox);
-	display->addElement(interface->passwordBox, Callbacks::PasswordBox);
-	display->addElement(interface->submitButton, Callbacks::SubmitButton);
-	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::QuitButton);
-	display->addElement(interface->bottombar);
+	sflcars::Layout& layout = *display->getLayout();
+
+	layout.add(interface->topbar);
+	layout.add(interface->usernameBox, Callbacks::UsernameBox);
+	layout.add(interface->passwordBox, Callbacks::PasswordBox);
+	layout.add(interface->submitButton, Callbacks::SubmitButton);
+	layout.add(interface->quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::QuitButton);
+	layout.add(interface->bottombar);
 
 	std::cout << "LoginState ready." << std::endl;
 }

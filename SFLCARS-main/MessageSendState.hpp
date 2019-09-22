@@ -24,20 +24,12 @@ public:
 	void Draw();
 
 private:
-	struct Interface
-	{
-		Interface();
-		~Interface();
-
-		sflcars::InputBox* destinationBox;
-		sflcars::InputBox* messageBox;
-		sflcars::Button* submitButton;
-		sflcars::Button* quitButton;
-		sflcars::TextBar* topbar;
-		sflcars::Bar* bottombar;
-	};
-
-	Interface* interface;
+	sflcars::InputBox* destinationBox;
+	sflcars::InputBox* messageBox;
+	sflcars::Button* submitButton;
+	sflcars::Button* quitButton;
+	sflcars::TextBar* topbar;
+	sflcars::Bar* bottombar;
 };
 
 #endif // !MESSAGE_SEND_STATE_HPP

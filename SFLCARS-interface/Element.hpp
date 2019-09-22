@@ -5,8 +5,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <vector>
-
 namespace sflcars
 {
 
@@ -19,6 +17,7 @@ enum class State
 };
 
 class Display;
+class Layout;
 
 class Element : public sf::Drawable
 {
@@ -42,8 +41,11 @@ public:
 	virtual void setState(State newState);
 	State getState() const { return state; };
 
-	void setParent(Display* display);
-	Display* getParent() const;
+	void setDisplay(Display* display);
+	Display* getDisplay() const;
+
+	void setParent(Element* element);
+	Element* getParent() const;
 
 	void setSelectable(bool selectable);
 
@@ -69,12 +71,15 @@ protected:
 
 	void triggerCallback();
 
+	Element* parent = nullptr;
+	Element* triggered = nullptr;
+	Element* focused = nullptr;
+	Element* hovered = nullptr;
+
 private:
 	State state;
 	int id = -1;
 	bool selectable;
-
-	Display* parent;
 };
 
 }

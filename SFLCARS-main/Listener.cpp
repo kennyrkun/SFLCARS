@@ -14,6 +14,11 @@ Listener::Listener()
 
 Listener::~Listener()
 {
+	sf::Packet packet;
+	packet << "disconnect";
+
+	sendToServer(packet);
+
 	socket.disconnect();
 }
 
@@ -31,7 +36,14 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 
 bool Listener::sendToServer(sf::Packet packet)
 {
-	return (socket.send(packet) != sf::Socket::Status::Done);
+	sf::Socket::Status status = socket.send(packet);
+
+	if (status == sf::Socket::Status::Done)
+		return true;
+
+	std::cerr << "failed to send packet to server (" << status << ")" << std::endl;
+
+	return false;
 }
 
 void Listener::pollNetworkEvent(NetworkEvent& event)
