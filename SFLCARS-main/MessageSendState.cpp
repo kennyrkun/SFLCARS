@@ -112,10 +112,6 @@ void MessageSendState::Update()
 
 			std::cout << from << ": " << message << std::endl;
 		}
-		else
-		{
-
-		}
 
 		while (!event.packet.endOfPacket())
 		{
