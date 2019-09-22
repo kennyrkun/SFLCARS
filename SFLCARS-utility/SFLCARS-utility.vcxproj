@@ -119,11 +119,13 @@
   <ItemGroup>
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="SettingsParser.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Password.hpp" />
     <ClInclude Include="PicoSHA256.hpp" />
     <ClInclude Include="SettingsParser.hpp" />
+    <ClInclude Include="Utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
