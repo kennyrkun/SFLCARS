@@ -85,7 +85,8 @@ public:
 
 				if (selector.isReady(listener))
 				{
-					std::cout << "something hit the listener" << std::endl;
+					std::cout << "listener is ready:" << std::endl;
+
 					Client newClient;
 					newClient.socket = new sf::TcpSocket;
 					if (listener.accept(*newClient.socket) == sf::Socket::Status::Done)
@@ -137,6 +138,8 @@ public:
 					{
 						if (selector.isReady(*client.socket))
 						{
+							std::cout << "client_ socket is ready" << std::endl;
+
 							sf::Packet packet, responsePacket;
 							std::string command, responseCommand;
 
@@ -239,7 +242,7 @@ public:
 
 								sf::Packet message;
 								message << "messageDeliver";
-								message << (std::to_string(client.id) + ";" + client.ip.toString());
+								message << std::to_string(client.id) + ";" + client.ip.toString();
 								message << what;
 
 								if (who == "everyone")
