@@ -22,7 +22,7 @@ class Display
 {
 public:
 	// TODO: optionally accept an already created renderwindow
-	Display(const sf::VideoMode& size, const sf::Vector2i& position, const int id = -1);
+	Display(const sf::VideoMode& size, const int id = -1);
 	~Display();
 
 	enum class Layout
@@ -41,6 +41,8 @@ public:
 
 	std::vector<Element*> getElements() const;
 
+	void clearElements();
+
 	int onEvent(const sf::Event& event);
 
     DisplayEvent HandleEvents();
@@ -56,8 +58,6 @@ private:
     sf::RenderWindow* window;
 
 	std::vector<Element*> elements;
-
-	float padding = 20;
 };
 
 }

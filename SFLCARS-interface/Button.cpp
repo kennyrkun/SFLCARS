@@ -29,14 +29,14 @@ Button::Button(const std::string& string)
 	setString(string);
 }
 
-Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys) : Button(string)
-{
-	this->hotkeys = hotkeys;
-}
-
 Button::Button(const std::string& string, const sf::Keyboard::Key& hotkey) : Button(string)
 {
 	hotkeys.push_back(hotkey);
+}
+
+Button::Button(const std::string& string, std::vector<sf::Keyboard::Key> hotkeys) : Button(string)
+{
+	this->hotkeys = hotkeys;
 }
 
 void Button::addHotkey(const sf::Keyboard::Key& key)

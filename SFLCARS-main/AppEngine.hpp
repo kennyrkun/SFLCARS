@@ -1,6 +1,8 @@
 #ifndef APP_ENGINE_HPP
 #define APP_ENGINE_HPP
 
+#include "Listener.hpp"
+
 #include <SFML/Window/Event.hpp>
 
 #include <vector>
@@ -16,6 +18,8 @@ struct AppSettings
 	bool debug = true;
 	bool console = false;
 	int maxfps = 60;
+
+	bool offline = false;
 
 	struct CommandLineArguments
 	{
@@ -46,6 +50,8 @@ public:
 	std::string title;
 
 	AppSettings settings;
+
+	Listener listener;
 
 	std::vector<AppState*> states;
 	std::vector<sf::Event> events;

@@ -38,6 +38,9 @@ private:
 	};
 
 	Interface* interface;
+
+	std::string username;
+	std::string password;
 };
 
 #endif // !LOGIN_STATE_HPP

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -20,7 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppEngine.cpp" />
-    <ClCompile Include="entry.cpp" />
+    <ClCompile Include="InitialiseState.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
@@ -28,6 +29,7 @@
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp" />
     <ClInclude Include="AppState.hpp" />
+    <ClInclude Include="InitialiseState.hpp" />
     <ClInclude Include="Listener.hpp" />
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
@@ -36,7 +38,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{69f2ccca-9662-49d3-b92d-1586cfc728b0}</ProjectGuid>
     <RootNamespace>SFLCARS_main</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -93,12 +95,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../SFML/include;../SFLCARS-interface;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../SFML/include;../SFLCARS-interface;../SFLCARS-utility;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>../SFML/lib;../Debug;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-audio-s-d.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-network-s-d.lib;ws2_32.lib;SFLCARS-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-audio-s-d.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-network-s-d.lib;ws2_32.lib;SFLCARS-interface-d.lib;SFLCARS-utility-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,13 +119,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../SFML/include;../SFLCARS-interface;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../SFML/include;../SFLCARS-interface;../SFLCARS-utility;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-audio-s.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-network-s.lib;ws2_32.lib;SFLCARS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-audio-s.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-network-s.lib;ws2_32.lib;SFLCARS-interface.lib;SFLCARS-utility.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../SFML/lib;../Release;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

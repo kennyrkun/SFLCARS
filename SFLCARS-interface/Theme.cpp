@@ -10,14 +10,16 @@ Theme::TextStyle Theme::label;
 Theme::TextStyle Theme::button;
 Theme::TextStyle Theme::input;
 sf::Color Theme::windowBgColor;
-float     Theme::borderSize = 1.f;
+float     Theme::borderSize = 1.0f;
 //float     Theme::minWidgetWidth = 86;
-float     Theme::PADDING = 1.f;
-float     Theme::MARGIN = 7.f;
+float     Theme::PADDING = 20.0f;
+float     Theme::MARGIN = 7.0f;
 bool Theme::triggerCallbacksOnRelease = true;
 
 sf::Keyboard::Key Theme::nextWidgetKey = sf::Keyboard::Down;
 sf::Keyboard::Key Theme::previousWidgetKey = sf::Keyboard::Up;
+
+Theme::MouseInput mouse;
 
 sf::Font Theme::m_font;
 
@@ -62,6 +64,7 @@ sf::Color Theme::hexToRgb(std::string hexcolor)
 //	std::cout << "converting " << hexcolor << std::endl;
 
 	// TODO: improve this
+	// put a # in front of the thing because we're stupid and need it
 	if (hexcolor[0] != '#')
 		hexcolor.insert(0, "#");
 
@@ -86,6 +89,8 @@ sf::Color Theme::hexToRgb(std::string hexcolor)
 
 sf::Color Theme::getRandomColor(int lower, int upper, bool single)
 {
+	// TODO: should these be static?
+	// or are they already static because it's a static function?
 	std::random_device dev;
 	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> dist(lower, upper);

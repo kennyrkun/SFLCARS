@@ -1,5 +1,8 @@
 #include "AppEngine.hpp"
 #include "LoginState.hpp"
+#include "MessageSendState.hpp"
+
+#include <Password.hpp>
 
 #include <Display.hpp>
 
@@ -7,8 +10,10 @@
 
 enum Callbacks
 {
-	Login,
-	Quit
+	UsernameBox,
+	PasswordBox,
+	SubmitButton,
+	QuitButton
 };
 
 void LoginState::Init(AppEngine* app_)
@@ -17,15 +22,15 @@ void LoginState::Init(AppEngine* app_)
 
 	app = app_;
 
-	display = new sflcars::Display(sf::VideoMode(300, 310), sf::Vector2i(0, 0));
+	display = new sflcars::Display(sf::VideoMode(300, 310));
 
 	interface = new Interface;
 
 	display->addElement(interface->topbar);
-	display->addElement(interface->usernameBox);
-	display->addElement(interface->passwordBox);
-	display->addElement(interface->submitButton, Callbacks::Login);
-	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::Quit);
+	display->addElement(interface->usernameBox, Callbacks::UsernameBox);
+	display->addElement(interface->passwordBox, Callbacks::PasswordBox);
+	display->addElement(interface->submitButton, Callbacks::SubmitButton);
+	display->addElement(interface->quitButton, sflcars::Display::Layout::Horizontal, Callbacks::QuitButton);
 	display->addElement(interface->bottombar);
 
 	std::cout << "LoginState ready." << std::endl;
@@ -68,11 +73,27 @@ void LoginState::HandleEvents()
 
 	switch (event.elementCallbackID)
 	{
-	case Callbacks::Login:
+	case Callbacks::SubmitButton:
+	{
+		// TODO: hide the boxes while authenticating
+		username = interface->usernameBox->getText().toAnsiString();
+		password = interface->passwordBox->getText().toAnsiString();
+
+		sf::Packet packet;
+		packet << "login";
+		packet << "step1";
+		packet << username;
+
+//		interface->submitButton->disable();
+
+		app->listener.sendToServer(packet);
 		break;
-	case Callbacks::Quit:
+	}
+	case Callbacks::QuitButton:
+	{
 		app->Quit();
 		return;
+	}
 	default:
 		break;
 	}
@@ -80,6 +101,60 @@ void LoginState::HandleEvents()
 
 void LoginState::Update()
 {
+	NetworkEvent event;
+	app->listener.pollNetworkEvent(event);
+
+	if (event.packet.getDataSize() > 0)
+	{
+		std::string total;
+
+		event.packet >> total;
+
+		if (total == "login")
+		{
+			std::string loginStep;
+			event.packet >> loginStep;
+
+			if (loginStep == "step2")
+			{
+				std::cout << "we need ot encrypt the rando numbo" << std::endl;
+
+				std::string randoHash;
+				event.packet >> randoHash;
+
+				// step 3
+				std::string password = interface->passwordBox->getText().toAnsiString();
+				std::string passwordHash = sflcars::utility::password::hashString(password);
+				std::string superHash = sflcars::utility::password::hashString(passwordHash + randoHash);
+
+				sf::Packet response;
+				response << "login";
+				response << "step4";
+				response << username;
+				response << randoHash;
+				response << superHash;
+
+				app->listener.sendToServer(response);
+			}
+		}
+		else if (total == "loginSuccess")
+		{
+			std::cout << "login successful!" << std::endl;
+
+			app->ChangeState(new MessageSendState);
+			return;
+		}
+
+		while (!event.packet.endOfPacket())
+		{
+			std::string temp;
+			event.packet >> temp;
+			total += ("\n" + temp);
+		}
+
+		std::cout << "server: " << total << std::endl;
+	}
+
 	display->Update();
 }
 

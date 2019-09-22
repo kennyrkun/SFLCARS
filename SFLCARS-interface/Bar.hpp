@@ -33,7 +33,6 @@ protected:
 	// TODO: define these somewhere else
 	const float barHeight = 35;
 	const float barEdgeWidth = 50;
-	const float padding = 10.0f;
 
 	sf::Vector2f usableSize;
 

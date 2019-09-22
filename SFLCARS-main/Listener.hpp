@@ -2,12 +2,23 @@
 #define LISTENER_HPP
 
 #include <SFML/Network.hpp>
+#include <SFML/Audio.hpp>
 
 #include <vector>
+#include <ctime>
 
 struct NetworkEvent
 {
-	time_t receivedTime;
+	enum class Command
+	{
+		None,
+
+		Ping,
+		Disconnect,
+		MessageDeliver,
+	} command;
+
+	time_t receivedTime = 0;
 	sf::Packet packet;
 };
 
@@ -15,14 +26,23 @@ class Listener
 {
 public:
 	Listener();
+	~Listener();
+
+	bool connectToServer(const sf::IpAddress& address, const unsigned short port);
 
 	sf::TcpSocket socket;
 
-	void Update();
+	bool sendToServer(sf::Packet packet);
 
-	std::vector<NetworkEvent> eventQueue;
+	void pollNetworkEvent(NetworkEvent& event);
+
 private:
 	sf::SocketSelector selector;
+
+	sf::Sound update;
+	sf::Sound fail;
+	sf::SoundBuffer updateBuffer;
+	sf::SoundBuffer failBuffer;
 };
 
 #endif // !LISTENER_HPP

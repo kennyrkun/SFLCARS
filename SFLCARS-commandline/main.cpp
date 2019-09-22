@@ -7,7 +7,7 @@
 int main()
 {
 	sf::IpAddress remoteAddress = sf::IpAddress::LocalHost;
-	int remotePort = 51425;
+	int remotePort = 12345;
 
 	std::string address;
 	std::cout << "SFLCARS server address: ";
@@ -21,7 +21,7 @@ int main()
 	std::cout << "SFLCARS server port: ";
 	std::getline(std::cin, port);
 	if (port.empty())
-		remotePort = 51425;
+		remotePort = 12345;
 	else
 		remotePort = std::stoi(port);
 

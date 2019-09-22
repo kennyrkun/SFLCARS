@@ -1,17 +1,23 @@
+#include "Client.hpp"
+
+#include <Password.hpp>
+#include <SettingsParser.hpp>
+#include <Utility.hpp>
+
 #include <SFML/Network.hpp>
 
+#include <filesystem>
+#include <fstream>
 #include <iostream>
+#include <random>
+#include <string>
 #include <vector>
 
-struct Client
-{
-	std::string name;
+// TODO: send commands instead of strings
 
-	sf::IpAddress ip;
-	int id;
-
-	sf::TcpSocket* socket;
-};
+namespace fs = std::filesystem;
+namespace util = sflcars::utility;
+namespace pass = sflcars::utility::password;
 
 enum class Command
 {
@@ -24,11 +30,48 @@ enum class Command
 class Server
 {
 public:
+	Server()
+	{
+		const std::string BASE = "./sflcars_server/";
+		const std::string ACCOUNTS = BASE + "accounts/";
+
+		if (!fs::exists(BASE))
+			fs::create_directory(BASE);
+
+		if (!fs::exists(ACCOUNTS))
+			fs::create_directory(ACCOUNTS);
+
+		if (fs::is_empty(ACCOUNTS))
+		{
+			std::cout << "no user accounts are present" << std::endl;
+
+			std::string username = "admin";
+			std::string password = "admin";
+			std::string hashedPassword = pass::hashString(password);
+
+			fs::create_directory(ACCOUNTS + username);
+
+			std::ofstream createAccountFile(ACCOUNTS + username + "/account.dat", std::ios::trunc);
+
+			if (!createAccountFile.is_open())
+			{
+				std::cerr << "failed to create default account file" << std::endl;
+				abort();
+			}
+			else
+				createAccountFile.close();
+
+			util::SettingsParser parser(ACCOUNTS + username + "/account.dat");
+			parser.set("username", username);
+			parser.set("hashed_password", hashedPassword);
+		}
+	}
+
 	void run()
 	{
 		std::cout << "starting SFLCARS server" << std::endl;
 
-		if (listener.listen(51425) != sf::Socket::Status::Done)
+		if (listener.listen(12345) != sf::Socket::Status::Done)
 		{
 			std::cerr << "failed to bind listener to port" << std::endl;
 			return;
@@ -44,7 +87,7 @@ public:
 		{
 			// selector.wait returns true if something inside of it is ready
 			// returns false if nothing is ready
-			if (selector.wait(sf::seconds(1.0f)))
+			if (selector.wait())
 			{
 				std::cout << "something is ready:" << std::endl;
 
@@ -59,41 +102,39 @@ public:
 
 						newClient.ip = newClient.socket->getRemoteAddress();
 
-						bool duplicateClient = false;
 						for (const auto& client : clients)
 							if (client.ip == newClient.ip)
 							{
-								duplicateClient = true;
+								sf::Packet notifyPacket;
+
+								notifyPacket << "connectionRejected";
+								notifyPacket << "duplicateClient";
+								notifyPacket << "A client with this IP address is already connected.";
+
+								if (newClient.socket->send(notifyPacket) != sf::Socket::Status::Done)
+									std::cerr << "failed to send return packet to client" << std::endl;
+
+								newClient.socket->disconnect();
+								delete newClient.socket;
+
+								std::cout << "denied duplicate client" << std::endl;
+
 								break;
 							}
 
+
 						sf::Packet notifyPacket;
 
-						if (duplicateClient)
-						{
-							notifyPacket << "connectionRejected";
-							notifyPacket << "duplicateClient";
-							notifyPacket << "A client with this IP address is already connected.";
-						}
-						else
-						{
-							newClient.id = totalClients++;
-							selector.add(*newClient.socket);
-							clients.push_back(newClient);
+						newClient.id = totalClients++;
+						selector.add(*newClient.socket);
+						clients.push_back(newClient);
 
-							notifyPacket << "connectionAccepted";
-						}
+						notifyPacket << "connectionAccepted";
 
 						if (newClient.socket->send(notifyPacket) != sf::Socket::Status::Done)
 							std::cerr << "failed to send return packet to client" << std::endl;
 
-						if (duplicateClient)
-						{
-							newClient.socket->disconnect();
-							delete newClient.socket;
-						}
-						else
-							std::cout << "accepted new client" << std::endl;
+						std::cout << "accepted new client" << std::endl;
 					}
 					else
 						delete newClient.socket;
@@ -110,9 +151,58 @@ public:
 							client.socket->receive(packet);
 							packet >> command;
 
-							std::cout << "client" + client.id << ": " << command << std::endl;
+							std::cout << client.ip.toString() << ": " << command << std::endl;
 
-							if (command == "shutdown")
+							if (command == "login")
+							{
+								std::string step;
+								packet >> step;
+
+								if (step == "step1")
+								{
+									std::cout << "step1, sending client a random number" << std::endl;
+
+									responseCommand = "login";
+									responsePacket << responseCommand;
+									responsePacket << "step2";
+									responsePacket << util::getRandomNumber(0, std::numeric_limits<size_t>::max());
+								}
+								else if (step == "step4")
+								{
+									std::cout << "step4, testing password" << std::endl;
+
+									std::string username, randoHash, superHash;
+
+									packet >> username;
+									packet >> randoHash;
+									packet >> superHash;
+
+									// step 5
+									util::SettingsParser parser("./sflcars_server/accounts/" + username + "/account.dat");
+
+									std::string local_passwordHash;
+									parser.get("hashed_password", local_passwordHash);
+
+									std::string local_superHash = pass::hashString(local_passwordHash + randoHash);
+
+									// step 6
+									if (local_superHash == superHash)
+									{
+										std::cout << "success!" << std::endl;
+
+										responseCommand = "loginSuccess";
+										responsePacket << responseCommand;
+
+										client.clientAuthenticated = true;
+									}
+									else
+									{
+										responseCommand = "loginFailure";
+										responsePacket << "The password did not match the locally stored password.";
+									}
+								}
+							}
+							else if (command == "shutdown")
 							{
 								std::cout << "shutting down" << std::endl;
 								responseCommand = "shutting the heck down boys";
@@ -149,6 +239,8 @@ public:
 								std::string who, what;
 
 								packet >> who;
+
+								// FIXME: we need to loop over the packet and make sure we get everything in what
 								packet >> what;
 
 								std::cout << "sending " << who << ": " << what << std::endl;
@@ -185,13 +277,33 @@ public:
 							}
 
 							if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
+							{
+								std::cerr << "failed to send return packet to client" << std::endl;
+
+								if (client.socket->send(responsePacket) == sf::Socket::Status::Disconnected)
+								{
+									std::cout << "client disconnected" << std::endl;
+									client.socket->disconnect();
+									//std::remove(clients.begin(), clients.end(), client);
+									delete client.socket;
+								}
+								else if (client.socket->getRemoteAddress() == sf::IpAddress::None)
+								{
+									std::cout << "client disconnected" << std::endl;
+									client.socket->disconnect();
+									delete client.socket;
+									// TODO: delete client
+								}
+							}
+
+							if (client.socket->send(responsePacket) != sf::Socket::Status::Done)
 								std::cerr << "failed to send return packet to client" << std::endl;
 						}
 					}
 				}
 			}
 
-			sf::sleep(sf::seconds(1));
+			sf::sleep(sf::milliseconds(100));
 		}
 
 		std::cout << "exiting SFLCARS server." << std::endl;
@@ -208,7 +320,6 @@ public:
 				std::cerr << "failed to send return packet to client" << std::endl;
 
 			client.socket->disconnect();
-
 			delete client.socket;
 		}
 
@@ -234,6 +345,8 @@ int main()
 	Server server;
 
 	server.run();
+
+	std::cin.get();
 
 	return 0;
 }
