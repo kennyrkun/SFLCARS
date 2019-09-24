@@ -81,7 +81,7 @@ void InitialiseState::Update()
 	{
 		if (!connectedToServer)
 		{
-			if (!app->listener.connectToServer(sf::IpAddress::LocalHost, 12345))
+			if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
 			{
 				std::cerr << "failed to connect to server (" << updates << ")" << std::endl;
 				app->settings.offline = true;
