@@ -77,7 +77,10 @@ public:
 			return;
 		}
 		else
-			std::cout << "bound to port" << std::endl;
+			std::cout << "Listener bound to port " << listener.getLocalPort() << std::endl;
+
+		std::cout << "this server's local ip address is: " << sf::IpAddress::getLocalAddress() << std::endl;
+		std::cout << "this server's public ip address is: " << sf::IpAddress::getPublicAddress() << std::endl;
 
 		listener.setBlocking(false);
 
