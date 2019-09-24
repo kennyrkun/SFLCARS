@@ -2,6 +2,7 @@
 #include "Theme.hpp"
 
 #include <random>
+#include <cctype>
 
 namespace sflcars
 {
@@ -26,6 +27,7 @@ Button::Button(const std::string& string)
 	buffer.loadFromFile(".//resources/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
 
+	// TODO: if Theme::textAllCaps == true, make text uppercase
 	setString(string);
 }
 

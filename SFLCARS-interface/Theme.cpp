@@ -21,6 +21,8 @@ sf::Keyboard::Key Theme::previousWidgetKey = sf::Keyboard::Up;
 
 Theme::MouseInput Theme::mouse;
 
+bool Theme::textAllCaps = true;
+
 sf::Font Theme::m_font;
 
 bool Theme::loadFont(const std::string& filename)

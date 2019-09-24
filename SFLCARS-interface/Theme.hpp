@@ -80,6 +80,8 @@ public:
 	//	static sf::Keyboard::Key back = sf::Keyboard::Key::BackSpace | sf::Keyboard::Key::Esc;
 	//	static sf::Keyboard::Key cancel = sf::Keyboard::Key::Esc;
 
+	static bool textAllCaps;
+
 	static bool triggerCallbacksOnRelease;
 
 private:
