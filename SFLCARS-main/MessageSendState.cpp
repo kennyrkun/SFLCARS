@@ -92,7 +92,7 @@ void MessageSendState::HandleEvents()
 		packet << who;
 		packet << what;
 
-		app->listener.sendToServer(packet);
+		app->listener.send(packet);
 		break;
 	}
 	case Callbacks::Quit:

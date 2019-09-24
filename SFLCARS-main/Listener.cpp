@@ -17,7 +17,7 @@ Listener::~Listener()
 	sf::Packet packet;
 	packet << "disconnect";
 
-	sendToServer(packet);
+	send(packet);
 
 	socket.disconnect();
 }
@@ -34,7 +34,7 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 	return true;
 }
 
-bool Listener::sendToServer(sf::Packet packet)
+bool Listener::send(sf::Packet packet)
 {
 	sf::Socket::Status status = socket.send(packet);
 

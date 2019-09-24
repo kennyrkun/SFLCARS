@@ -32,7 +32,7 @@ public:
 
 	sf::TcpSocket socket;
 
-	bool sendToServer(sf::Packet packet);
+	bool send(sf::Packet packet);
 
 	void pollNetworkEvent(NetworkEvent& event);
 

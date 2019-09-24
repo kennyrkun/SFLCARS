@@ -77,6 +77,8 @@ void InitialiseState::Update()
 		sf::Packet packet;
 		packet << "connectionRequested";
 
+		app->listener.send(packet);
+
 		if (connectedToServer)
 		{
 			NetworkEvent event;

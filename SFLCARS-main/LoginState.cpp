@@ -81,7 +81,7 @@ void LoginState::HandleEvents()
 
 //		interface->submitButton->disable();
 
-		app->listener.sendToServer(packet);
+		app->listener.send(packet);
 		break;
 	}
 	case Callbacks::QuitButton:
@@ -129,7 +129,7 @@ void LoginState::Update()
 				response << randoHash;
 				response << superHash;
 
-				app->listener.sendToServer(response);
+				app->listener.send(response);
 			}
 		}
 		else if (total == "loginSuccess")
