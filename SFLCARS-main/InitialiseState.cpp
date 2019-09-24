@@ -66,26 +66,17 @@ void InitialiseState::Update()
 {
 	// we want to draw first
 	static int updates = 0;
-	static bool connectedToServer = false;
 
 	if (updates >= 1)
 	{
-		if (!connectedToServer)
+		if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
 		{
-			if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
-			{
-				std::cerr << "failed to connect to server (" << updates << ")" << std::endl;
-				app->settings.offline = true;
-			}
-			else // success
-			{
-				std::cout << "connected to server" << std::endl;
-				app->ChangeState(new LoginState);
-				return;
-			}
+			std::cerr << "failed to connect to server (" << updates << ")" << std::endl;
+			app->settings.offline = true;
 		}
-		else // connected to server
+		else // success
 		{
+			std::cout << "connected to server" << std::endl;
 			app->ChangeState(new LoginState);
 			return;
 		}

@@ -4,6 +4,7 @@
 #include "Listener.hpp"
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Network/IpAddress.hpp>
 
 #include <vector>
 #include <string>
@@ -20,6 +21,12 @@ struct AppSettings
 	int maxfps = 60;
 
 	bool offline = false;
+
+	struct Server
+	{
+		sf::IpAddress serverIpAddress = sf::IpAddress::LocalHost;
+		unsigned short serverPort = 12345;
+	} server;
 
 	struct CommandLineArguments
 	{

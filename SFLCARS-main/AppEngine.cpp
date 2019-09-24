@@ -18,6 +18,23 @@ void AppEngine::Init(std::string title_, AppSettings settings_)
 	title = title_;
 	settings = settings_;
 
+	for (size_t i = 0; i < settings.launchOptions.argc; i++)
+	{
+		std::cout << i << ": " << settings.launchOptions.argv[i] << std::endl;
+
+		if (std::string(settings.launchOptions.argv[i]) == "-serverIp")
+		{
+			settings.server.serverIpAddress = settings.launchOptions.argv[i + 1];
+			std::cout << "set server ip to " << settings.server.serverIpAddress << std::endl;
+		}
+
+		if (std::string(settings.launchOptions.argv[i]) == "-serverPort")
+		{
+			settings.server.serverPort = std::stoi(settings.launchOptions.argv[i + 1]);
+			std::cout << "set server ip to " << settings.server.serverIpAddress << std::endl;
+		}
+	}
+
 	for (int i = 0; i < settings.launchOptions.argc; i++)
 	{
 		if (std::string(settings.launchOptions.argv[i]) == "-vsync")
