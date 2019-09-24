@@ -29,6 +29,26 @@ sf::Vector2f String::getSize() const
 	return sf::Vector2f(rect.width, rect.height);
 }
 
+void String::setText(const sf::String& string)
+{
+	text.setString(string);
+}
+
+const sf::String& String::getText() const
+{
+	return text.getString();
+}
+
+void String::addText(const sf::String& string)
+{
+	setText(getText() + string);
+}
+
+bool String::isEmpty() const
+{
+	return text.getString().isEmpty();
+}
+
 void String::setCharacterSize(float newSize)
 {
 	text.setCharacterSize(newSize);

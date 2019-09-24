@@ -17,6 +17,13 @@ public:
 	void setSize(const sf::Vector2f& newSize) {};
 	sf::Vector2f getSize() const;
 
+	void setText(const sf::String& string);
+	const sf::String& getText() const;
+
+	void addText(const sf::String& string);
+
+	bool isEmpty() const;
+
 	void setCharacterSize(float newSize);
 	float getCharacterSize() const;
 

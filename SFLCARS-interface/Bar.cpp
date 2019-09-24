@@ -18,6 +18,9 @@ Bar::Bar()
 
 }
 
+// TODO: this function needs to be updated
+// either a single float parameter for length
+// or actually change height with newSize.y
 void Bar::setSize(const sf::Vector2f& newSize)
 {
 	std::cout << "updating bar size" << std::endl;
