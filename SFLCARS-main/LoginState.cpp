@@ -1,6 +1,6 @@
 #include "AppEngine.hpp"
 #include "LoginState.hpp"
-#include "MessageSendState.hpp"
+#include "MainMenuState.hpp"
 
 #include <Password.hpp>
 
@@ -44,6 +44,7 @@ void LoginState::Cleanup()
 	std::cout << "Cleaning up LoginState." << std::endl;
 
 	delete interface;
+	delete display;
 
 	std::cout << "Cleaned up LoginState." << std::endl;
 }
@@ -135,7 +136,7 @@ void LoginState::Update()
 		{
 			std::cout << "login successful!" << std::endl;
 
-			app->ChangeState(new MessageSendState);
+			app->ChangeState(new MainMenuState);
 			return;
 		}
 

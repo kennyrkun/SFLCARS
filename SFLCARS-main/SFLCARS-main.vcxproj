@@ -24,6 +24,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="LoginState.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +33,7 @@
     <ClInclude Include="InitialiseState.hpp" />
     <ClInclude Include="Listener.hpp" />
     <ClInclude Include="LoginState.hpp" />
+    <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

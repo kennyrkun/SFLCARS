@@ -49,6 +49,8 @@ void MessageSendState::Cleanup()
 {
 	std::cout << "Cleaning up MessageSendState." << std::endl;
 
+	delete display;
+
 	std::cout << "Cleaned up MessageSendState." << std::endl;
 }
 
@@ -95,7 +97,7 @@ void MessageSendState::HandleEvents()
 	}
 	case Callbacks::Quit:
 	{
-		app->Quit();
+		app->PopState();
 		return;
 	}
 	default:
