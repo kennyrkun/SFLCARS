@@ -29,6 +29,7 @@ void MainMenuState::Init(AppEngine* app_)
 
 	layout->add(topbar, 10);
 	layout->add(toSendMessageState, Callbacks::toMessageSendState);
+	layout->add(quitButton, Callbacks::Quit);
 	layout->add(bottombar);
 
 	std::cout << "MainMenuState ready." << std::endl;

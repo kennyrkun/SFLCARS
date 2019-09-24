@@ -1,13 +1,19 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
 
-enum class COmmands
+namespace sflcars
+{
+namespace network
+{
+
+enum class Commands
 {
 	Login,
 	Logout,
 	Disconnect,
 	Disconnected,
 	Connect,
+	ConnectionRequested,
 	ConnectionAccepted,
 	ConnectionRejected,
 	Ping,
@@ -16,5 +22,8 @@ enum class COmmands
 	DeliverMessage,
 	ListClients,
 };
+
+}
+}
 
 #endif // !COMMANDS_HPP

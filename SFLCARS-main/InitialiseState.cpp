@@ -32,6 +32,8 @@ void InitialiseState::Init(AppEngine* app_)
 	layout->add(text, Callbacks::SubmitButton);
 	layout->add(bottombar);
 
+	Draw();
+
 	std::cout << "InitialiseState ready." << std::endl;
 }
 
@@ -65,26 +67,50 @@ void InitialiseState::HandleEvents()
 void InitialiseState::Update()
 {
 	// we want to draw first
-	static int updates = 0;
+	static int failedConnectionAttempts = 0;
+	static bool connectedToServer = false;
 
-	if (updates >= 1)
+	if (app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
 	{
-		if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
+		std::cout << "successfully established connection to server." << std::endl;
+
+		sf::Packet packet;
+		packet << "connectionRequested";
+
+		if (connectedToServer)
 		{
-			std::cerr << "failed to connect to server (" << updates << ")" << std::endl;
-			app->settings.offline = true;
+			NetworkEvent event;
+			app->listener.pollNetworkEvent(event);
+
+			if (event.packet.getDataSize() > 0)
+			{
+				std::string command;
+				event.packet >> command;
+
+				std::cout << "command: " << command << std::endl;
+
+				if (command == "connectionAccepted")
+				{
+					app->ChangeState(new LoginState);
+					return;
+				}
+				else
+				{
+					// TODO: eventually do try to reconnect
+					std::cerr << "connection not accepted: (" << command << ")" << std::endl;
+					abort();
+				}
+			}
 		}
-		else // success
-		{
-			std::cout << "connected to server" << std::endl;
-			app->ChangeState(new LoginState);
-			return;
-		}
+	}
+	else
+	{
+		std::cerr << "failed to connect to server (" << failedConnectionAttempts << ")" << std::endl;
+		app->settings.offline = true;
+		failedConnectionAttempts++;
 	}
 
 	display->Update();
-
-	updates++;
 }
 
 void InitialiseState::Draw()

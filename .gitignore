@@ -347,3 +347,4 @@ MigrationBackup/
 SFML
 SFLCARS-Test/resources
 SFLCARS-main/resources
+SFLCARS-Server/sflcars_server/accounts/admin/account.dat

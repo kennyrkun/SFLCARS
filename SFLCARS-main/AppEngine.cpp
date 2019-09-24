@@ -155,6 +155,8 @@ void AppEngine::Draw()
 
 void AppEngine::Quit()
 {
+	std::cout << "AppEngine shutdown initiated." << std::endl;
+
 	for (size_t i = 0; i < states.size(); i++)
 	{
 		states.back()->Cleanup();
