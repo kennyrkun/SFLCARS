@@ -1,6 +1,5 @@
 #include "Server.hpp"
 
-#include <Commands.hpp>
 #include <Password.hpp>
 #include <SettingsParser.hpp>
 #include <Utility.hpp>
@@ -19,6 +18,14 @@
 namespace fs = std::filesystem;
 namespace util = sflcars::utility;
 namespace pass = sflcars::utility::password;
+namespace net = sflcars::utility::network;
+
+sf::Packet& operator >>(sf::Packet& packet, net::Command& command)
+{
+	// FIXME: can't figure out how to unpack Command into a value
+	int t = -1;
+	return packet >> (command = static_cast<net::Command>(t));
+}
 
 Server::Server()
 {
@@ -105,14 +112,15 @@ void Server::run()
 						std::cout << "client" << client->id << " socket is ready" << std::endl;
 
 						sf::Packet packet, responsePacket;
-						std::string command, responseCommand;
+
+						net::Command command;
 
 						client->socket->receive(packet);
 						packet >> command;
 
 						std::cout << client->ip.toString() << ": " << command << std::endl;
 
-						if (command == "login")
+						if (command == net::Command::Login)
 						{
 							std::string step;
 							packet >> step;
@@ -121,8 +129,7 @@ void Server::run()
 							{
 								std::cout << "step1, sending client a random number" << std::endl;
 
-								responseCommand = "login";
-								responsePacket << responseCommand;
+								responsePacket << net::Command::Login;
 								responsePacket << "step2";
 								responsePacket << util::getRandomNumber(0, std::numeric_limits<size_t>::max());
 							}
@@ -149,32 +156,29 @@ void Server::run()
 								{
 									std::cout << "success!" << std::endl;
 
-									responseCommand = "loginSuccess";
-									responsePacket << responseCommand;
+									responsePacket << net::Command::LoginSuccess;
 
 									client->clientAuthenticated = true;
 								}
 								else
 								{
-									responseCommand = "loginFailure";
+									responsePacket << net::Command::LoginFailure;
 									responsePacket << "The password did not match the locally stored password.";
 								}
 							}
 						}
-						else if (command == "shutdown")
+						else if (command == net::Command::Shutdown)
 						{
 							std::cout << "shutting down" << std::endl;
-							responseCommand = "shutting the heck down boys";
-							responsePacket << responseCommand;
+							responsePacket << net::Command::ShuttingDown;
 
 							running = false;
 						}
-						else if (command == "listClients")
+						else if (command == net::Command::ListClients)
 						{
 							std::cout << "sending a list of clients" << std::endl;
 
-							responseCommand = "clientList";
-							responsePacket << responseCommand;
+							responsePacket << net::Command::ClientList;
 
 							for (const auto& client : clients)
 							{
@@ -182,18 +186,16 @@ void Server::run()
 								responsePacket << clientinformation;
 							}
 						}
-						else if (command == "ping")
+						else if (command == net::Command::Ping)
 						{
-							responseCommand = "pong";
-							responsePacket << responseCommand;
+							responsePacket << net::Command::Pong;
 						}
-						else if (command == "getVersion")
+						else if (command == net::Command::Version)
 						{
-							responseCommand = "giveVersion";
-							responsePacket << responseCommand;
+							responsePacket << net::SubCommand::MyVersion;
 							responsePacket << version;
 						}
-						else if (command == "messageSend")
+						else if (command == net::Command::SendMessage)
 						{
 							std::string who, what;
 
@@ -217,22 +219,21 @@ void Server::run()
 										std::cerr << "failed to send return packet to client" << std::endl;
 								}
 
-								responseCommand = "messageSent";
+								responsePacket << net::Command::MessageSent;
 								responsePacket << "The message has been sent to everyone.";
 							}
 							else
 							{
 								// find specific ip address
 
-								responseCommand = "messageInvalid";
-								responsePacket << responseCommand;
+								responsePacket << net::Command::MessageRecipientInvalid;
 								responsePacket << ("The who \"" + who + "\" is not recognised.");
 							}
 						}
 						else
 						{
-							responseCommand = "\"" + command + "\" acknowledged; command unknown";
-							responsePacket << responseCommand;
+							responsePacket << net::Command::None;
+							responsePacket << "\"" + std::to_string(command) + "\" acknowledged; command unknown";
 						}
 
 						if (send(responsePacket, client) != sf::Socket::Status::Done)
@@ -269,6 +270,14 @@ void Server::run()
 	std::cin.get();
 }
 
+sf::Socket::Status Server::send(net::Command command, Client* client)
+{
+	sf::Packet packet;
+	packet << command;
+
+	return send(command, client);
+}
+
 sf::Socket::Status Server::send(sf::Packet& packet, Client* client)
 {
 	sf::Socket::Status status = client->socket->send(packet);
@@ -288,7 +297,7 @@ bool Server::acceptNewClientConnection(Client* newClient)
 		{
 			sf::Packet notifyPacket;
 
-			notifyPacket << "connectionRejected";
+			notifyPacket << net::Command::ConnectionRejected;
 			notifyPacket << "duplicateClient";
 			notifyPacket << "A client with this IP address is already connected.";
 
@@ -307,7 +316,7 @@ bool Server::acceptNewClientConnection(Client* newClient)
 	clients.push_back(newClient);
 
 	sf::Packet notifyPacket;
-	notifyPacket << "connectionAccepted";
+	notifyPacket << net::Command::ConnectionAccepted;
 	notifyPacket << newClient->id;
 
 	send(notifyPacket, newClient);
@@ -321,14 +330,7 @@ void Server::informClientsShutdown()
 {
 	// let all the clients know we're shutting down
 	for (auto& client : clients)
-	{
-		std::string command = "serverShuttingDown";
-
-		sf::Packet responsePacket;
-		responsePacket << command;
-
-		send(responsePacket, client);
-	}
+		send(net::Command::ShuttingDown, client);
 }
 
 bool Server::testClientConnection(Client* client)

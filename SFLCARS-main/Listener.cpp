@@ -68,9 +68,9 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 			}
 			else
 			{
-				event = { NetworkEvent::Command::None, time_t(0), packet };
+				event = { net::Command::None, time_t(0), packet };
+				std::cout << "received and processed packet (" << event.command << ")" << std::endl;
 				update.play();
-				std::cout << "received and processed packet" << std::endl;
 			}
 		}
 	}

@@ -18,7 +18,7 @@
     <ClInclude Include="Utility.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.hpp">
+    <ClInclude Include="Command.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

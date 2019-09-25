@@ -122,7 +122,7 @@
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Commands.hpp" />
+    <ClInclude Include="Command.hpp" />
     <ClInclude Include="Password.hpp" />
     <ClInclude Include="PicoSHA256.hpp" />
     <ClInclude Include="SettingsParser.hpp" />

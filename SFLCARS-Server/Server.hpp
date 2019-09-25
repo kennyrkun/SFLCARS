@@ -1,9 +1,11 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include <SFML/Network.hpp>
-
 #include "Client.hpp"
+
+#include <Command.hpp>
+
+#include <SFML/Network.hpp>
 
 class Server
 {
@@ -13,6 +15,7 @@ public:
 	void run();
 
 private:
+	sf::Socket::Status send(sflcars::utility::network::Command command, Client* client);
 	sf::Socket::Status send(sf::Packet& packet, Client* client);
 
 	bool acceptNewClientConnection(Client* newClient);

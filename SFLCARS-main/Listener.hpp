@@ -1,22 +1,19 @@
 #ifndef LISTENER_HPP
 #define LISTENER_HPP
 
+#include <Command.hpp>
+
 #include <SFML/Network.hpp>
 #include <SFML/Audio.hpp>
 
 #include <vector>
 #include <ctime>
 
+namespace net = sflcars::utility::network;
+
 struct NetworkEvent
 {
-	enum class Command
-	{
-		None,
-
-		Ping,
-		Disconnect,
-		MessageDeliver,
-	} command;
+	net::Command command;
 
 	time_t receivedTime = 0;
 	sf::Packet packet;

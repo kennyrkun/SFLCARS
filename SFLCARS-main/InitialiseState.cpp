@@ -70,12 +70,25 @@ void InitialiseState::Update()
 	static int failedConnectionAttempts = 0;
 	static bool connectedToServer = false;
 
-	if (app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
+	if (!connectedToServer)
 	{
-		std::cout << "successfully established connection to server." << std::endl;
+		if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
+		{
+			std::cerr << "failed to connect to server (" << failedConnectionAttempts << ")" << std::endl;
+			app->settings.offline = true;
+			failedConnectionAttempts++;
+		}
+		else
+		{
+			connectedToServer = true;
+			std::cout << "successfully established connection to server." << std::endl;
+		}
+	}
+	else
+	{
 
 		sf::Packet packet;
-		packet << "connectionRequested";
+		packet << net::Command::ConnectionRequested;
 
 		app->listener.send(packet);
 
@@ -86,30 +99,22 @@ void InitialiseState::Update()
 
 			if (event.packet.getDataSize() > 0)
 			{
-				std::string command;
-				event.packet >> command;
+				std::cout << "command: " << event.command << std::endl;
 
-				std::cout << "command: " << command << std::endl;
-
-				if (command == "connectionAccepted")
+				if (event.command == net::Command::ConnectionAccepted)
 				{
+					std::cout << "connection accepted" << std::endl;
 					app->ChangeState(new LoginState);
 					return;
 				}
 				else
 				{
 					// TODO: eventually do try to reconnect
-					std::cerr << "connection not accepted: (" << command << ")" << std::endl;
+					std::cerr << "connection not accepted: (" << event.command << ")" << std::endl;
 					abort();
 				}
 			}
 		}
-	}
-	else
-	{
-		std::cerr << "failed to connect to server (" << failedConnectionAttempts << ")" << std::endl;
-		app->settings.offline = true;
-		failedConnectionAttempts++;
 	}
 
 	display->Update();
