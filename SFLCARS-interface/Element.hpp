@@ -47,9 +47,6 @@ public:
 	void setParent(Element* element);
 	Element* getParent() const;
 
-	void setSelectable(bool selectable);
-
-	bool isSelectable() const;
 	bool isFocused() const;
 
 	bool containsPoint(const sf::Vector2f& point) const;
@@ -79,7 +76,6 @@ protected:
 private:
 	State state;
 	int id = -1;
-	bool selectable;
 };
 
 }

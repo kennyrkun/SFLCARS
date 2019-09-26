@@ -77,49 +77,44 @@ void Layout::onStateChanged(State state)
 
 int Layout::onEvent(const sf::Event& event)
 {
-	for (auto& x : elements)
+	sf::Vector2f mouse = display->getMousePosition();
+
+	switch (event.type)
 	{
-		// TODO: test events for subwindows
-
-		sf::Vector2f mouse = display->getMousePosition();
-
-		switch (event.type)
-		{
-		case sf::Event::MouseMoved:
-		{
-			x->onMouseMoved(mouse);
-			break;
-		}
-		case sf::Event::MouseButtonPressed:
-		{
-			if (event.mouseButton.button == sf::Mouse::Left)
-				x->onMousePressed(mouse);
-			break;
-		}
-		case sf::Event::MouseButtonReleased:
-		{
-			if (event.mouseButton.button == sf::Mouse::Left)
-				x->onMouseReleased(mouse);
-			break;
-		}
-		case sf::Event::MouseWheelMoved:
-			x->onMouseWheelMoved(event.mouseWheel.delta);
-			break;
-		case sf::Event::KeyPressed:
-			x->onKeyPressed(event.key.code);
-			break;
-		case sf::Event::KeyReleased:
-			x->onKeyReleased(event.key.code);
-			break;
-		case sf::Event::TextEntered:
-			x->onTextEntered(event.text.unicode);
-			break;
-		case sf::Event::Resized:
-			x->onWindowResized(event.size);
-			break;
-		default:
-			break;
-		}
+	case sf::Event::MouseMoved:
+	{
+		onMouseMoved(mouse);
+		break;
+	}
+	case sf::Event::MouseButtonPressed:
+	{
+		if (event.mouseButton.button == sf::Mouse::Left)
+			onMousePressed(mouse);
+		break;
+	}
+	case sf::Event::MouseButtonReleased:
+	{
+		if (event.mouseButton.button == sf::Mouse::Left)
+			onMouseReleased(mouse);
+		break;
+	}
+	case sf::Event::MouseWheelMoved:
+		onMouseWheelMoved(event.mouseWheel.delta);
+		break;
+	case sf::Event::KeyPressed:
+		onKeyPressed(event.key.code);
+		break;
+	case sf::Event::KeyReleased:
+		onKeyReleased(event.key.code);
+		break;
+	case sf::Event::TextEntered:
+		onTextEntered(event.text.unicode);
+		break;
+	case sf::Event::Resized:
+		onWindowResized(event.size);
+		break;
+	default:
+		break;
 	}
 
 	if (triggered != nullptr)
@@ -256,13 +251,9 @@ bool Layout::focusElement(Element* element, State state)
 			focused = nullptr;
 		}
 
-		// Apply focus to element
-		if (element->isSelectable())
-		{
-			focused = element;
-			element->setState(state);
-			return true;
-		}
+		focused = element;
+		element->setState(state);
+		return true;
 	}
 
 	return false;

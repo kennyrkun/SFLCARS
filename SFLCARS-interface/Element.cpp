@@ -33,16 +33,6 @@ Element* Element::getParent() const
 	return parent;
 }
 
-void Element::setSelectable(bool selectable)
-{
-	this->selectable = selectable;
-}
-
-bool Element::isSelectable() const
-{
-	return selectable;
-}
-
 bool Element::isFocused() const
 {
 	return (state == State::Focused);
