@@ -54,6 +54,7 @@ Server::Server()
 		util::SettingsParser parser(ACCOUNTS + username + "/account.dat");
 		parser.set("username", username);
 		parser.set("hashed_password", hashedPassword);
+		parser.set("elevated_privileges", true);
 	}
 }
 

@@ -16,6 +16,7 @@ public:
 	sf::TcpSocket* socket;
 
 	bool clientAuthenticated = false;
+	bool elevatedPrivileges = false;
 };
 
 #endif // !CLIENT_HPP
