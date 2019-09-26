@@ -4,12 +4,17 @@
 
 Listener::Listener()
 {
-	failBuffer.loadFromFile("./resources/sounds/error.ogg");
-	fail.setBuffer(failBuffer);
-	fail.setVolume(50.0f);
-	updateBuffer.loadFromFile("./resources/sounds/network/set.ogg");
-	packetReceived.setBuffer(updateBuffer);
-	packetReceived.setVolume(50.0f);
+	packetFailBuffer.loadFromFile("./resources/sounds/error.ogg");
+	packetFail.setBuffer(packetFailBuffer);
+	packetFail.setVolume(50.0f);
+
+	serverConnectFailBuffer.loadFromFile("./resources/sounds/fail2.ogg");
+	serverConnectFail.setBuffer(serverConnectFailBuffer);
+	serverConnectFail.setVolume(50.0f);
+
+	packetSuccessBuffer.loadFromFile("./resources/sounds/network/set.ogg");
+	packetSuccess.setBuffer(packetSuccessBuffer);
+	packetSuccess.setVolume(50.0f);
 }
 
 Listener::~Listener()
@@ -26,7 +31,7 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 {
 	if (socket.connect(address, port, sf::seconds(3)) != sf::Socket::Done)
 	{
-		fail.play();
+		serverConnectFail.play();
 		return false;
 	}
 
@@ -70,14 +75,14 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 				}
 
 				std::cerr << "failed to receive packed from server" << std::endl;
-				fail.play();
+				packetFail.play();
 			}
 			else
 			{
 				event = { net::Command::None, time_t(0), packet };
 				event.packet >> event.command;
 				std::cout << "received and processed packet (" << event.command << ")" << std::endl;
-				packetReceived.play();
+				packetSuccess.play();
 			}
 		}
 	}

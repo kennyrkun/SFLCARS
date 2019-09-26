@@ -36,10 +36,12 @@ public:
 private:
 	sf::SocketSelector selector;
 
-	sf::Sound packetReceived;
-	sf::Sound fail;
-	sf::SoundBuffer updateBuffer;
-	sf::SoundBuffer failBuffer;
+	sf::Sound packetSuccess;
+	sf::Sound packetFail;
+	sf::Sound serverConnectFail;
+	sf::SoundBuffer packetSuccessBuffer;
+	sf::SoundBuffer packetFailBuffer;
+	sf::SoundBuffer serverConnectFailBuffer;
 };
 
 #endif // !LISTENER_HPP
