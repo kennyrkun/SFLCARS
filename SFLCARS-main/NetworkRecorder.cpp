@@ -38,7 +38,4 @@ void NetworkRecorder::onStop()
 	packet << sflcars::utility::network::Command::EndIntercomToClient;
 	packet << endOfStream;
 	socket->send(packet);
-
-	// Close the socket
-	socket->disconnect();
 }
