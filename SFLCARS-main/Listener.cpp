@@ -19,6 +19,8 @@ Listener::Listener()
 
 Listener::~Listener()
 {
+	std::cout << "shutting down listener" << std::endl;
+
 	sf::Packet packet;
 	packet << net::Command::Disconnect;
 
@@ -67,11 +69,11 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 
 	if (selector.wait(sf::milliseconds(10)))
 	{
-		std::cout << "something is ready: " << std::endl;
+		std::cout << "selector (";
 
 		if (selector.isReady(socket))
 		{
-			std::cout << "socket is ready: " << std::endl;
+			std::cout << "socket)" << std::endl;
 
 			sf::Packet packet;
 			sf::Socket::Status status = socket.receive(packet);
@@ -93,8 +95,16 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 				event = { net::Command::None, time_t(0), packet };
 				event.packet >> event.command;
 				std::cout << "received and processed packet (" << event.command << ")" << std::endl;
-				packetSuccess.play();
+
+				if (event.command != net::Command::IntercomDataSend && event.command != net::Command::IntercomDataSend)
+					packetSuccess.play();
 			}
+		}
+		else
+		{
+			std::cout << "unknown)" << std::endl;
+			std::cerr << "This should neverr happen" << std::endl;
+			abort();
 		}
 	}
 }
