@@ -34,16 +34,14 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 	return true;
 }
 
-bool Listener::send(sf::Packet packet)
+sf::Socket::Status Listener::send(sf::Packet packet)
 {
 	sf::Socket::Status status = socket.send(packet);
 
-	if (status == sf::Socket::Status::Done)
-		return true;
+	if (status != sf::Socket::Status::Done)
+		std::cerr << "failed to send packet to server (" << status << ")" << std::endl;
 
-	std::cerr << "failed to send packet to server (" << status << ")" << std::endl;
-
-	return false;
+	return status;
 }
 
 void Listener::pollNetworkEvent(NetworkEvent& event)
