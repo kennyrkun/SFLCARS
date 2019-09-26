@@ -32,6 +32,11 @@ void MainMenuState::Init(AppEngine* app_)
 	layout->add(quitButton, Callbacks::Quit);
 	layout->add(bottombar);
 
+	buffer.loadFromFile("./resources/sounds/initialising.ogg");
+	sound.setBuffer(buffer);
+
+	sound.play();
+
 	std::cout << "MainMenuState ready." << std::endl;
 }
 

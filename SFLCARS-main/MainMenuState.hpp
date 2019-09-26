@@ -23,6 +23,9 @@ public:
 	void Draw();
 
 private:
+	sf::Sound sound;
+	sf::SoundBuffer buffer;
+
 	sflcars::TextBar* topbar;
 	sflcars::Button* toSendMessageState;
 	sflcars::Button* quitButton;

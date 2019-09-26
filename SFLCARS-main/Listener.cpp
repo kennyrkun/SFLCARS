@@ -7,15 +7,15 @@ Listener::Listener()
 	failBuffer.loadFromFile("./resources/sounds/error.ogg");
 	fail.setBuffer(failBuffer);
 	fail.setVolume(50.0f);
-	updateBuffer.loadFromFile("./resources/sounds/set.ogg");
-	update.setBuffer(updateBuffer);
-	update.setVolume(50.0f);
+	updateBuffer.loadFromFile("./resources/sounds/network/set.ogg");
+	packetReceived.setBuffer(updateBuffer);
+	packetReceived.setVolume(50.0f);
 }
 
 Listener::~Listener()
 {
 	sf::Packet packet;
-	packet << "disconnect";
+	packet << net::Command::Disconnect;
 
 	send(packet);
 
@@ -61,14 +61,23 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 			sf::Socket::Status status = socket.receive(packet);
 			if (status != sf::Socket::Status::Done)
 			{
+				if (status == sf::Socket::Status::Disconnected)
+				{
+					std::cerr << "server has disconnected" << std::endl;
+					socket.disconnect();
+					abort();
+					// TODO: don't break so horribly
+				}
+
 				std::cerr << "failed to receive packed from server" << std::endl;
 				fail.play();
 			}
 			else
 			{
 				event = { net::Command::None, time_t(0), packet };
+				event.packet >> event.command;
 				std::cout << "received and processed packet (" << event.command << ")" << std::endl;
-				update.play();
+				packetReceived.play();
 			}
 		}
 	}

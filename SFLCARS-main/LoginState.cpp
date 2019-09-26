@@ -75,7 +75,7 @@ void LoginState::HandleEvents()
 		password = interface->passwordBox->getText().toAnsiString();
 
 		sf::Packet packet;
-		packet << "login";
+		packet << net::Command::Login;
 		packet << "step1";
 		packet << username;
 
@@ -99,13 +99,11 @@ void LoginState::Update()
 	NetworkEvent event;
 	app->listener.pollNetworkEvent(event);
 
-	if (event.packet.getDataSize() > 0)
+	if (event.command != net::Command::None)
 	{
-		std::string total;
-
-		event.packet >> total;
-
-		if (total == "login")
+		switch (event.command)
+		{
+		case net::Command::Login:
 		{
 			std::string loginStep;
 			event.packet >> loginStep;
@@ -123,7 +121,7 @@ void LoginState::Update()
 				std::string superHash = sflcars::utility::password::hashString(passwordHash + randoHash);
 
 				sf::Packet response;
-				response << "login";
+				response << net::Command::Login;
 				response << "step4";
 				response << username;
 				response << randoHash;
@@ -131,8 +129,32 @@ void LoginState::Update()
 
 				app->listener.send(response);
 			}
+			break;
 		}
-		else if (total == "loginSuccess")
+		case net::Command::LoginSuccess:
+		{
+			std::cout << "login successful!" << std::endl;
+			
+			// play initialising sound
+
+			app->ChangeState(new MainMenuState);
+			return;
+		}
+		default:
+			break;
+		}
+	}
+	else
+	{
+		// print the contents of the packet
+	}
+
+	if (event.packet.getDataSize() > 0)
+	{
+		std::string total;
+
+		event.packet >> total;
+		if (total == "loginSuccess")
 		{
 			std::cout << "login successful!" << std::endl;
 

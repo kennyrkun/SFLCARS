@@ -36,7 +36,7 @@ public:
 private:
 	sf::SocketSelector selector;
 
-	sf::Sound update;
+	sf::Sound packetReceived;
 	sf::Sound fail;
 	sf::SoundBuffer updateBuffer;
 	sf::SoundBuffer failBuffer;
