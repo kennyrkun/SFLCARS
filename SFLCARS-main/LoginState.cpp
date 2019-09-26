@@ -149,29 +149,6 @@ void LoginState::Update()
 		// print the contents of the packet
 	}
 
-	if (event.packet.getDataSize() > 0)
-	{
-		std::string total;
-
-		event.packet >> total;
-		if (total == "loginSuccess")
-		{
-			std::cout << "login successful!" << std::endl;
-
-			app->ChangeState(new MainMenuState);
-			return;
-		}
-
-		while (!event.packet.endOfPacket())
-		{
-			std::string temp;
-			event.packet >> temp;
-			total += ("\n" + temp);
-		}
-
-		std::cout << "server: " << total << std::endl;
-	}
-
 	display->Update();
 }
 
