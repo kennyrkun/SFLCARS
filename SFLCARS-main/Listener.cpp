@@ -39,6 +39,13 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 	return true;
 }
 
+sf::Socket::Status Listener::send(net::Command command)
+{
+	sf::Packet packet;
+	packet << command;
+	return send(packet);
+}
+
 sf::Socket::Status Listener::send(sf::Packet packet)
 {
 	sf::Socket::Status status = socket.send(packet);

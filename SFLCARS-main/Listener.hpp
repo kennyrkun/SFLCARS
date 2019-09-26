@@ -29,6 +29,7 @@ public:
 
 	sf::TcpSocket socket;
 
+	sf::Socket::Status send(net::Command command);
 	sf::Socket::Status send(sf::Packet packet);
 
 	void pollNetworkEvent(NetworkEvent& event);
