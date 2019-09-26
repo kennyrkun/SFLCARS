@@ -8,7 +8,7 @@
 
 enum Callbacks
 {
-	Login,
+	SendMessage,
 	Quit
 };
 
@@ -24,7 +24,7 @@ void MessageSendState::Init(AppEngine* app_)
 		display = nullptr;
 	}
 
-	display = new sflcars::Display(sf::VideoMode(300, 310));
+	display = new sflcars::Display(sf::VideoMode(800, 600));
 
 	topbar = new sflcars::TextBar("Send Message");
 	destinationBox = new sflcars::InputBox;
@@ -38,7 +38,7 @@ void MessageSendState::Init(AppEngine* app_)
 	layout.add(topbar);
 	layout.add(destinationBox);
 	layout.add(messageBox);
-	layout.add(submitButton, Callbacks::Login);
+	layout.add(submitButton, Callbacks::SendMessage);
 	layout.add(quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);
 	layout.add(bottombar);
 
@@ -82,7 +82,7 @@ void MessageSendState::HandleEvents()
 
 	switch (event.elementCallbackID)
 	{
-	case Callbacks::Login:
+	case Callbacks::SendMessage:
 	{
 		std::string who = destinationBox->getText().toAnsiString();
 		std::string what = messageBox->getText().toAnsiString();

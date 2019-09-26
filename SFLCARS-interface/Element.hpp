@@ -26,7 +26,7 @@ public:
 	int getID() const;
 
 	// optional
-	virtual void setSize(const sf::Vector2f& newSize) { return; }
+	virtual void setSize(const sf::Vector2f& newSize) {}
 	// optional
 	virtual sf::Vector2f getSize() const { return sf::Vector2f(0, 0); }
 

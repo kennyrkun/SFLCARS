@@ -35,6 +35,11 @@ enum Command
 	ListClients,
 	ClientList,
 	Version,
+	StartIntercomToClient,
+	EndIntercomToClient,
+	StartIntercomToAll,
+	EndIntercomToAll,
+	IntercomData,
 };
 
 enum SubCommand

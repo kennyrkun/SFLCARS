@@ -65,15 +65,13 @@ void Server::run()
 	if (listener.listen(12345) != sf::Socket::Status::Done)
 	{
 		std::cerr << "failed to bind listener to port" << std::endl;
-		return;
+		abort();
 	}
 	else
 		std::cout << "Listener bound to port " << listener.getLocalPort() << std::endl;
 
 	std::cout << "this server's local ip address is: " << sf::IpAddress::getLocalAddress() << std::endl;
 	std::cout << "this server's public ip address is: " << sf::IpAddress::getPublicAddress() << std::endl;
-
-	listener.setBlocking(false);
 
 	selector.add(listener);
 
@@ -95,7 +93,10 @@ void Server::run()
 				if (listener.accept(*newClient->socket) == sf::Socket::Status::Done)
 					acceptNewClientConnection(newClient);
 				else
+				{
 					delete newClient->socket;
+					delete newClient;
+				}
 			}
 			else
 			{
@@ -176,7 +177,7 @@ void Server::run()
 
 							for (const auto& client : clients)
 							{
-								std::string clientinformation(std::to_string(client->id) + ";" + client->ip.toString() + ";");
+								std::string clientinformation(std::to_string(client->id) + ";" + client->ip.toString() + ";" + client->name + ";");
 								responsePacket << clientinformation;
 							}
 						}
@@ -224,6 +225,38 @@ void Server::run()
 								responsePacket << ("The who \"" + who + "\" is not recognised.");
 							}
 						}
+						else if (command == net::Command::ConnectionRequested)
+						{
+							std::cout << "client is requesting a connection" << std::endl;
+
+							if (clientAlreadyConnected(client))
+							{
+								sf::Packet notifyPacket;
+
+								notifyPacket << net::Command::ConnectionRejected;
+								notifyPacket << "duplicateClient";
+								notifyPacket << "A client with this IP address is already connected.";
+
+								send(notifyPacket, client);
+
+
+								// TODO: remove client
+								client->socket->disconnect();
+								delete client->socket;
+
+								std::cout << "denied connection from duplicate client" << std::endl;
+							}
+							else
+							{
+								sf::Packet notifyPacket;
+								notifyPacket << net::Command::ConnectionAccepted;
+								notifyPacket << client->id;
+
+								send(notifyPacket, client);
+
+								std::cout << "accepted new client" << client->id << std::endl;
+							}
+						}
 						else
 						{
 							responsePacket << net::Command::None;
@@ -260,13 +293,12 @@ void Server::run()
 
 	std::cout << "exiting SFLCARS server." << std::endl;
 
-	informClientsShutdown();
-
-	// let all the clients know we're shutting down
 	for (auto& client : clients)
 	{
+		send(net::Command::ShuttingDown, client);
 		client->socket->disconnect();
 		delete client->socket;
+		// TODO: remove client
 	}
 
 	std::cin.get();
@@ -292,26 +324,25 @@ sf::Socket::Status Server::send(sf::Packet& packet, Client* client)
 
 bool Server::acceptNewClientConnection(Client* newClient)
 {
-	newClient->ip = newClient->socket->getRemoteAddress();
+	std::cout << "evaluating connection of new client" << std::endl;
 
-	for (const auto& client : clients)
-		if (client->ip == newClient->ip)
-		{
-			sf::Packet notifyPacket;
+	if (clientAlreadyConnected(newClient))
+	{
+		sf::Packet notifyPacket;
 
-			notifyPacket << net::Command::ConnectionRejected;
-			notifyPacket << "duplicateClient";
-			notifyPacket << "A client with this IP address is already connected.";
+		notifyPacket << net::Command::ConnectionRejected;
+		notifyPacket << "duplicateClient";
+		notifyPacket << "A client with this IP address is already connected.";
 
-			send(notifyPacket, newClient);
+		send(notifyPacket, newClient);
 
-			newClient->socket->disconnect();
-			delete newClient->socket;
+		newClient->socket->disconnect();
+		delete newClient->socket;
 
-			std::cout << "denied connection from duplicate client" << std::endl;
+		std::cout << "denied duplicate connection from client" << std::endl;
 
-			return false;
-		}
+		return false;
+	}
 
 	newClient->id = totalClients++;
 	selector.add(*newClient->socket);
@@ -328,11 +359,13 @@ bool Server::acceptNewClientConnection(Client* newClient)
 	return true;
 }
 
-void Server::informClientsShutdown()
+bool Server::clientAlreadyConnected(Client* client)
 {
-	// let all the clients know we're shutting down
-	for (auto& client : clients)
-		send(net::Command::ShuttingDown, client);
+	for (const auto& clientx : clients)
+		if (clientx->ip == client->socket->getRemoteAddress())
+			return true;
+
+	return false;
 }
 
 bool Server::testClientConnection(Client* client)

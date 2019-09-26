@@ -1,6 +1,7 @@
 #include "AppEngine.hpp"
 #include "MainMenuState.hpp"
 #include "MessageSendState.hpp"
+#include "IntercomState.hpp"
 
 #include <Layout.hpp>
 #include <Display.hpp>
@@ -10,6 +11,7 @@
 enum Callbacks
 {
 	toMessageSendState,
+	toIntercomState,
 	Quit,
 };
 
@@ -24,11 +26,13 @@ void MainMenuState::Init(AppEngine* app_)
 
 	topbar = new sflcars::TextBar("Main Menu");
 	toSendMessageState = new sflcars::Button("Send Message");
+	toIntercomState = new sflcars::Button("Intercom");
 	quitButton = new sflcars::Button("Quit");
 	bottombar = new sflcars::Bar;
 
 	layout->add(topbar, 10);
 	layout->add(toSendMessageState, Callbacks::toMessageSendState);
+	layout->add(toIntercomState, Callbacks::toIntercomState);
 	layout->add(quitButton, Callbacks::Quit);
 	layout->add(bottombar);
 
@@ -70,6 +74,9 @@ void MainMenuState::HandleEvents()
 	{
 	case Callbacks::toMessageSendState:
 		app->PushState(new MessageSendState);
+		break;
+	case Callbacks::toIntercomState:
+		app->PushState(new IntercomState);
 		break;
 	case Callbacks::Quit:
 		app->Quit();

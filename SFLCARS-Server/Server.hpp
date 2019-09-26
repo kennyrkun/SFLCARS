@@ -20,7 +20,8 @@ private:
 
 	bool acceptNewClientConnection(Client* newClient);
 
-	void informClientsShutdown();
+	bool clientAlreadyConnected(Client* client);
+
 	bool testClientConnection(Client* client);
 
 	unsigned int totalClients = 0;

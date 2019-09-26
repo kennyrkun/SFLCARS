@@ -28,6 +28,7 @@ private:
 
 	sflcars::TextBar* topbar;
 	sflcars::Button* toSendMessageState;
+	sflcars::Button* toIntercomState;
 	sflcars::Button* quitButton;
 	sflcars::Bar* bottombar;
 };

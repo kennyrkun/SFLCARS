@@ -86,7 +86,6 @@ void InitialiseState::Update()
 	}
 	else
 	{
-
 		sf::Packet packet;
 		packet << net::Command::ConnectionRequested;
 

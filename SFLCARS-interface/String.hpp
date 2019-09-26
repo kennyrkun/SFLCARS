@@ -14,7 +14,6 @@ public:
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 
-	void setSize(const sf::Vector2f& newSize) {};
 	sf::Vector2f getSize() const;
 
 	void setText(const sf::String& string);
