@@ -33,6 +33,9 @@ public:
 
 	int onEvent(const sf::Event& event);
 
+	bool focusNextElement();
+	bool focusPreviousElement();
+
 protected:
 	void onStateChanged(State state);
 

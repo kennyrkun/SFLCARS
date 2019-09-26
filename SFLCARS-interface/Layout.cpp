@@ -127,6 +127,36 @@ int Layout::onEvent(const sf::Event& event)
 	return -1;
 }
 
+bool Layout::focusNextElement()
+{
+	for (size_t i = 0; i < elements.size(); i++)
+		if (elements[i] != nullptr)
+			if (elements[i] == focused)
+				if (focusElement(elements[i + 1], State::Focused))
+					return true;
+
+	if (focused != nullptr)
+		focused->setState(State::Default);
+	focused = nullptr;
+
+	return false;
+}
+
+bool Layout::focusPreviousElement()
+{
+	for (size_t i = 0; i < elements.size(); i++)
+		if (elements[i] != nullptr)
+			if (elements[i] == focused)
+				if (focusElement(elements[i - 1], State::Focused))
+					return true;
+
+	if (focused != nullptr)
+		focused->setState(State::Default);
+	focused = nullptr;
+
+	return false;
+}
+
 void Layout::onMouseMoved(const sf::Vector2f& position)
 {
 	// Pressed elements still receive mouse move events even when not hovered if mouse is pressed
@@ -216,15 +246,20 @@ void Layout::onKeyPressed(const sf::Keyboard::Key& key)
 	// TODO: if in a text box, focus next element on return
 	// TODO: make this more versatile
 
-	/*
 	if (key == Theme::nextWidgetKey || (key == sf::Keyboard::Key::Tab && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)))
-		if (!focusNextWidget())
-			focusNextWidget();
+	{
+		if (!focusNextElement())
+			focusNextElement();
+	}
 	else if (key == Theme::previousWidgetKey || key == sf::Keyboard::Key::Tab)
-		if (!focusPreviousWidget())
-			focusPreviousWidget();
-	else*/ if (focused != nullptr)
+	{
+		if (!focusPreviousElement())
+			focusPreviousElement();
+	}
+	else if (focused != nullptr)
+	{
 		focused->onKeyPressed(key);
+	}
 }
 
 void Layout::onKeyReleased(const sf::Keyboard::Key& key)
