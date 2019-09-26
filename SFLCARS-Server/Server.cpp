@@ -275,7 +275,7 @@ sf::Socket::Status Server::send(net::Command command, Client* client)
 	sf::Packet packet;
 	packet << command;
 
-	return send(command, client);
+	return send(packet, client);
 }
 
 sf::Socket::Status Server::send(sf::Packet& packet, Client* client)
