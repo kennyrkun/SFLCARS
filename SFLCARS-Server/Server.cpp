@@ -20,13 +20,6 @@ namespace util = sflcars::utility;
 namespace pass = sflcars::utility::password;
 namespace net = sflcars::utility::network;
 
-sf::Packet& operator >>(sf::Packet& packet, net::Command& command)
-{
-	// FIXME: can't figure out how to unpack Command into a value
-	int t = -1;
-	return packet >> (command = static_cast<net::Command>(t));
-}
-
 Server::Server()
 {
 	const std::string BASE = "./sflcars_server/";
