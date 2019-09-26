@@ -45,6 +45,8 @@ private:
 	sf::SoundBuffer intercomEndBuffer;
 
 	NetworkRecorder* recorder;
+
+	bool transmitting = false;
 };
 
 #endif // !INTERCOM_STATE_HPP

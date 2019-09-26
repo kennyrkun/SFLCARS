@@ -102,15 +102,22 @@ void IntercomState::HandleEvents()
 		if (event.elementCallbackID != -1)
 		{
 			if (event.elementCallbackID == Callbacks::AllClients)
-				intercomAllStart.play();
+			{
+				if (!transmitting)
+					intercomAllStart.play();
+				else
+					std::cerr << "already transmitting" << std::endl;
+			}
 			else
 			{
+				// if the client id matches the callback id
 				if (clients.find(event.elementCallbackID) != clients.end())
 				{
 					// second is bool, isActive
 					if (clients[event.elementCallbackID].second)
 					{
 						app->listener.send(net::Command::EndIntercomToClient);
+						transmitting = false;
 						clients[event.elementCallbackID].second = false;
 						intercomEnd.play();
 						recorder->stop();
@@ -119,6 +126,7 @@ void IntercomState::HandleEvents()
 					{
 						app->listener.send(net::Command::StartIntercomToClient);
 						recorder->start();
+						transmitting = true;
 						clients[event.elementCallbackID].second = true;
 						intercomStart.play();
 					}
