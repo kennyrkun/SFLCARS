@@ -240,6 +240,14 @@ void Server::run()
 								clients.erase(std::remove(clients.begin(), clients.end(), client));
 								delete client;
 								std::cout << "clients: " << clients.size() << std::endl;
+
+								if (clients.size() < 1)
+								{
+									std::cout << "all connections have been closed, cleaning up" << std::endl;
+									selector.clear();
+									selector.add(listener);
+									totalClients = 0;
+								}
 							}
 						}
 					}
