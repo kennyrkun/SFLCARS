@@ -2,6 +2,7 @@
 #define SERVER_HPP
 
 #include "Client.hpp"
+#include "NetworkAudioStream.hpp"
 
 #include <Command.hpp>
 
@@ -35,6 +36,8 @@ private:
 	std::vector<Client*> clients;
 
 	std::string version = "1";
+
+	NetworkAudioStream intercomAudio;
 };
 
 #endif // !SERVER_HPP

@@ -27,6 +27,7 @@
     <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
+    <ClCompile Include="NetworkRecorder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
+    <ClInclude Include="NetworkRecorder.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

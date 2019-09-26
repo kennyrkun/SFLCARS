@@ -2,6 +2,7 @@
 #define INTERCOM_STATE_HPP
 
 #include "AppState.hpp"
+#include "NetworkRecorder.hpp"
 
 #include <Bar.hpp>
 #include <Button.hpp>
@@ -42,6 +43,8 @@ private:
 	sf::SoundBuffer intercomAllBuffer;
 	sf::SoundBuffer intercomStartBuffer;
 	sf::SoundBuffer intercomEndBuffer;
+
+	NetworkRecorder* recorder;
 };
 
 #endif // !INTERCOM_STATE_HPP

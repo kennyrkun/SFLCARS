@@ -1,5 +1,5 @@
-#ifndef COMMANDS_HPP
-#define COMMANDS_HPP
+#ifndef COMMAND_HPP
+#define COMMAND_HPP
 
 #include <SFML/Network.hpp>
 
@@ -39,7 +39,8 @@ enum Command
 	EndIntercomToClient,
 	StartIntercomToAll,
 	EndIntercomToAll,
-	IntercomData,
+	IntercomDataSend,
+	IntercomDataReceive,
 };
 
 enum SubCommand
@@ -67,4 +68,4 @@ sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::Sub
 
 sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::SubCommand& command);
 
-#endif // !COMMANDS_HPP
+#endif // !COMMAND_HPP

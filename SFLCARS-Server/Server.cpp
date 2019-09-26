@@ -257,6 +257,25 @@ void Server::run()
 								std::cout << "accepted new client" << client->id << std::endl;
 							}
 						}
+						else if (command == net::Command::StartIntercomToClient)
+						{
+							std::cout << "starting intercom" << std::endl;
+							intercomAudio.play();
+						}
+						else if (command == net::Command::IntercomDataSend)
+						{
+							std::cout << "processing intercom data" << std::endl;
+							intercomAudio.receiveStep(packet);
+						}
+						else if (command == net::Command::EndIntercomToClient)
+						{
+							std::cout << "stopping intercom" << std::endl;
+							intercomAudio.stop();
+						}
+						else if (command == net::Command::IntercomDataSend)
+						{
+							
+						}
 						else
 						{
 							responsePacket << net::Command::None;

@@ -51,13 +51,17 @@ sf::Socket::Status Listener::send(sf::Packet packet)
 	sf::Socket::Status status = socket.send(packet);
 
 	if (status != sf::Socket::Status::Done)
+	{
 		std::cerr << "failed to send packet to server (" << status << ")" << std::endl;
+		packetFail.play();
+	}
 
 	return status;
 }
 
 void Listener::pollNetworkEvent(NetworkEvent& event)
 {
+	// Because we're probably not connected to the server yet
 	if (socket.getRemoteAddress() == sf::IpAddress::None)
 		return;
 
