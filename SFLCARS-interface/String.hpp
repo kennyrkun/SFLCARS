@@ -24,7 +24,7 @@ public:
 	bool isEmpty() const;
 
 	void setCharacterSize(float newSize);
-	float getCharacterSize() const;
+	int getCharacterSize() const;
 
 	void setFont();
 	sf::Font getFont() const;

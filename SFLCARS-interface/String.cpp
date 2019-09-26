@@ -54,7 +54,7 @@ void String::setCharacterSize(float newSize)
 	text.setCharacterSize(newSize);
 }
 
-float String::getCharacterSize() const
+int String::getCharacterSize() const
 {
 	return text.getCharacterSize();
 }
