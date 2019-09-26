@@ -1,6 +1,8 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
 
+#include <SFML/Network.hpp>
+
 namespace sflcars
 {
 namespace utility
@@ -48,9 +50,16 @@ enum SubCommand
 
 };
 
+}
+}
+}
 
-}
-}
-}
+sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::Command& command);
+
+sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::Command& command);
+
+sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::SubCommand& command);
+
+sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::SubCommand& command);
 
 #endif // !COMMANDS_HPP
