@@ -88,7 +88,7 @@ void MessageSendState::HandleEvents()
 		std::string what = messageBox->getText().toAnsiString();
 
 		sf::Packet packet;
-		packet << "messageSend";
+		packet << net::Command::SendMessage;
 		packet << who;
 		packet << what;
 
