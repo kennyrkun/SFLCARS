@@ -15,6 +15,8 @@ public:
 
 	void run();
 
+	void handleIncomingNetTraffic(Client* client);
+
 private:
 	sf::Socket::Status send(sflcars::utility::network::Command command, Client* client);
 	sf::Socket::Status send(sf::Packet& packet, Client* client);

@@ -143,59 +143,53 @@ void IntercomState::Update()
 	NetworkEvent event;
 	app->listener.pollNetworkEvent(event);
 
-	if (event.command != net::Command::None)
+	switch (event.command)
 	{
-		switch (event.command)
+	case net::Command::ClientList:
+	{
+		if (event.packet.getDataSize() > 0)
 		{
-		case net::Command::ClientList:
-		{
-			if (event.packet.getDataSize() > 0)
+			std::string total;
+
+			int iterations = 100; // make sure we're after the interface buttons and stuff
+			while (!event.packet.endOfPacket())
 			{
-				std::string total;
+				std::string temp;
+				event.packet >> temp;
+				total += ("\n" + temp);
 
-				int iterations = 100; // make sure we're after the interface buttons and stuff
-				while (!event.packet.endOfPacket())
+				if (temp != "ClientList:")
 				{
-					std::string temp;
-					event.packet >> temp;
-					total += ("\n" + temp);
+					std::string id = temp;
+					std::string name = temp;
 
-					if (temp != "ClientList:")
-					{
-						std::string id = temp;
-						std::string ip = temp;
-						std::string name = temp;
+					id = temp.substr(0, temp.find_first_of(';'));
+					std::cout << "id: " << id << std::endl;
 
-						id = temp.substr(0, temp.find_first_of(';'));
-						std::cout << "id: " << id << std::endl;
+					name.erase(name.size() - 1, name.size());
+					name.erase(0, name.find_last_of(';') + 1);
+					std::cout << "name: " << name << std::endl;
 
-						ip.erase(0, ip.find_first_of(';') + 1);
-						ip.erase(ip.find_first_of(';'), ip.size());
-						std::cout << "ip: " << ip << std::endl;
+					sflcars::Button* button = new sflcars::Button(id, sf::Keyboard::Key::Num1);
+					display->getLayout()->add(button, iterations);
 
-						name.erase(name.size() - 1, name.size());
-						name.erase(0, name.find_last_of(';') + 1);
-						std::cout << "name: " << name << std::endl;
-
-						sflcars::Button* button = new sflcars::Button(temp, sf::Keyboard::Key::Num1);
-						display->getLayout()->add(button, iterations);
-
-						clients[iterations] = std::pair<sf::IpAddress, bool>(sf::IpAddress(ip), false);
-					}
-
-					iterations++;
+					clients[iterations] = std::pair<int, bool>(std::stoi(id), false);
 				}
 
-				std::cout << "ClientList: " << total << std::endl;
+				iterations++;
 			}
-		}
-		default:
-			break;
+
+			std::cout << "ClientList: " << total << std::endl;
 		}
 	}
-	else
+	case net::Command::IntercomReady:
 	{
+		std::cout << "intercom is ready" << std::endl; 
+		break;
+	}
+	default:
 		// print the contents of the packet
+		break;
 	}
 
 	display->Update();

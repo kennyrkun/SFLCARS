@@ -99,213 +99,9 @@ void Server::run()
 				}
 			}
 			else
-			{
 				for (auto& client : clients)
-				{
 					if (selector.isReady(*client->socket))
-					{
-						std::cout << "client" << client->id << " socket is ready" << std::endl;
-
-						sf::Packet packet, responsePacket;
-
-						net::Command command;
-
-						client->socket->receive(packet);
-						packet >> command;
-
-						std::cout << client->ip.toString() << ": " << command << std::endl;
-
-						if (command == net::Command::Login)
-						{
-							std::string step;
-							packet >> step;
-
-							if (step == "step1")
-							{
-								std::cout << "step1, sending client a random number" << std::endl;
-
-								responsePacket << net::Command::Login;
-								responsePacket << "step2";
-								responsePacket << util::getRandomNumber(0, std::numeric_limits<size_t>::max());
-							}
-							else if (step == "step4")
-							{
-								std::cout << "step4, testing password" << std::endl;
-
-								std::string username, randoHash, superHash;
-
-								packet >> username;
-								packet >> randoHash;
-								packet >> superHash;
-
-								// step 5
-								util::SettingsParser parser("./sflcars_server/accounts/" + username + "/account.dat");
-
-								std::string local_passwordHash;
-								parser.get("hashed_password", local_passwordHash);
-
-								std::string local_superHash = pass::hashString(local_passwordHash + randoHash);
-
-								// step 6
-								if (local_superHash == superHash)
-								{
-									std::cout << "success!" << std::endl;
-
-									responsePacket << net::Command::LoginSuccess;
-
-									client->clientAuthenticated = true;
-								}
-								else
-								{
-									responsePacket << net::Command::LoginFailure;
-									responsePacket << "The password did not match the locally stored password.";
-								}
-							}
-						}
-						else if (command == net::Command::Shutdown)
-						{
-							std::cout << "shutting down" << std::endl;
-							responsePacket << net::Command::ShuttingDown;
-
-							running = false;
-						}
-						else if (command == net::Command::ListClients)
-						{
-							std::cout << "sending a list of clients" << std::endl;
-
-							responsePacket << net::Command::ClientList;
-
-							for (const auto& client : clients)
-							{
-								std::string clientinformation(std::to_string(client->id) + ";" + client->ip.toString() + ";" + client->name + ";");
-								responsePacket << clientinformation;
-							}
-						}
-						else if (command == net::Command::Ping)
-						{
-							responsePacket << net::Command::Pong;
-						}
-						else if (command == net::Command::Version)
-						{
-							responsePacket << net::SubCommand::MyVersion;
-							responsePacket << version;
-						}
-						else if (command == net::Command::SendMessage)
-						{
-							std::string who, what;
-
-							packet >> who;
-
-							// FIXME: we need to loop over the packet and make sure we get everything in what
-							packet >> what;
-
-							std::cout << "sending " << who << ": " << what << std::endl;
-
-							sf::Packet message;
-							message << "messageDeliver";
-							message << std::to_string(client->id) + ";" + client->ip.toString();
-							message << what;
-
-							if (who == "everyone")
-							{
-								for (const auto& client : clients)
-								{
-									if (client->socket->send(message) != sf::Socket::Status::Done)
-										std::cerr << "failed to send return packet to client" << std::endl;
-								}
-
-								responsePacket << net::Command::MessageSent;
-								responsePacket << "The message has been sent to everyone.";
-							}
-							else
-							{
-								// find specific ip address
-
-								responsePacket << net::Command::MessageRecipientInvalid;
-								responsePacket << ("The who \"" + who + "\" is not recognised.");
-							}
-						}
-						else if (command == net::Command::ConnectionRequested)
-						{
-							std::cout << "client is requesting a connection" << std::endl;
-
-							if (clientAlreadyConnected(client))
-							{
-								sf::Packet notifyPacket;
-
-								notifyPacket << net::Command::ConnectionRejected;
-								notifyPacket << "duplicateClient";
-								notifyPacket << "A client with this IP address is already connected.";
-
-								send(notifyPacket, client);
-
-								// TODO: remove client
-								client->socket->disconnect();
-								delete client->socket;
-
-								std::cout << "denied connection from duplicate client" << std::endl;
-							}
-							else
-							{
-								sf::Packet notifyPacket;
-								notifyPacket << net::Command::ConnectionAccepted;
-								notifyPacket << client->id;
-
-								send(notifyPacket, client);
-
-								std::cout << "accepted new client" << client->id << std::endl;
-							}
-						}
-						else if (command == net::Command::StartIntercomToClient)
-						{
-							std::cout << "starting intercom" << std::endl;
-							NetworkAudioStream* intercomStream = new NetworkAudioStream;
-							intercomStreams[client->id] = intercomStream;
-							intercomStream->play();
-						}
-						else if (command == net::Command::IntercomDataSend)
-						{
-							std::cout << "processing intercom data" << std::endl;
-							intercomStreams[client->id]->receiveStep(packet);
-						}
-						else if (command == net::Command::EndIntercomToClient)
-						{
-							std::cout << "stopping intercom" << std::endl;
-							intercomStreams[client->id]->stop();
-
-							delete intercomStreams[client->id];
-							intercomStreams[client->id] = nullptr;
-							intercomStreams.erase(client->id);
-						}
-						else
-						{
-							responsePacket << net::Command::None;
-							responsePacket << "\"" + std::to_string(command) + "\" acknowledged; command unknown";
-						}
-
-						if (send(responsePacket, client) != sf::Socket::Status::Done)
-						{
-							if (!testClientConnection(client))
-							{
-								std::cerr << "connection to client has been lost, disconnecting them." << std::endl;
-								client->socket->disconnect();
-								delete client->socket;
-								clients.erase(std::remove(clients.begin(), clients.end(), client));
-								delete client;
-								std::cout << "clients: " << clients.size() << std::endl;
-
-								if (clients.size() < 1)
-								{
-									std::cout << "all connections have been closed, cleaning up" << std::endl;
-									selector.clear();
-									selector.add(listener);
-									totalClients = 0;
-								}
-							}
-						}
-					}
-				}
-			}
+						handleIncomingNetTraffic(client);
 		}
 
 		sf::sleep(sf::milliseconds(100));
@@ -322,6 +118,228 @@ void Server::run()
 	}
 
 	std::cin.get();
+}
+
+void Server::handleIncomingNetTraffic(Client* client)
+{
+	std::cout << "client" << client->id << " socket is ready" << std::endl;
+
+	sf::Packet packet;
+	net::Command command;
+
+	client->socket->receive(packet);
+	packet >> command;
+
+	std::cout << client->ip.toString() << ": " << command << std::endl;
+
+	sf::Socket::Status status = sf::Socket::Status::Error;
+
+	if (command == net::Command::Login)
+	{
+		std::string step;
+		packet >> step;
+
+		if (step == "step1")
+		{
+			std::cout << "step1, sending client a random number" << std::endl;
+
+			sf::Packet packet;
+			packet << net::Command::Login;
+			packet << "step2";
+			packet << util::getRandomNumber(0, std::numeric_limits<size_t>::max());
+
+			status = send(packet, client);
+		}
+		else if (step == "step4")
+		{
+			std::cout << "step4, testing password" << std::endl;
+
+			std::string username, randoHash, superHash;
+
+			packet >> username;
+			packet >> randoHash;
+			packet >> superHash;
+
+			// step 5
+			util::SettingsParser parser("./sflcars_server/accounts/" + username + "/account.dat");
+
+			std::string local_passwordHash;
+			parser.get("hashed_password", local_passwordHash);
+
+			std::string local_superHash = pass::hashString(local_passwordHash + randoHash);
+
+			// step 6
+			if (local_superHash == superHash)
+			{
+				std::cout << "success!" << std::endl;
+
+				status = send(net::Command::LoginSuccess, client);
+
+				client->clientAuthenticated = true;
+			}
+			else
+			{
+				status = send(net::Command::LoginFailure, client);
+			}
+		}
+	}
+	else if (command == net::Command::Shutdown)
+	{
+		std::cout << "shutting down" << std::endl;
+		status = send(net::Command::ShuttingDown, client);
+
+		running = false;
+	}
+	else if (command == net::Command::ListClients)
+	{
+		std::cout << "sending a list of clients" << std::endl;
+
+		sf::Packet packet;
+		packet << net::Command::ClientList;
+
+		for (const auto& client : clients)
+		{
+			std::string clientinformation(std::to_string(client->id) + ";" + client->ip.toString() + ";" + client->name + ";");
+			packet << clientinformation;
+		}
+
+		status = send(packet, client);
+	}
+	else if (command == net::Command::Ping)
+	{
+		status = send(net::Command::Pong, client);
+	}
+	else if (command == net::Command::SendMessage)
+	{
+		std::string who, what;
+
+		packet >> who;
+
+		// FIXME: we need to loop over the packet and make sure we get everything in what
+		packet >> what;
+
+		std::cout << "sending " << who << ": " << what << std::endl;
+
+		sf::Packet messagePacket;
+		messagePacket << "messageDeliver";
+		messagePacket << std::to_string(client->id) + ";" + client->ip.toString();
+		messagePacket << what;
+
+		sf::Packet messageStatusReportPacket;
+
+		if (who == "everyone")
+		{
+			for (const auto& client : clients)
+			{
+				if (client->socket->send(messagePacket) != sf::Socket::Status::Done)
+					std::cerr << "failed to send return packet to client" << std::endl;
+			}
+
+			messageStatusReportPacket << net::Command::MessageSent;
+			messageStatusReportPacket << "The message has been sent to everyone.";
+		}
+		else
+		{
+			// find specific ip address
+
+			messageStatusReportPacket << net::Command::MessageRecipientInvalid;
+			messageStatusReportPacket << ("The who \"" + who + "\" is not recognised.");
+		}
+
+		status = send(messageStatusReportPacket, client);
+	}
+	else if (command == net::Command::ConnectionRequested)
+	{
+		std::cout << "client is requesting a connection" << std::endl;
+
+		if (clientAlreadyConnected(client))
+		{
+			sf::Packet notifyPacket;
+
+			notifyPacket << net::Command::ConnectionRejected;
+			notifyPacket << "duplicateClient";
+			notifyPacket << "A client with this IP address is already connected.";
+
+			status = send(notifyPacket, client);
+
+			// TODO: remove client
+			client->socket->disconnect();
+			delete client->socket;
+
+			std::cout << "denied connection from duplicate client" << std::endl;
+		}
+		else
+		{
+			sf::Packet notifyPacket;
+			notifyPacket << net::Command::ConnectionAccepted;
+			notifyPacket << client->id;
+
+			status = send(notifyPacket, client);
+
+			std::cout << "accepted new client" << client->id << std::endl;
+		}
+	}
+	else if (command == net::Command::StartIntercomToClient)
+	{
+		std::cout << "starting intercom" << std::endl;
+
+		status = send(net::Command::IntercomReady, client);
+
+		NetworkAudioStream* intercomStream = new NetworkAudioStream;
+		intercomStreams[client->id] = intercomStream;
+		intercomStream->play();
+
+		status = sf::Socket::Status::Done;
+	}
+	else if (command == net::Command::IntercomDataSend)
+	{
+		std::cout << "processing intercom data" << std::endl;
+		intercomStreams[client->id]->receiveStep(packet);
+
+		status = sf::Socket::Status::Done;
+	}
+	else if (command == net::Command::EndIntercomToClient)
+	{
+		std::cout << "stopping intercom" << std::endl;
+		intercomStreams[client->id]->stop();
+
+		std::cout << "stopped" << std::endl;
+		delete intercomStreams[client->id];
+		std::cout << "stopped2" << std::endl;
+		intercomStreams[client->id] = nullptr;
+		std::cout << "stopped3" << std::endl;
+		intercomStreams.erase(client->id);
+		std::cout << "stopped4" << std::endl;
+
+		status = sf::Socket::Status::Done;
+	}
+	else
+	{
+		status = send(net::Command::UnknownCommand, client);
+	}
+
+	if (status != sf::Socket::Status::Done)
+	{
+		std::cout << "packet failed, testing connection to client" << std::endl;
+
+		if (!testClientConnection(client))
+		{
+			std::cerr << "connection to client has been lost, disconnecting them." << std::endl;
+			client->socket->disconnect();
+			delete client->socket;
+			clients.erase(std::remove(clients.begin(), clients.end(), client));
+			delete client;
+			std::cout << "clients: " << clients.size() << std::endl;
+
+			if (clients.size() < 1)
+			{
+				std::cout << "all connections have been closed, cleaning up" << std::endl;
+				selector.clear();
+				selector.add(listener);
+				totalClients = 0;
+			}
+		}
+	}
 }
 
 sf::Socket::Status Server::send(net::Command command, Client* client)

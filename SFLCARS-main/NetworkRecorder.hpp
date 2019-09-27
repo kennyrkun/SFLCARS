@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+// TODO: stop using these
 const sf::Uint8 audioData = 1;
 const sf::Uint8 endOfStream = 2;
 

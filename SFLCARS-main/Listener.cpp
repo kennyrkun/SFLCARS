@@ -21,10 +21,7 @@ Listener::~Listener()
 {
 	std::cout << "shutting down listener" << std::endl;
 
-	sf::Packet packet;
-	packet << net::Command::Disconnect;
-
-	send(packet);
+	send(net::Command::Disconnecting);
 
 	socket.disconnect();
 }
@@ -84,7 +81,7 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 					std::cerr << "server has disconnected" << std::endl;
 					socket.disconnect();
 					abort();
-					// TODO: don't break so horribly
+					// TODO: clear all app states and go back to initialisestate
 				}
 
 				std::cerr << "failed to receive packed from server" << std::endl;

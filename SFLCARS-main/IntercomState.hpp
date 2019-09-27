@@ -35,7 +35,8 @@ private:
 	sflcars::Button* quitButton;
 	sflcars::Bar* bottombar;
 
-	std::map<int, std::pair<sf::IpAddress, bool>> clients;
+	// callback id, client id, transmitting
+	std::map<int, std::pair<int, bool>> clients;
 
 	sf::Sound intercomStart;
 	sf::Sound intercomEnd;

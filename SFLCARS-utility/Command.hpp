@@ -19,7 +19,7 @@ enum Command
 	Logout,
 	Shutdown,
 	ShuttingDown,
-	Disconnect,
+	Disconnecting,
 	Disconnected,
 	Connect,
 	ConnectionRequested,
@@ -41,7 +41,10 @@ enum Command
 	EndIntercomToAll,
 	IntercomDataSend,
 	IntercomDataReceive,
+	IntercomReady,
+	IntercomNotReady,
 	TestAllClientConnections,
+	UnknownCommand,
 };
 
 enum SubCommand
