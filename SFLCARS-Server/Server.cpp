@@ -239,7 +239,6 @@ void Server::run()
 
 								send(notifyPacket, client);
 
-
 								// TODO: remove client
 								client->socket->disconnect();
 								delete client->socket;
@@ -260,21 +259,23 @@ void Server::run()
 						else if (command == net::Command::StartIntercomToClient)
 						{
 							std::cout << "starting intercom" << std::endl;
-							intercomAudio.play();
+							NetworkAudioStream* intercomStream = new NetworkAudioStream;
+							intercomStreams[client->id] = intercomStream;
+							intercomStream->play();
 						}
 						else if (command == net::Command::IntercomDataSend)
 						{
 							std::cout << "processing intercom data" << std::endl;
-							intercomAudio.receiveStep(packet);
+							intercomStreams[client->id]->receiveStep(packet);
 						}
 						else if (command == net::Command::EndIntercomToClient)
 						{
 							std::cout << "stopping intercom" << std::endl;
-							intercomAudio.stop();
-						}
-						else if (command == net::Command::IntercomDataSend)
-						{
-							
+							intercomStreams[client->id]->stop();
+
+							delete intercomStreams[client->id];
+							intercomStreams[client->id] = nullptr;
+							intercomStreams.erase(client->id);
 						}
 						else
 						{

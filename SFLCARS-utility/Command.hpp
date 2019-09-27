@@ -41,6 +41,7 @@ enum Command
 	EndIntercomToAll,
 	IntercomDataSend,
 	IntercomDataReceive,
+	TestAllClientConnections,
 };
 
 enum SubCommand
@@ -53,7 +54,6 @@ enum SubCommand
 	Login4,
 	Login5,
 	DuplicateClient,
-
 };
 
 }

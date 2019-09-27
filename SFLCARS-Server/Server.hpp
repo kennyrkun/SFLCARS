@@ -37,7 +37,7 @@ private:
 
 	std::string version = "1";
 
-	NetworkAudioStream intercomAudio;
+	std::map<int, NetworkAudioStream*> intercomStreams;
 };
 
 #endif // !SERVER_HPP
