@@ -41,9 +41,11 @@ private:
 	sf::Sound intercomStart;
 	sf::Sound intercomEnd;
 	sf::Sound intercomAllStart;
+	sf::Sound intercomFail;
 	sf::SoundBuffer intercomAllBuffer;
 	sf::SoundBuffer intercomStartBuffer;
 	sf::SoundBuffer intercomEndBuffer;
+	sf::SoundBuffer intercomFailBuffer;
 
 	NetworkRecorder* recorder;
 

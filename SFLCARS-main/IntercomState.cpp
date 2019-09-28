@@ -47,9 +47,12 @@ void IntercomState::Init(AppEngine* app_)
 	intercomEndBuffer.loadFromFile("./resources/sounds/transmission/end_transmit2.ogg");
 	intercomEnd.setBuffer(intercomEndBuffer);
 
+	intercomFailBuffer.loadFromFile("./resources/sounds/fail2.ogg");
+	intercomFail.setBuffer(intercomFailBuffer);
+
 	app->listener.send(net::Command::ListClients);
 
-	std::cout << "MessageSendState ready." << std::endl;
+	std::cout << "IntercomState ready." << std::endl;
 }
 
 void IntercomState::Cleanup()
@@ -78,15 +81,6 @@ void IntercomState::HandleEvents()
 
 	if (event.event.type == sf::Event::EventType::Closed)
 		app->Quit();
-	else if (event.event.type == sf::Event::EventType::KeyPressed)
-	{
-		if (event.event.key.code == sf::Keyboard::Key::Tilde)
-		{
-			app->settings.debug = !app->settings.debug;
-
-			std::cout << "cl_debug set to " + std::to_string(app->settings.debug) << std::endl;
-		}
-	}
 
 	switch (event.elementCallbackID)
 	{
@@ -99,6 +93,8 @@ void IntercomState::HandleEvents()
 	{
 		if (event.elementCallbackID != -1)
 		{
+			std::cout << "elementcallbackid: " << event.elementCallbackID << std::endl;
+
 			if (event.elementCallbackID == Callbacks::AllClients)
 			{
 				if (!transmitting)
@@ -123,12 +119,13 @@ void IntercomState::HandleEvents()
 					}
 					else
 					{
-						app->listener.send(net::Command::StartIntercomToClient);
-						recorder = new NetworkRecorder(&app->listener.socket);
-						recorder->start();
-						transmitting = true;
-						clients[event.elementCallbackID].second = true;
-						intercomStart.play();
+						std::cout << "sending request to initiate intercom with client" << std::endl;
+						// a request to start an intercom with client id
+						sf::Packet packet;
+						packet << net::Command::StartIntercomToClient;
+						packet << event.elementCallbackID;
+
+						app->listener.send(packet);
 					}
 				}
 			}
@@ -181,10 +178,25 @@ void IntercomState::Update()
 
 			std::cout << "ClientList: " << total << std::endl;
 		}
+		break;
 	}
 	case net::Command::IntercomReady:
 	{
+		int clientID;
+		event.packet >> clientID;
+
+		recorder = new NetworkRecorder(&app->listener.socket);
+		recorder->start();
+		transmitting = true;
+		clients[clientID].second = true;
+		intercomStart.play();
+
 		std::cout << "intercom is ready" << std::endl; 
+		break;
+	}
+	case net::Command::IntercomNotReady:
+	{
+		intercomFail.play();
 		break;
 	}
 	default:

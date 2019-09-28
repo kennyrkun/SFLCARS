@@ -16,16 +16,25 @@ bool NetworkAudioStream::onGetData(sf::SoundStream::Chunk& data)
 	while ((m_offset >= m_samples.size()) && !m_hasFinished)
 		sf::sleep(sf::milliseconds(10));
 
-	// Copy samples into a local buffer to avoid synchronization problems
-	// (don't forget that we run in two separate threads)
+	try
 	{
-		sf::Lock lock(m_mutex);
-		m_tempBuffer.assign(m_samples.begin() + m_offset, m_samples.end());
-	}
+		// Copy samples into a local buffer to avoid synchronization problems
+		// (don't forget that we run in two separate threads)
+		{
+			sf::Lock lock(m_mutex);
+			m_tempBuffer.assign(m_samples.begin() + m_offset, m_samples.end());
+		}
 
-	// Fill audio data to pass to the stream
-	data.samples = &m_tempBuffer[0];
-	data.sampleCount = m_tempBuffer.size();
+		// Fill audio data to pass to the stream
+		data.samples = &m_tempBuffer[0];
+		data.sampleCount = m_tempBuffer.size();
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << "ERROR: exception in NetworkAudioStream::onGetData():" << std::endl;
+		std::cout << e.what() << std::endl;
+		return false;
+	}
 
 	// Update the playing offset
 	m_offset += m_tempBuffer.size();

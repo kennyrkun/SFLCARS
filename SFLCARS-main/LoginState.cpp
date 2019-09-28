@@ -131,6 +131,11 @@ void LoginState::Update()
 			}
 			break;
 		}
+		case net::Command::LoginFailure:
+		{
+			std::cerr << "login failed" << std::endl;
+			break;
+		}
 		case net::Command::LoginSuccess:
 		{
 			std::cout << "login successful!" << std::endl;

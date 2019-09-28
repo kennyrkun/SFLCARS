@@ -290,13 +290,26 @@ void Server::handleIncomingNetTraffic(Client* client)
 	{
 		std::cout << "starting intercom" << std::endl;
 
-		status = send(net::Command::IntercomReady, client);
+		if (intercomStreams.find(client->id) == intercomStreams.end())
+		{
+			NetworkAudioStream* intercomStream = new NetworkAudioStream;
+			intercomStreams[client->id] = intercomStream;
+			intercomStream->play();
 
-		NetworkAudioStream* intercomStream = new NetworkAudioStream;
-		intercomStreams[client->id] = intercomStream;
-		intercomStream->play();
+			// id of the client the client wants to talk to
+			int id;
+			packet >> id;
 
-		status = sf::Socket::Status::Done;
+			std::cout << "with client " << id << std::endl;
+
+			sf::Packet outPacket;
+			outPacket << net::Command::IntercomReady;
+			outPacket << id;
+
+			status = send(outPacket, client);
+		}
+		else
+			status = send(net::Command::IntercomNotReady, client);
 	}
 	else if (command == net::Command::IntercomDataSend)
 	{
