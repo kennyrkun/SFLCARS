@@ -103,8 +103,8 @@ void Server::run()
 					if (selector.isReady(*client->socket))
 						handleIncomingNetTraffic(client);
 		}
-
-		sf::sleep(sf::milliseconds(100));
+		else
+			sf::sleep(sf::milliseconds(100));
 	}
 
 	std::cout << "exiting SFLCARS server." << std::endl;
@@ -276,6 +276,13 @@ void Server::handleIncomingNetTraffic(Client* client)
 
 			status = send(notifyPacket, client);
 
+			if (!packet.endOfPacket())
+			{
+				std::string name;
+				packet >> name;
+				client->name = name;
+			}
+
 			std::cout << "accepted new client" << client->id << std::endl;
 		}
 	}
@@ -300,10 +307,10 @@ void Server::handleIncomingNetTraffic(Client* client)
 	}
 	else if (command == net::Command::EndIntercomToClient)
 	{
-		std::cout << "stopping intercom" << std::endl;
-		intercomStreams[client->id]->stop();
+		intercomStreams[client->id]->receiveStep(packet, true);
 
-		std::cout << "stopped" << std::endl;
+		std::cout << "stopping intercom" << std::endl;
+
 		delete intercomStreams[client->id];
 		std::cout << "stopped2" << std::endl;
 		intercomStreams[client->id] = nullptr;
@@ -316,6 +323,11 @@ void Server::handleIncomingNetTraffic(Client* client)
 	else
 	{
 		status = send(net::Command::UnknownCommand, client);
+	}
+
+	if (!packet.endOfPacket())
+	{
+		std::cout << "WARNING: packet was not fully extracted" << std::endl;
 	}
 
 	if (status != sf::Socket::Status::Done)

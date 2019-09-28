@@ -47,8 +47,6 @@ void IntercomState::Init(AppEngine* app_)
 	intercomEndBuffer.loadFromFile("./resources/sounds/transmission/end_transmit2.ogg");
 	intercomEnd.setBuffer(intercomEndBuffer);
 
-	recorder = new NetworkRecorder(&app->listener.socket);
-
 	app->listener.send(net::Command::ListClients);
 
 	std::cout << "MessageSendState ready." << std::endl;
@@ -116,15 +114,17 @@ void IntercomState::HandleEvents()
 					// second is bool, isActive
 					if (clients[event.elementCallbackID].second)
 					{
-						app->listener.send(net::Command::EndIntercomToClient);
+						// NetworkRecorder::onStop notifies the server of the end in transmission
+						recorder->stop();
 						transmitting = false;
 						clients[event.elementCallbackID].second = false;
 						intercomEnd.play();
-						recorder->stop();
+						delete recorder;
 					}
 					else
 					{
 						app->listener.send(net::Command::StartIntercomToClient);
+						recorder = new NetworkRecorder(&app->listener.socket);
 						recorder->start();
 						transmitting = true;
 						clients[event.elementCallbackID].second = true;

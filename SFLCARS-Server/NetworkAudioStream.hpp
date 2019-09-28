@@ -20,7 +20,7 @@ public:
 	NetworkAudioStream();
 
 	// Get audio data from the client until playback is stopped
-	void receiveStep(sf::Packet& packet);
+	void receiveStep(sf::Packet& packet, bool finished = false);
 
 private:
 	// see SoundStream::OnGetData

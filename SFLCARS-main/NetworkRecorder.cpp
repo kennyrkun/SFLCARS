@@ -13,7 +13,6 @@ NetworkRecorder::NetworkRecorder(sf::TcpSocket* socket) : socket(socket)
 // \see SoundRecorder::~SoundRecorder()
 NetworkRecorder::~NetworkRecorder()
 {
-	// Make sure to stop the recording thread
 	stop();
 }
 

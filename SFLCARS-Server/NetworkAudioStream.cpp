@@ -38,11 +38,13 @@ void NetworkAudioStream::onSeek(sf::Time timeOffset)
 	m_offset = timeOffset.asMilliseconds() * getSampleRate() * getChannelCount() / 1000;
 }
 
-void NetworkAudioStream::receiveStep(sf::Packet& packet)
+void NetworkAudioStream::receiveStep(sf::Packet& packet, bool finished)
 {
 	// Extract the message ID
 	sf::Uint8 id;
 	packet >> id;
+
+	std::cout << (int)id << std::endl;
 
 	if (id == audioData)
 	{
@@ -57,16 +59,16 @@ void NetworkAudioStream::receiveStep(sf::Packet& packet)
 			std::copy(samples, samples + sampleCount, std::back_inserter(m_samples));
 		}
 	}
-	else if (id == endOfStream)
+	else if (id == endOfStream || finished)
 	{
 		// End of stream reached: we stop receiving audio data
-		std::cout << "Audio data has been 100% received!" << std::endl;
+		std::cout << "Audio data has been 100% received! and finished" << std::endl;
 		m_hasFinished = true;
 	}
 	else
 	{
 		// Something's wrong...
-		std::cout << "Invalid packet received..." << std::endl;
+		std::cout << "Invalid packet received: " << (int)id << std::endl;
 		m_hasFinished = true;
 	}
 }
