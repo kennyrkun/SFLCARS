@@ -11,6 +11,8 @@
 
 namespace net = sflcars::utility::network;
 
+class AppEngine;
+
 struct NetworkEvent
 {
 	net::Command command;
@@ -22,7 +24,7 @@ struct NetworkEvent
 class Listener
 {
 public:
-	Listener();
+	Listener(AppEngine* app);
 	~Listener();
 
 	bool connectToServer(const sf::IpAddress& address, const unsigned short port);
@@ -35,6 +37,8 @@ public:
 	void pollNetworkEvent(NetworkEvent& event);
 
 private:
+	AppEngine* app;
+
 	sf::SocketSelector selector;
 
 	sf::Sound packetSuccess;

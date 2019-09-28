@@ -81,8 +81,6 @@ void Server::run()
 		// returns false if nothing is ready
 		if (selector.wait())
 		{
-			std::cout << "something is ready:" << std::endl;
-
 			if (selector.isReady(listener))
 			{
 				std::cout << "listener is ready:" << std::endl;
@@ -91,7 +89,8 @@ void Server::run()
 				newClient->socket = new sf::TcpSocket;
 
 				if (listener.accept(*newClient->socket) == sf::Socket::Status::Done)
-					acceptNewClientConnection(newClient);
+					if (acceptNewClientConnection(newClient))
+						selector.add(*newClient->socket);
 				else
 				{
 					delete newClient->socket;
@@ -122,7 +121,7 @@ void Server::run()
 
 void Server::handleIncomingNetTraffic(Client* client)
 {
-	std::cout << "client" << client->id << " socket is ready" << std::endl;
+	std::cout << "socket for client" << client->id << " is ready" << std::endl;
 
 	sf::Packet packet;
 	net::Command command;
@@ -252,39 +251,7 @@ void Server::handleIncomingNetTraffic(Client* client)
 	{
 		std::cout << "client is requesting a connection" << std::endl;
 
-		if (clientAlreadyConnected(client))
-		{
-			sf::Packet notifyPacket;
-
-			notifyPacket << net::Command::ConnectionRejected;
-			notifyPacket << "duplicateClient";
-			notifyPacket << "A client with this IP address is already connected.";
-
-			status = send(notifyPacket, client);
-
-			// TODO: remove client
-			client->socket->disconnect();
-			delete client->socket;
-
-			std::cout << "denied connection from duplicate client" << std::endl;
-		}
-		else
-		{
-			sf::Packet notifyPacket;
-			notifyPacket << net::Command::ConnectionAccepted;
-			notifyPacket << client->id;
-
-			status = send(notifyPacket, client);
-
-			if (!packet.endOfPacket())
-			{
-				std::string name;
-				packet >> name;
-				client->name = name;
-			}
-
-			std::cout << "accepted new client" << client->id << std::endl;
-		}
+		acceptNewClientConnection(client);
 	}
 	else if (command == net::Command::StartIntercomToClient)
 	{
@@ -292,7 +259,7 @@ void Server::handleIncomingNetTraffic(Client* client)
 
 		if (intercomStreams.find(client->id) == intercomStreams.end())
 		{
-			NetworkAudioStream* intercomStream = new NetworkAudioStream;
+			net::NetworkAudioStream* intercomStream = new net::NetworkAudioStream;
 			intercomStreams[client->id] = intercomStream;
 			intercomStream->play();
 
@@ -313,7 +280,6 @@ void Server::handleIncomingNetTraffic(Client* client)
 	}
 	else if (command == net::Command::IntercomDataSend)
 	{
-		std::cout << "processing intercom data" << std::endl;
 		intercomStreams[client->id]->receiveStep(packet);
 
 		status = sf::Socket::Status::Done;
@@ -387,7 +353,7 @@ sf::Socket::Status Server::send(sf::Packet& packet, Client* client)
 
 bool Server::acceptNewClientConnection(Client* newClient)
 {
-	std::cout << "evaluating connection of new client" << std::endl;
+	std::cout << "evaluating connection eligibility of a client" << std::endl;
 
 	if (clientAlreadyConnected(newClient))
 	{
@@ -408,13 +374,14 @@ bool Server::acceptNewClientConnection(Client* newClient)
 	}
 
 	newClient->id = totalClients++;
-	selector.add(*newClient->socket);
 	clients.push_back(newClient);
 
 	sf::Packet notifyPacket;
 	notifyPacket << net::Command::ConnectionAccepted;
 	notifyPacket << newClient->id;
 
+	send(notifyPacket, newClient);
+	send(notifyPacket, newClient);
 	send(notifyPacket, newClient);
 
 	std::cout << "accepted new client" << newClient->id << std::endl;

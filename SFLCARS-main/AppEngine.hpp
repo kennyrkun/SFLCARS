@@ -38,8 +38,8 @@ struct AppSettings
 class AppEngine
 {
 public:
-	void Init(std::string title, AppSettings settings_);
-	void Cleanup();
+	AppEngine(std::string title, AppSettings settings_);
+	~AppEngine();
 
 	// Note: code after these functions is still executed.
 	void ChangeState(AppState* state);

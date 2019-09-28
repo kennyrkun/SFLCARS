@@ -13,18 +13,12 @@
     <ClCompile Include="Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkAudioStream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Client.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkAudioStream.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

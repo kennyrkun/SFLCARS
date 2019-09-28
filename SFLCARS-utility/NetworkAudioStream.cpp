@@ -1,5 +1,12 @@
 #include "NetworkAudioStream.hpp"
 
+namespace sflcars
+{
+namespace utility
+{
+namespace network
+{
+
 NetworkAudioStream::NetworkAudioStream() : m_offset(0), m_hasFinished(false)
 {
 	// Set the sound parameters
@@ -80,4 +87,8 @@ void NetworkAudioStream::receiveStep(sf::Packet& packet, bool finished)
 		std::cout << "Invalid packet received: " << (int)id << std::endl;
 		m_hasFinished = true;
 	}
+}
+
+}
+}
 }

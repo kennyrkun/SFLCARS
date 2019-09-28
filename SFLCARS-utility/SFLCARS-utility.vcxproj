@@ -131,12 +131,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="NetworkAudioStream.cpp" />
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="SettingsParser.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.hpp" />
+    <ClInclude Include="NetworkAudioStream.hpp" />
     <ClInclude Include="Password.hpp" />
     <ClInclude Include="PicoSHA256.hpp" />
     <ClInclude Include="SettingsParser.hpp" />

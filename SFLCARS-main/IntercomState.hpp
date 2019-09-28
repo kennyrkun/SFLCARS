@@ -4,6 +4,8 @@
 #include "AppState.hpp"
 #include "NetworkRecorder.hpp"
 
+#include <NetworkAudioStream.hpp>
+
 #include <Bar.hpp>
 #include <Button.hpp>
 #include <InputBox.hpp>

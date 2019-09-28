@@ -7,6 +7,13 @@
 #include <iostream>
 #include <iterator>
 
+namespace sflcars
+{
+namespace utility
+{
+namespace network
+{
+
 const sf::Uint8 audioData = 1;
 const sf::Uint8 endOfStream = 2;
 
@@ -36,5 +43,9 @@ private:
 	std::size_t            m_offset;
 	bool                   m_hasFinished;
 };
+
+}
+}
+}
 
 #endif // !NETWORK_AUDIO_STREAM_HPP

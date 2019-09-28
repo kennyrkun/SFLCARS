@@ -2,9 +2,9 @@
 #define SERVER_HPP
 
 #include "Client.hpp"
-#include "NetworkAudioStream.hpp"
 
 #include <Command.hpp>
+#include <NetworkAudioStream.hpp>
 
 #include <SFML/Network.hpp>
 
@@ -39,7 +39,7 @@ private:
 
 	std::string version = "1";
 
-	std::map<int, NetworkAudioStream*> intercomStreams;
+	std::map<int, sflcars::utility::network::NetworkAudioStream*> intercomStreams;
 };
 
 #endif // !SERVER_HPP

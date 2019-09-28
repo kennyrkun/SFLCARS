@@ -194,6 +194,13 @@ void IntercomState::Update()
 		std::cout << "intercom is ready" << std::endl; 
 		break;
 	}
+	case net::Command::IntercomDataReceive:
+	{
+		//std::cout << "processing intercom data" << std::endl;
+		//intercomStreams[client->id]->receiveStep(packet);
+
+		break;
+	}
 	case net::Command::IntercomNotReady:
 	{
 		intercomFail.play();

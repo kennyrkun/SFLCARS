@@ -1,8 +1,11 @@
 #include "Listener.hpp"
+#include "AppEngine.hpp"
+
+#include "InitialiseState.hpp"
 
 #include <iostream>
 
-Listener::Listener()
+Listener::Listener(AppEngine* app) : app(app)
 {
 	packetFailBuffer.loadFromFile("./resources/sounds/error.ogg");
 	packetFail.setBuffer(packetFailBuffer);
@@ -80,11 +83,13 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 				{
 					std::cerr << "server has disconnected" << std::endl;
 					socket.disconnect();
-					abort();
+
+					app->PopState(app->states.size());
+					app->ChangeState(new InitialiseState);
 					// TODO: clear all app states and go back to initialisestate
 				}
 
-				std::cerr << "failed to receive packed from server" << std::endl;
+				std::cerr << "failed to receive packet from server" << std::endl;
 				packetFail.play();
 			}
 			else
