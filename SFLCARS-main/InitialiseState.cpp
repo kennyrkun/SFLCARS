@@ -66,10 +66,6 @@ void InitialiseState::HandleEvents()
 
 void InitialiseState::Update()
 {
-	// we want to draw first
-	static int failedConnectionAttempts = 0;
-	static bool connectedToServer = false;
-
 	if (!connectedToServer)
 	{
 		if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))

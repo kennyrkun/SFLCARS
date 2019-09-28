@@ -26,6 +26,9 @@ private:
 	sflcars::TextBar* topbar;
 	sflcars::String* text;
 	sflcars::Bar* bottombar;
+
+	int failedConnectionAttempts = 0;
+	bool connectedToServer = false;
 };
 
 #endif // !INITIALISE_STATE_HPP
