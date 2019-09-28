@@ -59,8 +59,21 @@ void IntercomState::Cleanup()
 {
 	std::cout << "Cleaning up IntercomState." << std::endl;
 
+	clients.clear();
+
+	if (transmitting)
+	{
+		transmitting = false;
+		intercomEnd.play();
+
+		if (recorder)
+		{
+			recorder->stop();
+			delete recorder;
+		}
+	}
+
 	delete display;
-	delete recorder;
 
 	std::cout << "Cleaned up IntercomState." << std::endl;
 }
