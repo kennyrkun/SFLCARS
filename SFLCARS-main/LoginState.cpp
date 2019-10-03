@@ -36,7 +36,7 @@ void LoginState::Init(AppEngine* app_)
 	layout.add(interface->quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::QuitButton);
 	layout.add(interface->bottombar);
 
-	failBuffer.loadFromFile("./resources/sounds/error2.ogg");
+	failBuffer.loadFromFile("./resources/sounds/deny.ogg");
 	fail.setBuffer(failBuffer);
 
 	std::cout << "LoginState ready." << std::endl;
