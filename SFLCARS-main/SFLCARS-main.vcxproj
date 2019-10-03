@@ -27,7 +27,7 @@
     <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
-    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="NetworkEvent.cpp" />
     <ClCompile Include="NetworkRecorder.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +39,7 @@
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
-    <ClInclude Include="Network.hpp" />
+    <ClInclude Include="NetworkEvent.hpp" />
     <ClInclude Include="NetworkRecorder.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

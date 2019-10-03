@@ -1,7 +1,7 @@
 #ifndef LISTENER_HPP
 #define LISTENER_HPP
 
-#include "Network.hpp"
+#include "NetworkEvent.hpp"
 
 #include <Command.hpp>
 

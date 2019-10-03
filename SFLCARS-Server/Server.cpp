@@ -223,26 +223,31 @@ void Server::handleIncomingNetTraffic(Client* client)
 		std::cout << "sending " << who << ": " << what << std::endl;
 
 		sf::Packet messagePacket;
-		messagePacket << "messageDeliver";
-		messagePacket << std::to_string(client->id) + ";" + client->ip.toString();
+		messagePacket << net::ClientCommand::DeliverMessage;
+		messagePacket << std::to_string(client->id) + ";" + client->ip.toString(); // information of client who sent the message
 		messagePacket << what;
 
 		sf::Packet messageStatusReportPacket;
 
 		if (who == "everyone")
 		{
-			for (const auto& client : clients)
+			for (const auto& cl : clients)
 			{
-				if (client->socket->send(messagePacket) != sf::Socket::Status::Done)
-					std::cerr << "failed to send return packet to client" << std::endl;
+				if (cl == client)
+					continue;
+
+				if (cl->socket->send(messagePacket) != sf::Socket::Status::Done)
+					std::cerr << "failed to send message to packet to client " << cl->id << std::endl;
 			}
+
+			// TODO: specify if it successfully sent ot everyone, and tell us how many people did not get it.
 
 			messageStatusReportPacket << net::ClientCommand::MessageSent;
 			messageStatusReportPacket << "The message has been sent to everyone.";
 		}
 		else
 		{
-			// find specific ip address
+			// TODO: find specific ip address
 
 			messageStatusReportPacket << net::ClientCommand::MessageRecipientInvalid;
 			messageStatusReportPacket << ("The who \"" + who + "\" is not recognised.");

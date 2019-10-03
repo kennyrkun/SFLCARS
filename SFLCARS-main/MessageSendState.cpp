@@ -110,31 +110,48 @@ void MessageSendState::Update()
 	NetworkEvent event;
 	app->listener.pollNetworkEvent(event);
 
-	if (event.packet.getDataSize() > 0)
+	switch (event.command)
 	{
-		std::string total;
+	case net::ClientCommand::MessageSent:
+	{
+		std::cout << "our message was sent" << std::endl;
+		break;
+	}
+	case net::ClientCommand::MessageDelivered:
+	{
+		std::cout << "our message was delivered" << std::endl;
+		break;
+	}
+	case net::ClientCommand::DeliverMessage:
+	{
+		std::cout << "received a message" << std::endl;
 
-		event.packet >> total;
+		std::string from, message;
+		event.packet >> from;
+		event.packet >> message;
 
-		if (total == "messageDeliver")
-		{
-			std::cout << "message recieved" << std::endl;
+		std::cout << from << ": " << message << std::endl; 
 
-			std::string from, message;
-			event.packet >> from;
-			event.packet >> message;
+		// TODO: tell the server the message was received
 
-			std::cout << from << ": " << message << std::endl;
-		}
+		break;
+	}
+	case net::ClientCommand::MessageRecipientInvalid:
+	{
+		std::cerr << "failed to send message" << std::endl;
 
-		while (!event.packet.endOfPacket())
-		{
-			std::string temp;
-			event.packet >> temp;
-			total += ("\n" + temp);
-		}
+		std::string error;
+		event.packet >> error;
 
-		std::cout << "server: " << total << std::endl;
+		std::cout << "server: " << error << std::endl;
+
+		// TODO: tell the server the message was received
+
+		break;
+	}
+	default:
+		// TODO: read the rest of the packet
+		break;
 	}
 
 	display->Update();
