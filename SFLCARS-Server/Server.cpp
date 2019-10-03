@@ -56,11 +56,8 @@ Server::Server()
 		parser.set("hashed_password", hashedPassword);
 		parser.set("elevated_privileges", true);
 	}
-}
 
-void Server::run()
-{
-	std::cout << "starting SFLCARS server" << std::endl;
+	std::cout << "preparing SFLCARS server" << std::endl;
 
 	if (listener.listen(12345) != sf::Socket::Status::Done)
 	{
@@ -74,6 +71,11 @@ void Server::run()
 	std::cout << "this server's public ip address is: " << sf::IpAddress::getPublicAddress() << std::endl;
 
 	selector.add(listener);
+}
+
+void Server::run()
+{
+	std::cout << "running SFLCARS server" << std::endl;
 
 	while (running)
 	{

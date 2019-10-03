@@ -39,7 +39,7 @@ private:
 
 	std::string version = "1";
 
-	std::map<int, sflcars::utility::network::NetworkAudioStream* > intercomStreams;
+	std::map<int, sflcars::utility::network::NetworkAudioStream*> intercomStreams;
 };
 
 #endif // !SERVER_HPP

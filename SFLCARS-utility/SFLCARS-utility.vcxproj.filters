@@ -4,42 +4,54 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{36d80039-fd4a-4527-8f27-92113083ac79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{0a95ba6d-0389-461c-b733-9ffde186e995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\network">
+      <UniqueIdentifier>{fcfe9cd4-58f4-4a6e-8fd4-26c7da36b9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\file">
+      <UniqueIdentifier>{c2e86651-ac81-4f8d-b936-455ec4d012aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\encryption">
+      <UniqueIdentifier>{09c5cf42-2401-4a06-b58f-f0901627cafc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PicoSHA256.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Password.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingsParser.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utility.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.hpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="NetworkAudioStream.hpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility\network</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.hpp">
+      <Filter>Source Files\Utility\network</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsParser.hpp">
+      <Filter>Source Files\Utility\file</Filter>
+    </ClInclude>
+    <ClInclude Include="PicoSHA256.hpp">
+      <Filter>Source Files\Utility\encryption</Filter>
+    </ClInclude>
+    <ClInclude Include="Password.hpp">
+      <Filter>Source Files\Utility\encryption</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Password.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingsParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utility.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility\network</Filter>
     </ClCompile>
     <ClCompile Include="NetworkAudioStream.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility\network</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsParser.cpp">
+      <Filter>Source Files\Utility\file</Filter>
+    </ClCompile>
+    <ClCompile Include="Password.cpp">
+      <Filter>Source Files\Utility\encryption</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
