@@ -83,7 +83,7 @@ void InitialiseState::Update()
 	else
 	{
 		sf::Packet packet;
-		packet << net::Command::ConnectionRequested;
+		packet << net::ServerCommand::ConnectionRequested;
 
 		app->listener.send(packet);
 
@@ -94,9 +94,9 @@ void InitialiseState::Update()
 
 			if (event.packet.getDataSize() > 0)
 			{
-				std::cout << "command: " << event.command << std::endl;
+				std::cout << "command: " << (int)event.command << std::endl;
 
-				if (event.command == net::Command::ConnectionAccepted)
+				if (event.command == net::ClientCommand::ConnectionAccepted)
 				{
 					std::cout << "connection accepted" << std::endl;
 					app->ChangeState(new LoginState);
@@ -105,7 +105,7 @@ void InitialiseState::Update()
 				else
 				{
 					// TODO: eventually do try to reconnect
-					std::cerr << "connection not accepted: (" << event.command << ")" << std::endl;
+					std::cerr << "connection not accepted: (" << (int)event.command << ")" << std::endl;
 					abort();
 				}
 			}

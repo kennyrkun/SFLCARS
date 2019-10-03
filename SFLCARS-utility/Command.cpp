@@ -1,29 +1,29 @@
 #include "Command.hpp"
 
-sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::Command& command)
+sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::ServerCommand& command)
 {
 	int x = static_cast<int>(command);
 	return packet << x;
 }
 
-sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::Command& command)
+sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::ServerCommand& command)
 {
 	int x;
 	packet >> x;
-	command = static_cast<sflcars::utility::network::Command>(x);
+	command = static_cast<sflcars::utility::network::ServerCommand>(x);
 	return packet;
 }
 
-sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::SubCommand& command)
+sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::ClientCommand& command)
 {
 	int x = static_cast<int>(command);
 	return packet << x;
 }
 
-sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::SubCommand& command)
+sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::ClientCommand& command)
 {
 	int x;
 	packet >> x;
-	command = static_cast<sflcars::utility::network::SubCommand>(x);
+	command = static_cast<sflcars::utility::network::ClientCommand>(x);
 	return packet;
 }

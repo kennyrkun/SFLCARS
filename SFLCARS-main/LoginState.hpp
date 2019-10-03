@@ -41,6 +41,9 @@ private:
 
 	std::string username;
 	std::string password;
+
+	sf::Sound fail;
+	sf::SoundBuffer failBuffer;
 };
 
 #endif // !LOGIN_STATE_HPP

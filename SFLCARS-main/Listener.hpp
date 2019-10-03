@@ -23,7 +23,7 @@ public:
 
 	sf::TcpSocket socket;
 
-	sf::Socket::Status send(net::Command command);
+	sf::Socket::Status send(net::ServerCommand command);
 	sf::Socket::Status send(sf::Packet packet);
 
 	void pollNetworkEvent(NetworkEvent& event);
@@ -36,9 +36,11 @@ private:
 	sf::Sound packetSuccess;
 	sf::Sound packetFail;
 	sf::Sound serverConnectFail;
+	sf::Sound serverConnectionLost;
 	sf::SoundBuffer packetSuccessBuffer;
 	sf::SoundBuffer packetFailBuffer;
 	sf::SoundBuffer serverConnectFailBuffer;
+	sf::SoundBuffer serverConnectionLostBuffer;
 };
 
 #endif // !LISTENER_HPP

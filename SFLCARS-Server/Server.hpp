@@ -8,6 +8,16 @@
 
 #include <SFML/Network.hpp>
 
+/*
+class IntercomStream
+{
+	sflcars::utility::network::NetworkAudioStream* intercomStream;
+
+	Client* sender;
+	Client* receiver;
+};
+*/
+
 class Server
 {
 public:
@@ -18,7 +28,8 @@ public:
 	void handleIncomingNetTraffic(Client* client);
 
 private:
-	sf::Socket::Status send(sflcars::utility::network::Command command, Client* client);
+	sf::Socket::Status send(sflcars::utility::network::ClientCommand command, Client* client);
+	sf::Socket::Status send(sflcars::utility::network::ServerCommand command, Client* client);
 	sf::Socket::Status send(sf::Packet& packet, Client* client);
 
 	bool acceptNewClientConnection(Client* newClient);

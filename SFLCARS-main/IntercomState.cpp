@@ -50,7 +50,7 @@ void IntercomState::Init(AppEngine* app_)
 	intercomFailBuffer.loadFromFile("./resources/sounds/fail2.ogg");
 	intercomFail.setBuffer(intercomFailBuffer);
 
-	app->listener.send(net::Command::ListClients);
+	app->listener.send(net::ServerCommand::ListClients);
 
 	std::cout << "IntercomState ready." << std::endl;
 }
@@ -111,7 +111,7 @@ void IntercomState::HandleEvents()
 			if (event.elementCallbackID == Callbacks::AllClients)
 			{
 				if (!transmitting)
-					intercomAllStart.play();
+					app->listener.send(net::ServerCommand::StartIntercomToAll);
 				else
 					std::cerr << "already transmitting" << std::endl;
 			}
@@ -135,7 +135,7 @@ void IntercomState::HandleEvents()
 						std::cout << "sending request to initiate intercom with client" << std::endl;
 						// a request to start an intercom with client id
 						sf::Packet packet;
-						packet << net::Command::StartIntercomToClient;
+						packet << net::ServerCommand::StartIntercomToClient;
 						packet << event.elementCallbackID;
 
 						app->listener.send(packet);
@@ -155,7 +155,7 @@ void IntercomState::Update()
 
 	switch (event.command)
 	{
-	case net::Command::ClientList:
+	case net::ClientCommand::ClientList:
 	{
 		if (event.packet.getDataSize() > 0)
 		{
@@ -193,28 +193,45 @@ void IntercomState::Update()
 		}
 		break;
 	}
-	case net::Command::IntercomReady:
+	case net::ClientCommand::IntercomReady:
 	{
-		int clientID;
-		event.packet >> clientID;
+		bool toAll = false;
 
-		recorder = new NetworkRecorder(&app->listener.socket);
-		recorder->start();
-		transmitting = true;
-		clients[clientID].second = true;
-		intercomStart.play();
+		event.packet >> toAll;
 
-		std::cout << "intercom is ready" << std::endl; 
-		break;
+		if (toAll)
+		{
+			intercomAllStart.play();
+
+			/*
+			recorder = new NetworkRecorder(&app->listener.socket);
+			recorder->start();
+			transmitting = true;
+			*/
+		}
+		else
+		{
+			int clientID;
+			event.packet >> clientID;
+
+			recorder = new NetworkRecorder(&app->listener.socket);
+			recorder->start();
+			transmitting = true;
+			clients[clientID].second = true;
+			intercomStart.play();
+
+			std::cout << "intercom is ready" << std::endl;
+			break;
+		}
 	}
-	case net::Command::IntercomDataReceive:
+	case net::ClientCommand::IntercomDataReceive:
 	{
 		//std::cout << "processing intercom data" << std::endl;
 		//intercomStreams[client->id]->receiveStep(packet);
 
 		break;
 	}
-	case net::Command::IntercomNotReady:
+	case net::ClientCommand::IntercomNotReady:
 	{
 		intercomFail.play();
 		break;

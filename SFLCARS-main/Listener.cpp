@@ -18,13 +18,16 @@ Listener::Listener(AppEngine* app) : app(app)
 	packetSuccessBuffer.loadFromFile("./resources/sounds/network/set.ogg");
 	packetSuccess.setBuffer(packetSuccessBuffer);
 	packetSuccess.setVolume(50.0f);
+
+	serverConnectionLostBuffer.loadFromFile("./resources/sounds/critical_long.ogg");
+	serverConnectionLost.setBuffer(serverConnectionLostBuffer);
 }
 
 Listener::~Listener()
 {
 	std::cout << "shutting down listener" << std::endl;
 
-	send(net::Command::Disconnecting);
+	send(net::ServerCommand::Disconnecting);
 
 	socket.disconnect();
 }
@@ -41,7 +44,7 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 	return true;
 }
 
-sf::Socket::Status Listener::send(net::Command command)
+sf::Socket::Status Listener::send(net::ServerCommand command)
 {
 	sf::Packet packet;
 	packet << command;
@@ -84,6 +87,8 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 					std::cerr << "server has disconnected" << std::endl;
 					socket.disconnect();
 
+					serverConnectionLost.play();
+
 					app->PopState(app->states.size());
 					app->ChangeState(new InitialiseState);
 					// TODO: clear all app states and go back to initialisestate
@@ -94,11 +99,12 @@ void Listener::pollNetworkEvent(NetworkEvent& event)
 			}
 			else
 			{
-				event = { net::Command::None, time_t(0), packet };
+				event = { net::ClientCommand::None, time_t(0), packet };
 				event.packet >> event.command;
-				std::cout << "received and processed packet (" << event.command << ")" << std::endl;
+				std::cout << "received and processed packet (" << (int)event.command << ")" << std::endl;
 
-				if (event.command != net::Command::IntercomDataSend && event.command != net::Command::IntercomDataSend)
+				// don't play sounds for reptitive commands
+				if (event.command != net::ClientCommand::IntercomDataReceive)
 					packetSuccess.play();
 			}
 		}

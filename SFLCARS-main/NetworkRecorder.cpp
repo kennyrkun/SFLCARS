@@ -21,7 +21,7 @@ bool NetworkRecorder::onProcessSamples(const sf::Int16* samples, std::size_t sam
 {
 	// Pack the audio samples into a network packet
 	sf::Packet packet;
-	packet << sflcars::utility::network::Command::IntercomDataSend;
+	packet << sflcars::utility::network::ServerCommand::ReceiveIntercomData;
 	packet << audioData;
 	packet.append(samples, sampleCount * sizeof(sf::Int16));
 
@@ -34,7 +34,7 @@ void NetworkRecorder::onStop()
 {
 	// Send a "end-of-stream" packet
 	sf::Packet packet;
-	packet << sflcars::utility::network::Command::EndIntercomToClient;
+	packet << sflcars::utility::network::ServerCommand::EndIntercom;
 	packet << endOfStream;
 	socket->send(packet);
 }

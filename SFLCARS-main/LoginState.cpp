@@ -36,6 +36,9 @@ void LoginState::Init(AppEngine* app_)
 	layout.add(interface->quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::QuitButton);
 	layout.add(interface->bottombar);
 
+	failBuffer.loadFromFile("./resources/sounds/error2.ogg");
+	fail.setBuffer(failBuffer);
+
 	std::cout << "LoginState ready." << std::endl;
 }
 
@@ -75,7 +78,7 @@ void LoginState::HandleEvents()
 		password = interface->passwordBox->getText().toAnsiString();
 
 		sf::Packet packet;
-		packet << net::Command::Login;
+		packet << net::ServerCommand::Login;
 		packet << "step1";
 		packet << username;
 
@@ -99,11 +102,11 @@ void LoginState::Update()
 	NetworkEvent event;
 	app->listener.pollNetworkEvent(event);
 
-	if (event.command != net::Command::None)
+	if (event.command != net::ClientCommand::None)
 	{
 		switch (event.command)
 		{
-		case net::Command::Login:
+		case net::ClientCommand::LoginStep:
 		{
 			std::string loginStep;
 			event.packet >> loginStep;
@@ -121,7 +124,7 @@ void LoginState::Update()
 				std::string superHash = sflcars::utility::password::hashString(passwordHash + randoHash);
 
 				sf::Packet response;
-				response << net::Command::Login;
+				response << net::ServerCommand::Login;
 				response << "step4";
 				response << username;
 				response << randoHash;
@@ -131,12 +134,13 @@ void LoginState::Update()
 			}
 			break;
 		}
-		case net::Command::LoginFailure:
+		case net::ClientCommand::LoginFailure:
 		{
 			std::cerr << "login failed" << std::endl;
+			fail.play();
 			break;
 		}
-		case net::Command::LoginSuccess:
+		case net::ClientCommand::LoginSuccess:
 		{
 			std::cout << "login successful!" << std::endl;
 			

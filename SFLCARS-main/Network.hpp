@@ -13,7 +13,7 @@ class AppEngine;
 
 struct NetworkEvent
 {
-	net::Command command;
+	net::ClientCommand command;
 
 	time_t receivedTime = 0;
 	sf::Packet packet;

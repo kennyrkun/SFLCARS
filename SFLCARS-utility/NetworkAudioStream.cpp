@@ -29,7 +29,10 @@ bool NetworkAudioStream::onGetData(sf::SoundStream::Chunk& data)
 		// (don't forget that we run in two separate threads)
 		{
 			sf::Lock lock(m_mutex);
+
+			// FIXME: this is broken
 			m_tempBuffer.assign(m_samples.begin() + m_offset, m_samples.end());
+			// FIXME: this is broken
 		}
 
 		// Fill audio data to pass to the stream

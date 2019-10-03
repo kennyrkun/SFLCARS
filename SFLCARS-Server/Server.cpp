@@ -113,7 +113,7 @@ void Server::run()
 
 	for (auto& client : clients)
 	{
-		send(net::Command::ShuttingDown, client);
+		send(net::ClientCommand::ShuttingDown, client);
 		client->socket->disconnect();
 		delete client->socket;
 		// TODO: remove client
@@ -127,16 +127,16 @@ void Server::handleIncomingNetTraffic(Client* client)
 	std::cout << "client" << client->id << " socket is ready" << std::endl;
 
 	sf::Packet packet;
-	net::Command command;
+	net::ServerCommand command;
 
 	client->socket->receive(packet);
 	packet >> command;
 
-	std::cout << client->ip.toString() << ": " << command << std::endl;
+	std::cout << client->ip.toString() << ": " << (int)command << std::endl;
 
 	sf::Socket::Status status = sf::Socket::Status::Error;
 
-	if (command == net::Command::Login)
+	if (command == net::ServerCommand::Login)
 	{
 		std::string step;
 		packet >> step;
@@ -146,7 +146,7 @@ void Server::handleIncomingNetTraffic(Client* client)
 			std::cout << "step1, sending client a random number" << std::endl;
 
 			sf::Packet packet;
-			packet << net::Command::Login;
+			packet << net::ClientCommand::LoginStep;
 			packet << "step2";
 			packet << util::getRandomNumber(0, std::numeric_limits<size_t>::max());
 
@@ -175,29 +175,29 @@ void Server::handleIncomingNetTraffic(Client* client)
 			{
 				std::cout << "success!" << std::endl;
 
-				status = send(net::Command::LoginSuccess, client);
+				status = send(net::ClientCommand::LoginSuccess, client);
 
 				client->clientAuthenticated = true;
 			}
 			else
 			{
-				status = send(net::Command::LoginFailure, client);
+				status = send(net::ClientCommand::LoginFailure, client);
 			}
 		}
 	}
-	else if (command == net::Command::Shutdown)
+	else if (command == net::ServerCommand::Shutdown)
 	{
 		std::cout << "shutting down" << std::endl;
-		status = send(net::Command::ShuttingDown, client);
+		status = send(net::ClientCommand::ShuttingDown, client);
 
 		running = false;
 	}
-	else if (command == net::Command::ListClients)
+	else if (command == net::ServerCommand::ListClients)
 	{
 		std::cout << "sending a list of clients" << std::endl;
 
 		sf::Packet packet;
-		packet << net::Command::ClientList;
+		packet << net::ClientCommand::ClientList;
 
 		for (const auto& client : clients)
 		{
@@ -207,11 +207,11 @@ void Server::handleIncomingNetTraffic(Client* client)
 
 		status = send(packet, client);
 	}
-	else if (command == net::Command::Ping)
+	else if (command == net::ServerCommand::Ping)
 	{
-		status = send(net::Command::Pong, client);
+		status = send(net::ClientCommand::Pong, client);
 	}
-	else if (command == net::Command::SendMessage)
+	else if (command == net::ServerCommand::SendMessage)
 	{
 		std::string who, what;
 
@@ -237,20 +237,20 @@ void Server::handleIncomingNetTraffic(Client* client)
 					std::cerr << "failed to send return packet to client" << std::endl;
 			}
 
-			messageStatusReportPacket << net::Command::MessageSent;
+			messageStatusReportPacket << net::ClientCommand::MessageSent;
 			messageStatusReportPacket << "The message has been sent to everyone.";
 		}
 		else
 		{
 			// find specific ip address
 
-			messageStatusReportPacket << net::Command::MessageRecipientInvalid;
+			messageStatusReportPacket << net::ClientCommand::MessageRecipientInvalid;
 			messageStatusReportPacket << ("The who \"" + who + "\" is not recognised.");
 		}
 
 		status = send(messageStatusReportPacket, client);
 	}
-	else if (command == net::Command::ConnectionRequested)
+	else if (command == net::ServerCommand::ConnectionRequested)
 	{
 		std::cout << "client is requesting a connection" << std::endl;
 
@@ -258,7 +258,7 @@ void Server::handleIncomingNetTraffic(Client* client)
 		{
 			sf::Packet notifyPacket;
 
-			notifyPacket << net::Command::ConnectionRejected;
+			notifyPacket << net::ClientCommand::ConnectionRejected;
 			notifyPacket << "duplicateClient";
 			notifyPacket << "A client with this IP address is already connected.";
 
@@ -273,7 +273,7 @@ void Server::handleIncomingNetTraffic(Client* client)
 		else
 		{
 			sf::Packet notifyPacket;
-			notifyPacket << net::Command::ConnectionAccepted;
+			notifyPacket << net::ClientCommand::ConnectionAccepted;
 			notifyPacket << client->id;
 
 			status = send(notifyPacket, client);
@@ -288,10 +288,11 @@ void Server::handleIncomingNetTraffic(Client* client)
 			std::cout << "accepted new client" << client->id << std::endl;
 		}
 	}
-	else if (command == net::Command::StartIntercomToClient)
+	else if (command == net::ServerCommand::StartIntercomToClient)
 	{
-		std::cout << "starting intercom" << std::endl;
+		std::cout << "starting intercom from " << client->id;
 
+		// if the client is not already transmitting to someone
 		if (intercomStreams.find(client->id) == intercomStreams.end())
 		{
 			net::NetworkAudioStream* intercomStream = new net::NetworkAudioStream;
@@ -302,30 +303,55 @@ void Server::handleIncomingNetTraffic(Client* client)
 			int id;
 			packet >> id;
 
-			std::cout << "with client " << id << std::endl;
+			std::cout << " to client " << id << std::endl;
 
 			sf::Packet outPacket;
-			outPacket << net::Command::IntercomReady;
+			outPacket << net::ClientCommand::IntercomReady;
+			outPacket << false; // not transmitting to all clients
 			outPacket << id;
 
 			status = send(outPacket, client);
 		}
 		else
-			status = send(net::Command::IntercomNotReady, client);
+		{
+			std::cerr << "this client attempting to start a new transmission is already talking to someone" << std::endl;
+			status = send(net::ClientCommand::IntercomNotReady, client);
+		}
 	}
-	else if (command == net::Command::IntercomDataSend)
+	else if (command == net::ServerCommand::StartIntercomToAll)
+	{
+		std::cout << "starting intercom from " << client->id << " to all clients" << std::endl;
+
+		// if the client is not already transmitting to someone
+		if (intercomStreams.find(client->id) == intercomStreams.end())
+		{
+			sf::Packet outPacket;
+			outPacket << net::ClientCommand::IntercomReady;
+			outPacket << true; // not transmitting to all clients
+
+			status = send(outPacket, client);
+		}
+		else
+		{
+			std::cerr << "this client attempting to start a new transmission is already talking to someone" << std::endl;
+			status = send(net::ClientCommand::IntercomNotReady, client);
+		}
+	}
+	else if (command == net::ServerCommand::ReceiveIntercomData)
 	{
 		std::cout << "processing intercom data" << std::endl;
 		intercomStreams[client->id]->receiveStep(packet);
 
 		status = sf::Socket::Status::Done;
 	}
-	else if (command == net::Command::EndIntercomToClient)
+	else if (command == net::ServerCommand::EndIntercom)
 	{
 		intercomStreams[client->id]->receiveStep(packet, true);
 
 		std::cout << "stopping intercom" << std::endl;
 
+		intercomStreams[client->id]->stop();
+		std::cout << "stopped1" << std::endl;
 		delete intercomStreams[client->id];
 		std::cout << "stopped2" << std::endl;
 		intercomStreams[client->id] = nullptr;
@@ -337,7 +363,7 @@ void Server::handleIncomingNetTraffic(Client* client)
 	}
 	else
 	{
-		status = send(net::Command::UnknownCommand, client);
+		status = send(net::ClientCommand::UnknownCommand, client);
 	}
 
 	if (!packet.endOfPacket())
@@ -369,7 +395,15 @@ void Server::handleIncomingNetTraffic(Client* client)
 	}
 }
 
-sf::Socket::Status Server::send(net::Command command, Client* client)
+sf::Socket::Status Server::send(net::ServerCommand command, Client* client)
+{
+	sf::Packet packet;
+	packet << command;
+
+	return send(packet, client);
+}
+
+sf::Socket::Status Server::send(net::ClientCommand command, Client* client)
 {
 	sf::Packet packet;
 	packet << command;
@@ -395,7 +429,7 @@ bool Server::acceptNewClientConnection(Client* newClient)
 	{
 		sf::Packet notifyPacket;
 
-		notifyPacket << net::Command::ConnectionRejected;
+		notifyPacket << net::ClientCommand::ConnectionRejected;
 		notifyPacket << "duplicateClient";
 		notifyPacket << "A client with this IP address is already connected.";
 
@@ -414,7 +448,7 @@ bool Server::acceptNewClientConnection(Client* newClient)
 	clients.push_back(newClient);
 
 	sf::Packet notifyPacket;
-	notifyPacket << net::Command::ConnectionAccepted;
+	notifyPacket << net::ClientCommand::ConnectionAccepted;
 	notifyPacket << newClient->id;
 
 	send(notifyPacket, newClient);

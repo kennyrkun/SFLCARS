@@ -10,65 +10,72 @@ namespace utility
 namespace network
 {
 
-enum Command
+// These are commands sent to the server. (client -> server)
+enum class ServerCommand
 {
 	None,
-	Login,
-	LoginSuccess,
-	LoginFailure,
-	Logout,
-	Shutdown,
-	ShuttingDown,
-	Disconnecting,
-	Disconnected,
-	Connect,
-	ConnectionRequested,
-	ConnectionAccepted,
-	ConnectionRejected,
 	Ping,
 	Pong,
+	Information,
+	Login, // TODO: we might want a few more commands for the steps
+	Logout,
+	Shutdown,
+	Disconnecting, // the server acknowledges your departure
+	ConnectionRequested,
 	SendMessage,
-	DeliverMessage,
-	MessageSent,
-	MessageRecipientInvalid,
-	MessageFailedToSend,
+	ReceivedMessage,
 	ListClients,
-	ClientList,
-	Version,
+	MyVersionIs,
+	WhatIsYourVersion,
 	StartIntercomToClient,
-	EndIntercomToClient,
 	StartIntercomToAll,
-	EndIntercomToAll,
-	IntercomDataSend,
-	IntercomDataReceive,
-	IntercomReady,
-	IntercomNotReady,
-	TestAllClientConnections,
+	IncomingIntercom,
+	EndIntercom,
+	ReceiveIntercomData,
+	PingAllClients,
 	UnknownCommand,
 };
 
-enum SubCommand
+// These are commands sent to the client. (server -> client)
+enum class ClientCommand
 {
-	MyVersion,
-	YourVersion,
-	Login1,
-	Login2,
-	Login3,
-	Login4,
-	Login5,
-	DuplicateClient,
+	None,
+	Ping,
+	Pong,
+	Information,
+	LoginStep, // TODO: probably send login step in information
+	LoginSuccess,
+	LoginFailure,
+	ShuttingDown,
+	ConnectionAccepted,
+	ConnectionRejected,
+	Disconnected,
+	DeliverMessage,
+	MessageSent,
+	MessageDelivered,
+	MessageRecipientInvalid,
+	MessageFailed,
+	ClientList,
+	MyVersionIs,
+	WhatIsYourVersion,
+	IntercomReady,
+	IntercomNotReady,
+	IntercomRequested,
+	IntercomTerminated,
+	IntercomDataReceive,
+	UnknownCommand,
 };
 
 }
 }
 }
 
-sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::Command& command);
+sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::ServerCommand& command);
 
-sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::Command& command);
+sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::ServerCommand& command);
 
-sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::SubCommand& command);
+sf::Packet& operator <<(sf::Packet& packet, const sflcars::utility::network::ClientCommand& command);
 
-sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::SubCommand& command);
+sf::Packet& operator >>(sf::Packet& packet, sflcars::utility::network::ClientCommand& command);
 
 #endif // !COMMAND_HPP
