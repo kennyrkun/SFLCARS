@@ -11,7 +11,7 @@ namespace fs = std::experimental::filesystem;
 // and should rely on as little external
 // resources as reasonably possible.
 
-AppEngine::AppEngine(std::string title_, AppSettings settings_) : listener(this)
+AppEngine::AppEngine(AppSettings settings_)
 {
 	std::cout << "AppEngine Init" << std::endl;
 

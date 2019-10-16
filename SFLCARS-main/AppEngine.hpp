@@ -38,7 +38,7 @@ struct AppSettings
 class AppEngine
 {
 public:
-	AppEngine(std::string title, AppSettings settings_);
+	AppEngine(AppSettings settings_);
 	~AppEngine();
 
 	// Note: code after these functions is still executed.
