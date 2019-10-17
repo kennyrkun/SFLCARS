@@ -16,6 +16,16 @@ ResourceManager::~ResourceManager()
 	std::cout << "ResourceManager deconstructed." << std::endl;
 }
 
+void ResourceManager::setResourceDirectory(const std::string& directory)
+{
+	basedir = directory;
+}
+
+const std::string& ResourceManager::getResourceDirectory() const
+{
+	return basedir;
+}
+
 sf::Texture* ResourceManager::loadTexture(const std::string& resourceName, const std::string& fileLocation)
 {
 	if (!isTextureLoaded(resourceName))

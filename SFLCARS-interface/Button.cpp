@@ -23,7 +23,7 @@ Button::Button(const std::string& string)
 
 	int i = dist(rng);
 
-	buffer.loadFromFile(".//resources/sounds/" + sounds[i] + ".ogg");
+	buffer.loadFromFile(Theme::resources.getResourceDirectory() + "/sounds/" + sounds[i] + ".ogg");
 	beep.setBuffer(buffer);
 
 	// TODO: if Theme::textAllCaps == true, make text uppercase

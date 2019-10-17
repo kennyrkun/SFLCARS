@@ -13,6 +13,9 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
+	void setResourceDirectory(const std::string& directory);
+	const std::string& getResourceDirectory() const;
+
 	sf::Texture* loadTexture(const std::string& resourceName, const std::string& fileLocation);
 	bool isTextureLoaded(const std::string& resourceName);
 	sf::Texture* getTexture(const std::string& resourceName);
@@ -27,6 +30,8 @@ public:
 private:
 	std::map<std::string, sf::Texture*> loadedTextures;
 	std::map<std::string, sf::Font*> loadedFonts;
+
+	std::string basedir = "./resources/";
 };
 
 #endif
