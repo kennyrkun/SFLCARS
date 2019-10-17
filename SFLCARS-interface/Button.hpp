@@ -51,7 +51,6 @@ protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-	sf::Font font;
 	sf::Text text;
 
 	sf::SoundBuffer buffer;

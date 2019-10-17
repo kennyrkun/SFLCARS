@@ -5,8 +5,7 @@ namespace sflcars
 
 String::String(const std::string& string)
 {
-	font.loadFromFile(".//resources/fonts/Okuda.otf");
-	text.setFont(font);
+	text.setFont(Theme::getFont());
 	text.setCharacterSize(36);
 	text.setString(string);
 }
@@ -59,7 +58,7 @@ int String::getCharacterSize() const
 	return text.getCharacterSize();
 }
 
-void String::setFont()
+void String::setFont(sf::Font& font)
 {
 	text.setFont(font);
 }

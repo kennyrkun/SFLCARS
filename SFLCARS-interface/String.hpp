@@ -26,7 +26,7 @@ public:
 	void setCharacterSize(float newSize);
 	int getCharacterSize() const;
 
-	void setFont();
+	void setFont(sf::Font& font);
 	sf::Font getFont() const;
 
 	void setFillColor(const sf::Color& color);
@@ -35,7 +35,6 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-	sf::Font font;
 	sf::Text text;
 };
 

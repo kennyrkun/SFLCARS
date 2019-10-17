@@ -1,9 +1,12 @@
 #include "Theme.hpp"
 
 #include <random>
+#include <iostream>
 
 namespace sflcars
 {
+
+ResourceManager Theme::resources;
 
 size_t    Theme::textCharacterSize = 12;
 Theme::TextStyle Theme::label;
@@ -23,37 +26,24 @@ Theme::MouseInput Theme::mouse;
 
 bool Theme::textAllCaps = true;
 
-sf::Font Theme::m_font;
-
 bool Theme::loadFont(const std::string& filename)
 {
-	return m_font.loadFromFile(filename);
-}
-
-bool Theme::loadFont(const sf::Font* font)
-{
-	if (font)
-	{
-		m_font = *font;
-		return true;
-	}
-
-	return false;
+	return resources.loadFont("mainFont", filename) != nullptr;
 }
 
 const sf::Font& Theme::getFont()
 {
-	return m_font;
+	return *resources.getFont("mainFont");
 }
 
 float Theme::getBoxHeight()
 {
-	return getLineSpacing() + borderSize * 2 + PADDING * 2;
+	return getLineSpacing() + (borderSize * 2) + (PADDING * 2);
 }
 
 float Theme::getLineSpacing()
 {
-	return m_font.getLineSpacing(textCharacterSize);
+	return resources.getFont("mainFont")->getLineSpacing(textCharacterSize);
 }
 
 sf::Color Theme::hexToRgb(std::string hexcolor)

@@ -7,8 +7,7 @@ namespace sflcars
 
 TextBar::TextBar(const std::string& string, const TextAlignment align) : align(align)
 {
-	font.loadFromFile("./resources/fonts/Okuda.otf");
-	text.setFont(font);
+	text.setFont(Theme::getFont());
 	text.setCharacterSize(36);
 	text.setString(string);
 	

@@ -139,6 +139,7 @@
     <ClCompile Include="IconButton.cpp" />
     <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RoundRectangle.cpp" />
     <ClCompile Include="Spacer.cpp" />
     <ClCompile Include="String.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="IconButton.hpp" />
     <ClInclude Include="InputBox.hpp" />
     <ClInclude Include="Layout.hpp" />
+    <ClInclude Include="ResourceManager.hpp" />
     <ClInclude Include="RoundRectangle.hpp" />
     <ClInclude Include="Spacer.hpp" />
     <ClInclude Include="String.hpp" />

@@ -14,20 +14,18 @@ namespace sflcars
 
 InputBox::InputBox(float width) : cursorPos(0), maxCharacters(-1), blinkPeriod(1.0f)
 {
-	font.loadFromFile("./resources/fonts/Okuda.otf");
-
-	text.setFont(font);
+	text.setFont(Theme::getFont());
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(36);
 
-	box.setSize(sf::Vector2f(width, font.getLineSpacing(text.getCharacterSize())));
+	box.setSize(sf::Vector2f(width, Theme::getFont().getLineSpacing(text.getCharacterSize())));
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(Theme::getRandomColor());
 	box.setOutlineThickness(-4);
 
 	signed int outlineThickness = std::abs(box.getOutlineThickness());
 
-	cursor.setSize(sf::Vector2f(2, font.getLineSpacing(text.getCharacterSize()) - (outlineThickness * 2) - (padding * 2)));
+	cursor.setSize(sf::Vector2f(2, Theme::getFont().getLineSpacing(text.getCharacterSize()) - (outlineThickness * 2) - (padding * 2)));
 	cursor.setFillColor(sf::Color::White);
 	setCursorPosition(0);
 }

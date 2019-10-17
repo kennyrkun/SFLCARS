@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "ResourceManager.hpp"
+
 // TODO: make this a static namespace
 
 namespace sflcars
@@ -13,10 +15,14 @@ namespace sflcars
 class Theme
 {
 public:
+	static ResourceManager resources;
+
 	// Load the GUI global font from a file
 	static bool loadFont(const std::string& path);
+	/*
 	// Load the GUI global font from an already loaded font.
 	static bool loadFont(const sf::Font* font);
+	*/
 
 	static const sf::Font& getFont();
 
@@ -83,9 +89,6 @@ public:
 	static bool textAllCaps;
 
 	static bool triggerCallbacksOnRelease;
-
-private:
-	static sf::Font    m_font;
 };
 
 }

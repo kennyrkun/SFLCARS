@@ -37,7 +37,6 @@ private:
 	TextAlignment align;
 
 	sf::Text text;
-	sf::Font font;
 };
 
 }

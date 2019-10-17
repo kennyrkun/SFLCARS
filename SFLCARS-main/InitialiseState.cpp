@@ -21,6 +21,8 @@ void InitialiseState::Init(AppEngine* app_)
 
 	app = app_;
 
+	sflcars::Theme::loadFont("./resources/fonts/Okuda.otf");
+
 	display = new sflcars::Display(sf::VideoMode(800, 600));
 	sflcars::Layout* layout = display->getLayout();
 

@@ -46,8 +46,11 @@
     <ClCompile Include="TextBar.cpp">
       <Filter>Source Files\Elements</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
     <ClCompile Include="Theme.cpp">
-      <Filter>Source Files\Elements</Filter>
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +87,11 @@
     <ClInclude Include="TextBar.hpp">
       <Filter>Source Files\Elements</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManager.hpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="Theme.hpp">
-      <Filter>Source Files\Elements</Filter>
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,8 +9,7 @@ namespace sflcars
 
 Button::Button(const std::string& string)
 {
-	font.loadFromFile(".//resources/fonts/Okuda.otf");
-	text.setFont(font);
+	text.setFont(Theme::getFont());
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(36);
 

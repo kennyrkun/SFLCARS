@@ -59,7 +59,6 @@ private:
 
 	std::string oldText;
 	sf::Text    text;
-	sf::Font	font;
 
 	mutable sf::RectangleShape cursor;
 	mutable sf::Clock  cursorTimer;
