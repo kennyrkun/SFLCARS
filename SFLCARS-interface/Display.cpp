@@ -11,6 +11,8 @@ Display::Display(const sf::VideoMode& size, int id) : RenderWindow(size, "SFLCAR
 {
 	layout = new Layout(this);
 
+	setVerticalSyncEnabled(true);
+
 	std::cout << "created Display" << id << std::endl;
 }
 
