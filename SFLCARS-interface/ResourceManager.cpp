@@ -11,6 +11,8 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
+	std::cout << "Deconstructing ResourceManager" << std::endl;
+
 	freeAll();
 
 	std::cout << "ResourceManager deconstructed." << std::endl;
@@ -89,19 +91,19 @@ void ResourceManager::free(const std::string& resourceName)
 
 void ResourceManager::freeAll()
 {
-	for (auto& texture : loadedTextures)
-	{
-		delete loadedTextures[texture.first];
-		loadedTextures[texture.first] = nullptr;
-		loadedTextures.erase(texture.first);
-	}
+	std::cout << "Freeing all Resources" << std::endl;
 
-	for (auto& fonts : loadedFonts)
-	{
-		delete loadedFonts[fonts.first];
-		loadedFonts[fonts.first] = nullptr;
-		loadedFonts.erase(fonts.first);
-	}
+	for (auto& texture : loadedTextures)
+		free(texture.first);
+	loadedTextures.clear();
+
+	std::cout << "Freed all Textures." << std::endl;
+
+	for (auto& font : loadedFonts)
+		free(font.first);
+	loadedFonts.clear();
+
+	std::cout << "Freed all Fonts." << std::endl;
 
 	std::cout << "Freed all resources." << std::endl;
 }
