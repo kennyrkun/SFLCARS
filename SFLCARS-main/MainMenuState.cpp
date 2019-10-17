@@ -93,6 +93,8 @@ void MainMenuState::Update()
 
 void MainMenuState::Draw()
 {
-	display->Draw();
+	display->clear();
+	display->DrawLayout();
+	display->display();
 }
 

@@ -188,5 +188,7 @@ void IntercomState::Update()
 
 void IntercomState::Draw()
 {
-	display->Draw();
+	display->clear();
+	display->DrawLayout();
+	display->display();
 }

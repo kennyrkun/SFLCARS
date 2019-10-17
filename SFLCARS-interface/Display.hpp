@@ -18,7 +18,7 @@ struct DisplayEvent
 	int elementCallbackID;
 };
 
-class Display
+class Display : public sf::RenderWindow
 {
 public:
 	// TODO: optionally accept an already created renderwindow
@@ -28,24 +28,18 @@ public:
 	void setLayout(Layout* layout);
 	Layout* getLayout() const;
 
-	sf::Vector2u getWindowSize() const;
-
 	sf::Vector2f getMousePosition() const;
 
 	void setPadding(float padding);
 	float getPadding() const;
 
-	bool isOpen() const;
-
-    DisplayEvent HandleEvents();
+	DisplayEvent HandleEvents();
     void Update();
-    void Draw();
+    void DrawLayout();
 
     const int id;
 
 private:
-    sf::RenderWindow* window;
-
 	Layout* layout;
 };
 

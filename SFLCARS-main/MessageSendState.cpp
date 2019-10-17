@@ -142,5 +142,7 @@ void MessageSendState::Update()
 
 void MessageSendState::Draw()
 {
-	display->Draw();
+	display->clear();
+	display->DrawLayout();
+	display->display();
 }

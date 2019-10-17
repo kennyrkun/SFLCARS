@@ -41,7 +41,7 @@ Element* Layout::add(Element* element, Alignment align, int id)
 	element->setParent(this);
 	element->setID(id);
 
-	sf::Vector2u size = display->getWindowSize();
+	sf::Vector2u size = display->getSize();
 
 	element->setSize(sf::Vector2f(size.x, size.y));
 	element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING)); // HACK: get it to calculate it's geometry before we start moving things

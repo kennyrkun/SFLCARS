@@ -214,7 +214,7 @@ int calculator()
 		}
 
 		display->Update();
-		display->Draw();
+		display->DrawLayout();
 	}
 
 	return 0;
@@ -273,7 +273,7 @@ int notifier()
 		}
 
 		display->Update();
-		display->Draw();
+		display->DrawLayout();
 	}
 
 	return 0;

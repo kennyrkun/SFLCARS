@@ -123,6 +123,7 @@ void InitialiseState::Update()
 
 void InitialiseState::Draw()
 {
-	display->Draw();
+	display->clear();
+	display->DrawLayout();
+	display->display();
 }
-

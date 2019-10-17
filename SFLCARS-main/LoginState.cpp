@@ -177,7 +177,9 @@ void LoginState::Update()
 
 void LoginState::Draw()
 {
-	display->Draw();
+	display->clear();
+	display->DrawLayout();
+	display->display();
 }
 
 LoginState::Interface::Interface()
