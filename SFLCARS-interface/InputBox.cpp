@@ -23,7 +23,7 @@ InputBox::InputBox(float width) : cursorPos(0), maxCharacters(-1), blinkPeriod(1
 	box.setOutlineColor(Theme::getRandomColor());
 	box.setOutlineThickness(-4);
 
-	signed int outlineThickness = std::abs(box.getOutlineThickness());
+	float outlineThickness = std::abs(box.getOutlineThickness());
 
 	cursor.setSize(sf::Vector2f(2, Theme::getFont().getLineSpacing(text.getCharacterSize()) - (outlineThickness * 2) - (padding * 2)));
 	cursor.setFillColor(sf::Color::White);
@@ -52,6 +52,7 @@ bool InputBox::isEmpty() const
 {
 	return text.getString().isEmpty();
 }
+
 void InputBox::setCursorPosition(size_t index)
 {
 	if (index <= text.getString().getSize())
