@@ -24,6 +24,13 @@ struct AppSettings
 
 	struct Server
 	{
+		enum class NetworkOptions
+		{
+			Offline,
+			Local,
+			Public,
+		} networkAccess;
+
 		sf::IpAddress serverIpAddress = sf::IpAddress::LocalHost;
 		unsigned short serverPort = 12345;
 	} server;
