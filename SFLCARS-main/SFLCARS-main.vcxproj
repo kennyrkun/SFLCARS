@@ -27,6 +27,8 @@
     <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
+    <ClCompile Include="UserAccount.cpp" />
+    <ClCompile Include="UserAccountManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp" />
@@ -37,6 +39,8 @@
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
+    <ClInclude Include="UserAccount.hpp" />
+    <ClInclude Include="UserAccountManager.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

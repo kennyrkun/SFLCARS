@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\UserAccounts">
+      <UniqueIdentifier>{435865a4-e1c3-4c04-9d6b-c386408d3ac9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppEngine.cpp">
@@ -31,6 +34,12 @@
     <ClCompile Include="IntercomState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UserAccount.cpp">
+      <Filter>Source Files\UserAccounts</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAccountManager.cpp">
+      <Filter>Source Files\UserAccounts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp">
@@ -56,6 +65,12 @@
     </ClInclude>
     <ClInclude Include="IntercomState.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserAccount.hpp">
+      <Filter>Source Files\UserAccounts</Filter>
+    </ClInclude>
+    <ClInclude Include="UserAccountManager.hpp">
+      <Filter>Source Files\UserAccounts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

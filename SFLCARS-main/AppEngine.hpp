@@ -2,6 +2,7 @@
 #define APP_ENGINE_HPP
 
 #include "Listener.hpp"
+#include "UserAccountManager.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Network/IpAddress.hpp>
@@ -52,6 +53,7 @@ public:
 	void ChangeState(AppState* state);
 	void PushState(AppState* state);
 	void PopState();
+	// amount: the amount of states to pop starting from the back
 	void PopState(int amount);
 
 	void HandleEvents();
@@ -64,6 +66,7 @@ public:
 	AppSettings settings;
 
 	Listener listener;
+	UserAccountManager uam;
 
 	std::vector<AppState*> states;
 	std::vector<sf::Event> events;
