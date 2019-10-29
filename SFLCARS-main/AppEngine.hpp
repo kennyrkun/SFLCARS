@@ -45,7 +45,7 @@ struct AppSettings
 class AppEngine
 {
 public:
-	void Init(std::string title, AppSettings settings_);
+	void Init(AppSettings settings_);
 	void Cleanup();
 
 	// Note: code after these functions is still executed.
@@ -60,8 +60,6 @@ public:
 
 	bool isRunning() { return running; }
 	void Quit();
-
-	std::string title;
 
 	AppSettings settings;
 
