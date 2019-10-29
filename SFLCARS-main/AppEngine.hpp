@@ -29,7 +29,7 @@ struct AppSettings
 			Offline,
 			Local,
 			Public,
-		} networkAccess;
+		} networkType = NetworkOptions::Offline;
 
 		sf::IpAddress serverIpAddress = sf::IpAddress::LocalHost;
 		unsigned short serverPort = 12345;
