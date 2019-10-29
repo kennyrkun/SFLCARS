@@ -26,6 +26,7 @@ public:
 	~Listener();
 
 	bool connectToServer(const sf::IpAddress& address, const unsigned short port);
+	bool connectedToServer();
 
 	sf::TcpSocket socket;
 

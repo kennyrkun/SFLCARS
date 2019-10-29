@@ -39,6 +39,22 @@ bool Listener::connectToServer(const sf::IpAddress& address, const unsigned shor
 	return true;
 }
 
+bool Listener::connectedToServer()
+{
+	if (socket.getRemoteAddress() == sf::IpAddress::None)
+		return false;
+
+	sf::Socket::Status status = send(net::Command::Ping);
+
+	if (status != sf::Socket::Status::Done)
+	{
+		if (status == sf::Socket::Status::Disconnected)
+			return false;
+	}
+
+	return true;
+}
+
 sf::Socket::Status Listener::send(net::Command command)
 {
 	sf::Packet packet;
