@@ -85,6 +85,25 @@ bool Button::isDepressed() const
 	return depressed;
 }
 
+void Button::enable()
+{
+	enabled = true;
+	box.setFillColor(Theme::getRandomColor());
+}
+
+void Button::disable()
+{
+	enabled = false;
+	sf::Color t = text.getFillColor(), b = box.getFillColor();
+	text.setFillColor(sf::Color(t.r, t.g, t.b, 100));
+	box.setFillColor(sf::Color(b.r, b.g, b.b, 100));
+}
+
+bool Button::isEnabled() const
+{
+	return enabled;
+}
+
 void Button::press()
 {
 	depressed = true;
@@ -100,6 +119,9 @@ void Button::release()
 
 void Button::onMousePressed(const sf::Vector2f& position)
 {
+	if (!enabled)
+		return;
+
 	if (box.getGlobalBounds().contains(position))
 	{
 		press();
@@ -111,6 +133,9 @@ void Button::onMousePressed(const sf::Vector2f& position)
 
 void Button::onMouseReleased(const sf::Vector2f& position)
 {
+	if (!enabled)
+		return;
+
 	if (depressed)
 	{
 		release();
@@ -123,6 +148,9 @@ void Button::onMouseReleased(const sf::Vector2f& position)
 
 void Button::onKeyPressed(const sf::Keyboard::Key& key)
 {
+	if (!enabled)
+		return;
+
 	if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
 	{
 		if (!depressed)
@@ -137,6 +165,9 @@ void Button::onKeyPressed(const sf::Keyboard::Key& key)
 
 void Button::onKeyReleased(const sf::Keyboard::Key& key)
 {
+	if (!enabled)
+		return;
+
 	if (depressed)
 		if (std::find(hotkeys.begin(), hotkeys.end(), key) != hotkeys.end())
 		{

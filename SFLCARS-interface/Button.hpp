@@ -39,6 +39,11 @@ public:
 
 	bool isDepressed() const;
 
+	void enable();
+	// TODO: do we want an option to make this turn gray, or just transparent?
+	void disable();
+	bool isEnabled() const;
+
 	void press();
 	void release();
 
@@ -64,6 +69,7 @@ private:
 	void reposition();
 
 	bool depressed = false;
+	bool enabled = true;
 };
 
 }
