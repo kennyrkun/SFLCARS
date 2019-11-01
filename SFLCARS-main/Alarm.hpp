@@ -8,7 +8,7 @@ class Alarm
 {
 public:
 	std::string name;
-	std::string soundName;
+	std::string soundName = "Alarm01";
 
 	time_t date;
 	

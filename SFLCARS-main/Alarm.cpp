@@ -26,7 +26,7 @@ bool Alarm::save()
 {
 	if (!fs::exists("./sflcars/alarms/" + name + ".alarm"))
 	{
-		std::ofstream create("./sflcars/alarms/" + name + ".name", std::ios::out | std::ios::trunc);
+		std::ofstream create("./sflcars/alarms/" + name + ".alarm", std::ios::out | std::ios::trunc);
 
 		if (!create.is_open())
 		{
@@ -67,7 +67,7 @@ bool Alarm::load(const std::string& name)
 		return false;
 	}
 
-	alarmParser.get("name", name);
+	alarmParser.get("name", this->name);
 	alarmParser.get("soundName", soundName);
 	alarmParser.get("snoozes", snoozeCounter);
 	alarmParser.get("date", date);
