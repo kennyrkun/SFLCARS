@@ -44,7 +44,7 @@ void AlarmState::Init(AppEngine* app_)
 	layout->add(new sflcars::Button("Snooze"), sflcars::Layout::Alignment::Horizontal, Callbacks::SnoozeAlarm);
 	layout->add(new sflcars::Bar);
 
-	buffer.loadFromFile("./resources/sounds/alarm/Alarm01.wav");
+	buffer.loadFromFile("./resources/sounds/alarm/" + alarm.soundName + ".wav");
 	blinkPeriod = buffer.getDuration().asSeconds();
 	sound.setBuffer(buffer);
 	sound.setLoop(true);
@@ -128,7 +128,7 @@ void AlarmState::endAlarm()
 void AlarmState::snoozeAlarm()
 {
 	sound.stop();
-	alarm.snoozeCounter += 1;
+	alarm.snooze();
 	app->PopState();
 }
 
