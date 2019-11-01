@@ -55,6 +55,9 @@
     <ClCompile Include="Alarm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StandbyState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp">
@@ -97,6 +100,9 @@
       <Filter>Source Files\Animator</Filter>
     </ClInclude>
     <ClInclude Include="Alarm.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StandbyState.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,13 +3,19 @@
 
 #include "AppState.hpp"
 
+#include <SFML/System/Clock.hpp>
+
 #include <Bar.hpp>
 #include <TextBar.hpp>
 #include <Button.hpp>
 
-class AppEngine;
+#include <filesystem>
+#include <vector>
 
-class StandyState : public AppState
+class AppEngine;
+class Alarm;
+
+class StandbyState : public AppState
 {
 public:
 	void Init(AppEngine* app_);
@@ -25,6 +31,11 @@ public:
 private:
 	sf::Sound sound;
 	sf::SoundBuffer buffer;
+
+	std::vector<std::string> getObjectsAtPath(const std::string& s, std::experimental::filesystem::file_type type);
+	std::map<std::string, time_t> alarmTimes;
+
+	sf::Clock timer;
 };
 
 #endif // !STANDBY_STATE_HPP
