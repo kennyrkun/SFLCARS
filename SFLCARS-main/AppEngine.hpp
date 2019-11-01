@@ -66,7 +66,9 @@ public:
 	AppSettings settings;
 
 	Listener listener;
+
 	UserAccountManager uam;
+	UserAccount* user;
 
 	std::vector<AppState*> states;
 	std::vector<sf::Event> events;
