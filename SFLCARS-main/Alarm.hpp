@@ -12,6 +12,8 @@ public:
 
 	time_t date;
 	
+	void snooze();
+
 	// saves the alarm to name file
 	bool save();
 	// loads the alarm from name file

@@ -8,6 +8,20 @@
 
 namespace fs = std::experimental::filesystem;
 
+void Alarm::snooze()
+{
+	// in minutes
+	size_t snoozeTime = 5;
+	time_t snoozems = snoozeTime * 60000;
+
+	time_t timeNow = time(0);
+	time_t newTime = timeNow += snoozems;
+
+	std::cout << "new alarm time is: " << newTime << std::endl;
+
+	save();
+}
+
 bool Alarm::save()
 {
 	if (!fs::exists("./sflcars/alarms/" + name + ".alarm"))
