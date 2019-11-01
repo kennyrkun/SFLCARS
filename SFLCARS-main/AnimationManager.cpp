@@ -1,7 +1,7 @@
 #include "AnimationManager.hpp"
 
 #include "Interpolate.hpp"
-#include "../AppEngine.hpp"
+#include "AppEngine.hpp"
 
 // animation task
 
@@ -184,66 +184,6 @@ void AnimatedRectangleSize::Update()
 
 	shape.setSize(sf::Vector2f(x, y));
 };
-
-
-// Animated App Translation
-
-AnimatedAppTranslation::AnimatedAppTranslation(App* shape, sf::Vector2f destinationPosition, std::function<float(float, float, float, float)> easeFunction, int duration, bool constant, int ID)
-	: app(shape), targetPosition(destinationPosition), easeFunction(easeFunction), duration(duration), constant(constant), animationID(ID)
-{
-	std::cout << "atran " << animationID << std::endl;
-
-	if (app == nullptr)
-	{
-		std::cerr << "what the fuck" << std::endl;
-		abort();
-	}
-
-	originalPosition = shape->getPosition();
-	changeInPosition = destinationPosition - originalPosition;
-
-	int x = destinationPosition.x - originalPosition.x;
-	int y = destinationPosition.y - originalPosition.y;
-
-	changeInPosition = sf::Vector2f(x, y);
-
-	std::cout << "destin: " << destinationPosition.x << ", " << destinationPosition.y << std::endl;
-	std::cout << "moving: " << changeInPosition.x << ", " << changeInPosition.y << std::endl;
-
-	tick.restart();
-
-	// TODO: make sure it's not already at this position
-}
-
-AnimatedAppTranslation::~AnimatedAppTranslation()
-{
-	app->setPosition(targetPosition);
-}
-
-bool AnimatedAppTranslation::pastTime()
-{
-	return tick.getElapsedTime().asMilliseconds() < duration;
-}
-
-void AnimatedAppTranslation::Update()
-{
-	sf::Time t1 = tick.getElapsedTime();
-
-	if (app == nullptr)
-		return;
-
-	// we've gone past the time it should have taken
-	if (t1.asMilliseconds() > duration)
-		t1 = sf::milliseconds(duration);
-
-	float x, y;
-
-	x = easeFunction(t1.asMilliseconds(), originalPosition.x, changeInPosition.x, duration);
-	y = easeFunction(t1.asMilliseconds(), originalPosition.y, changeInPosition.y, duration);
-
-	app->setPosition(sf::Vector2f(x, y));
-};
-
 
 // animation manager
 

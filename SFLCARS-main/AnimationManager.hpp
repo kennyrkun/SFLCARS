@@ -1,8 +1,6 @@
 #ifndef ANIMATION_MANAGER_HPP
 #define ANIMATION_MANAGER_HPP
 
-#include "../App.hpp"
-
 #include <SFML/Graphics.hpp>
 
 #include <functional>
@@ -187,36 +185,6 @@ private:
 	std::function<float(float t, float b, float c, float d)> easeFunction;
 };
 
-class AnimatedAppTranslation : public AnimatedTask
-{
-public:
-	AnimatedAppTranslation(App* app, sf::Vector2f targetPosition, std::function<float(float, float, float, float)> easeFunction, int duration, bool constant, int ID);
-	~AnimatedAppTranslation();
-
-	int animationID;
-
-	int duration; // miliseconds
-	sf::Clock tick;
-
-	sf::Vector2f getCurrent() { return current; };
-
-	bool pastTime();
-	bool constant = false;
-
-	App* app;
-
-	sf::Vector2f targetPosition;
-	sf::Vector2f originalPosition;
-
-	void Update();
-
-private:
-	sf::Vector2f changeInPosition;
-	sf::Vector2f current;
-
-	std::function<float(float t, float b, float c, float d)> easeFunction;
-};
-
 class PhysicalAnimator
 {
 public:
@@ -225,7 +193,6 @@ public:
 
 	int addTranslationTask(sf::Transformable& shape, sf::Vector2f destination, EaseType ease, int duration, bool constant = false);
 	int addRectangleSizeTask(sf::RectangleShape& shape, sf::Vector2f size, EaseType ease, int duration, bool constant = false);
-	int addAppTranslationTask(App* app, sf::Vector2f destination, EaseType ease, int duration, bool constant = false);
 	int addRotationTask(sf::Transformable& shape, float& targetRotation, EaseType ease, int duration, bool constant = false);
 
 	void updateTaskTarget(size_t taskID, size_t newTarget);
