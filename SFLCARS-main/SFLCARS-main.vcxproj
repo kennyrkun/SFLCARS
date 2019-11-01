@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="AppEngine.cpp" />
     <ClCompile Include="InitialiseState.cpp" />
     <ClCompile Include="IntercomState.cpp" />
+    <ClCompile Include="Interpolate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="LoginState.cpp" />
@@ -31,10 +33,12 @@
     <ClCompile Include="UserAccountManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationManager.hpp" />
     <ClInclude Include="AppEngine.hpp" />
     <ClInclude Include="AppState.hpp" />
     <ClInclude Include="InitialiseState.hpp" />
     <ClInclude Include="IntercomState.hpp" />
+    <ClInclude Include="Interpolate.hpp" />
     <ClInclude Include="Listener.hpp" />
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />

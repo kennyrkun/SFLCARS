@@ -8,6 +8,9 @@
     <Filter Include="Source Files\UserAccounts">
       <UniqueIdentifier>{435865a4-e1c3-4c04-9d6b-c386408d3ac9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Animator">
+      <UniqueIdentifier>{086e1ac3-e0f2-413f-bea4-28e591409566}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppEngine.cpp">
@@ -40,6 +43,12 @@
     <ClCompile Include="UserAccountManager.cpp">
       <Filter>Source Files\UserAccounts</Filter>
     </ClCompile>
+    <ClCompile Include="Interpolate.cpp">
+      <Filter>Source Files\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Source Files\Animator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp">
@@ -71,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="UserAccountManager.hpp">
       <Filter>Source Files\UserAccounts</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.hpp">
+      <Filter>Source Files\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="Interpolate.hpp">
+      <Filter>Source Files\Animator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
