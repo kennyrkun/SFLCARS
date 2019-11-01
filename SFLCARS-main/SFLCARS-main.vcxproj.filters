@@ -87,5 +87,8 @@
     <ClInclude Include="Interpolate.hpp">
       <Filter>Source Files\Animator</Filter>
     </ClInclude>
+    <ClInclude Include="Alarm.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

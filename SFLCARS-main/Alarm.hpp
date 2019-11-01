@@ -8,6 +8,8 @@ class Alarm
 {
 public:
 	std::string name;
+	std::string soundName;
+
 	time_t date;
 	
 	// how many times has the alarm been snoozed?
