@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	settings.launchOptions = { argc, argv };
 
 	AppEngine app;
-	app.Init("SFLCARS-AppEngine", settings);
+	app.Init(settings);
 
 	app.PushState(new InitialiseState);
 
