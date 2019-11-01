@@ -320,28 +320,6 @@ int PhysicalAnimator::addRectangleSizeTask(sf::RectangleShape &shape, sf::Vector
 	}
 }
 
-int PhysicalAnimator::addAppTranslationTask(App* myapp, sf::Vector2f destination, EaseType ease, int duration, bool constant)
-{
-	std::cout << "adding app translation task" << std::endl;
-	
-	if (app->settings.useAnimations)
-	{
-		AnimatedAppTranslation* task = new AnimatedAppTranslation(myapp, destination, getEaseFunc(ease), duration * app->settings.animationScale, constant, totalAnimations++);
-
-		tasks.push_back(task);
-
-		// animation id needs to be assigned differently, because the
-		// total size of the thing might change and we could end up
-		// with multiple aniimations using the same id
-		return tasks.back()->animationID;
-	}
-	else
-	{
-		myapp->setPosition(destination);
-		return -1;
-	}
-}
-
 int PhysicalAnimator::addRotationTask(sf::Transformable& shape, float& targetRotation, EaseType ease, int duration, bool constant)
 {
 	std::cout << "adding rotation task" << std::endl;
