@@ -12,6 +12,8 @@ enum Callbacks
 {
 	toMessageSendState,
 	toIntercomState,
+	toAlarmState,
+	toStandbyState,
 	Quit,
 };
 
@@ -24,17 +26,13 @@ void MainMenuState::Init(AppEngine* app_)
 	display = new sflcars::Display(sf::VideoMode(800, 600));
 	sflcars::Layout* layout = display->getLayout();
 
-	topbar = new sflcars::TextBar("Main Menu");
-	toSendMessageState = new sflcars::Button("Send Message");
-	toIntercomState = new sflcars::Button("Intercom");
-	quitButton = new sflcars::Button("Quit");
-	bottombar = new sflcars::Bar;
-
-	layout->add(topbar, 10);
-	layout->add(toSendMessageState, Callbacks::toMessageSendState);
-	layout->add(toIntercomState, Callbacks::toIntercomState);
-	layout->add(quitButton, Callbacks::Quit);
-	layout->add(bottombar);
+	layout->add(new sflcars::TextBar("Main Menu"), 10);
+	layout->add(new sflcars::TextBar("Main Menu"), Callbacks::toMessageSendState);
+	layout->add(new sflcars::Button("Intercom"), Callbacks::toIntercomState);
+	layout->add(new sflcars::Button("Alarms"), Callbacks::Quit);
+	layout->add(new sflcars::Button("Standby"), Callbacks::Quit);
+	layout->add(new sflcars::Button("Quit"), Callbacks::Quit);
+	layout->add(new sflcars::Bar);
 
 	buffer.loadFromFile("./resources/sounds/initialising.ogg");
 	sound.setBuffer(buffer);
