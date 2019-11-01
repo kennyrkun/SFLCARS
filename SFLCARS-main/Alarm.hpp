@@ -12,6 +12,12 @@ public:
 
 	time_t date;
 	
+	// saves the alarm to name file
+	bool save();
+	// loads the alarm from name file
+	bool load(const std::string& name);
+
+private:
 	// how many times has the alarm been snoozed?
 	int snoozeCounter = 0;
 };
