@@ -8,6 +8,8 @@ class UserAccount;
 class UserAccountManager
 {
 public:
+	UserAccount* getGuestAccount();
+
 	UserAccount* createUser(const std::string& username, const std::string& password);
 	bool deleteUser(const std::string& username);
 

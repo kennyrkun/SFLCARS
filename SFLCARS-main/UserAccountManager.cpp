@@ -8,6 +8,11 @@
 
 namespace fs = std::experimental::filesystem;
 
+UserAccount* UserAccountManager::getGuestAccount()
+{
+	return new UserAccount("Guest");
+}
+
 UserAccount* UserAccountManager::createUser(const std::string& username, const std::string& password)
 {
 	if (doesUserExist(username))
