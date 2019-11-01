@@ -43,6 +43,9 @@
     <ClCompile Include="UserAccountManager.cpp">
       <Filter>Source Files\UserAccounts</Filter>
     </ClCompile>
+    <ClCompile Include="AlarmState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Interpolate.cpp">
       <Filter>Source Files\Animator</Filter>
     </ClCompile>
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="UserAccountManager.hpp">
       <Filter>Source Files\UserAccounts</Filter>
+    </ClInclude>
+    <ClInclude Include="AlarmState.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="AnimationManager.hpp">
       <Filter>Source Files\Animator</Filter>

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlarmState.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="AppEngine.cpp" />
     <ClCompile Include="InitialiseState.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="UserAccountManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlarmState.hpp" />
     <ClInclude Include="AnimationManager.hpp" />
     <ClInclude Include="AppEngine.hpp" />
     <ClInclude Include="AppState.hpp" />
