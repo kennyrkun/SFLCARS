@@ -35,7 +35,9 @@ private:
 	std::vector<std::string> getObjectsAtPath(const std::string& s, std::experimental::filesystem::file_type type);
 	std::map<std::string, time_t> alarmTimes;
 
-	sf::Clock timer;
+	sf::Clock alarmDifferencetTimer;
+
+	void loadAlarms();
 };
 
 #endif // !STANDBY_STATE_HPP
