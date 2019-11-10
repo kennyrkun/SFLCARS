@@ -1,6 +1,7 @@
 #include "AppEngine.hpp"
 #include "InitialiseState.hpp"
 #include "LoginState.hpp"
+#include "MainMenuState.hpp"
 
 #include <Layout.hpp>
 #include <Display.hpp>
@@ -68,6 +69,12 @@ void InitialiseState::HandleEvents()
 
 void InitialiseState::Update()
 {
+	if (app->settings.server.networkType == AppSettings::Server::NetworkOptions::Offline)
+	{
+		app->ChangeState(new MainMenuState);
+		return;
+	}
+
 	// we want to draw first
 	static int failedConnectionAttempts = 0;
 	static bool connectedToServer = false;
