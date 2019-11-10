@@ -28,12 +28,12 @@ void MainMenuState::Init(AppEngine* app_)
 	display = new sflcars::Display(sf::VideoMode(800, 600));
 	sflcars::Layout* layout = display->getLayout();
 
-	layout->add(new sflcars::TextBar("Main Menu"), 10);
-	layout->add(new sflcars::TextBar("Main Menu"), Callbacks::toMessageSendState);
+	layout->add(new sflcars::TextBar("Main Menu"));
 	layout->add(new sflcars::Button("Intercom"), Callbacks::toIntercomState);
+	layout->add(new sflcars::Button("Send Message"), sflcars::Layout::Alignment::Horizontal, Callbacks::toMessageSendState);
 	layout->add(new sflcars::Button("Alarms"), Callbacks::toAlarmListState);
 	layout->add(new sflcars::Button("Standby"), Callbacks::toStandbyState);
-	layout->add(new sflcars::Button("Quit"), Callbacks::Quit);
+	layout->add(new sflcars::Button("Quit"), sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);
 	layout->add(new sflcars::Bar);
 
 	buffer.loadFromFile("./resources/sounds/initialising.ogg");
