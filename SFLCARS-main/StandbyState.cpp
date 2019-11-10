@@ -1,7 +1,6 @@
 #include "AppEngine.hpp"
 #include "StandbyState.hpp"
-#include "MessageSendState.hpp"
-#include "IntercomState.hpp"
+#include "MainMenuState.hpp"
 #include "AlarmState.hpp"
 #include "Alarm.hpp"
 
@@ -50,6 +49,15 @@ void StandbyState::Resume()
 
 void StandbyState::HandleEvents()
 {
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L) ||
+		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C) ||
+		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
+		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R) ||
+		!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+		return;
+
+	app->ChangeState(new MainMenuState);
+	return;
 }
 
 void StandbyState::Update()
