@@ -146,7 +146,7 @@ void AlarmListState::buildMenu()
 	{
 		layout->add(new sflcars::Button(alarms[i].name), i);
 		alarmDeleteButtons.emplace(numbersAfterAlarmSize, i);
-		layout->add(new sflcars::Button(std::to_string(numbersAfterAlarmSize)), sflcars::Layout::Alignment::Horizontal, numbersAfterAlarmSize);
+		layout->add(new sflcars::Button("Delete"), sflcars::Layout::Alignment::Horizontal, numbersAfterAlarmSize);
 		numbersAfterAlarmSize++;
 	}
 
