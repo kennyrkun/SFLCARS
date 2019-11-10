@@ -22,7 +22,8 @@ void Layout::setSize(const sf::Vector2f& newSize)
 
 sf::Vector2f Layout::getSize() const
 {
-	return sf::Vector2f();
+	float height = (elements.front()->getPosition().y - (elements.back()->getPosition().y + elements.back()->getSize().y));
+	return sf::Vector2f(0, height);
 }
 
 void Layout::setPosition(const sf::Vector2f& newPosition)

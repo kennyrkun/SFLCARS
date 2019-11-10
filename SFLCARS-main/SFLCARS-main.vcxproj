@@ -19,26 +19,40 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Alarm.cpp" />
+    <ClCompile Include="AlarmEditState.cpp" />
+    <ClCompile Include="AlarmListState.cpp" />
+    <ClCompile Include="AlarmState.cpp" />
+    <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="AppEngine.cpp" />
     <ClCompile Include="InitialiseState.cpp" />
     <ClCompile Include="IntercomState.cpp" />
+    <ClCompile Include="Interpolate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
+    <ClCompile Include="StandbyState.cpp" />
     <ClCompile Include="UserAccount.cpp" />
     <ClCompile Include="UserAccountManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alarm.hpp" />
+    <ClInclude Include="AlarmEditState.hpp" />
+    <ClInclude Include="AlarmListState.hpp" />
+    <ClInclude Include="AlarmState.hpp" />
+    <ClInclude Include="AnimationManager.hpp" />
     <ClInclude Include="AppEngine.hpp" />
     <ClInclude Include="AppState.hpp" />
     <ClInclude Include="InitialiseState.hpp" />
     <ClInclude Include="IntercomState.hpp" />
+    <ClInclude Include="Interpolate.hpp" />
     <ClInclude Include="Listener.hpp" />
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
+    <ClInclude Include="StandbyState.hpp" />
     <ClInclude Include="UserAccount.hpp" />
     <ClInclude Include="UserAccountManager.hpp" />
   </ItemGroup>
