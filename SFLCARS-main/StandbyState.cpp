@@ -20,9 +20,8 @@ void StandbyState::Init(AppEngine* app_)
 
 	app = app_;
 
-	buffer.loadFromFile("./resources/sounds/initialising.ogg");
+	buffer.loadFromFile("./resources/sounds/powerdown.ogg");
 	sound.setBuffer(buffer);
-
 	sound.play();
 
 	loadAlarms();
