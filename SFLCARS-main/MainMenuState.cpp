@@ -2,7 +2,7 @@
 #include "MainMenuState.hpp"
 #include "MessageSendState.hpp"
 #include "IntercomState.hpp"
-#include "AlarmEditState.hpp"
+#include "AlarmListState.hpp"
 #include "StandbyState.hpp"
 
 #include <Layout.hpp>
@@ -38,7 +38,7 @@ void MainMenuState::Init(AppEngine* app_)
 
 	layout->add(topbar, 10);
 	layout->add(toSendMessageState, Callbacks::toMessageSendState);
-	layout->add(toIntercomState, Callbacks::toIntercomState);
+	layout->add(toIntercomState, sflcars::Layout::Alignment::Horizontal, Callbacks::toIntercomState);
 	layout->add(toAlarmEditState, Callbacks::toAlarmEditState);
 	layout->add(toStandbyState, Callbacks::toStandbyState);
 	layout->add(quitButton, Callbacks::Quit);
@@ -87,7 +87,7 @@ void MainMenuState::HandleEvents()
 		app->PushState(new IntercomState);
 		break;
 	case Callbacks::toAlarmEditState:
-		app->PushState(new AlarmEditState);
+		app->PushState(new AlarmListState);
 		break;
 	case Callbacks::toStandbyState:
 		app->ChangeState(new StandbyState);
