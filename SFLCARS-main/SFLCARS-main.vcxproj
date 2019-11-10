@@ -32,6 +32,7 @@
     <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MessageSendState.cpp" />
+    <ClCompile Include="StandbyState.cpp" />
     <ClCompile Include="UserAccount.cpp" />
     <ClCompile Include="UserAccountManager.cpp" />
   </ItemGroup>
@@ -49,6 +50,7 @@
     <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MessageSendState.hpp" />
+    <ClInclude Include="StandbyState.hpp" />
     <ClInclude Include="UserAccount.hpp" />
     <ClInclude Include="UserAccountManager.hpp" />
   </ItemGroup>

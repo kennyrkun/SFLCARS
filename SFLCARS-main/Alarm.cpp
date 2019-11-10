@@ -12,10 +12,13 @@ void Alarm::snooze()
 {
 	// in minutes
 	size_t snoozeTime = 5;
-	time_t snoozems = snoozeTime * 60000;
+	// snooze in seconds
+	time_t snoozes = snoozeTime * 60;
 
 	time_t timeNow = time(0);
-	time_t newTime = timeNow += snoozems;
+	time_t newTime = timeNow += snoozes;
+
+	date = newTime;
 
 	std::cout << "new alarm time is: " << newTime << std::endl;
 

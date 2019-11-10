@@ -64,6 +64,9 @@
     <ClCompile Include="AlarmState.cpp">
       <Filter>Source Files\Alarm</Filter>
     </ClCompile>
+    <ClCompile Include="StandbyState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppEngine.hpp">
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="AlarmEditState.hpp">
       <Filter>Source Files\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="StandbyState.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
