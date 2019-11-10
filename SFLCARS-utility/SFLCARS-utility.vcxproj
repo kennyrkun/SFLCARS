@@ -131,15 +131,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Date.cpp" />
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="SettingsParser.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.hpp" />
+    <ClInclude Include="Date.hpp" />
     <ClInclude Include="Password.hpp" />
     <ClInclude Include="PicoSHA256.hpp" />
     <ClInclude Include="SettingsParser.hpp" />
+    <ClInclude Include="Time.hpp" />
     <ClInclude Include="Utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

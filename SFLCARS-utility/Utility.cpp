@@ -16,6 +16,7 @@ namespace utility
 
 		return dist(rng);
 	}
+
 	std::string convertToTimestamp(const time_t& time)
 	{
 		time_t $time = time;
