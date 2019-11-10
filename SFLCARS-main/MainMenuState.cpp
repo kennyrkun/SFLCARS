@@ -14,7 +14,7 @@ enum Callbacks
 {
 	toMessageSendState,
 	toIntercomState,
-	toAlarmEditState,
+	toAlarmListState,
 	toStandbyState,
 	Quit,
 };
@@ -31,8 +31,8 @@ void MainMenuState::Init(AppEngine* app_)
 	layout->add(new sflcars::TextBar("Main Menu"), 10);
 	layout->add(new sflcars::TextBar("Main Menu"), Callbacks::toMessageSendState);
 	layout->add(new sflcars::Button("Intercom"), Callbacks::toIntercomState);
-	layout->add(new sflcars::Button("Alarms"), Callbacks::Quit);
-	layout->add(new sflcars::Button("Standby"), Callbacks::Quit);
+	layout->add(new sflcars::Button("Alarms"), Callbacks::toAlarmListState);
+	layout->add(new sflcars::Button("Standby"), Callbacks::toStandbyState);
 	layout->add(new sflcars::Button("Quit"), Callbacks::Quit);
 	layout->add(new sflcars::Bar);
 
@@ -78,7 +78,7 @@ void MainMenuState::HandleEvents()
 	case Callbacks::toIntercomState:
 		app->PushState(new IntercomState);
 		break;
-	case Callbacks::toAlarmEditState:
+	case Callbacks::toAlarmListState:
 		app->PushState(new AlarmListState);
 		break;
 	case Callbacks::toStandbyState:
