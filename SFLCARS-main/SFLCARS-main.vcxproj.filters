@@ -11,6 +11,9 @@
     <Filter Include="Source Files\Animator">
       <UniqueIdentifier>{086e1ac3-e0f2-413f-bea4-28e591409566}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Alarm">
+      <UniqueIdentifier>{f395d99f-d7c9-44cd-9601-3f058accc5d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppEngine.cpp">
@@ -43,17 +46,23 @@
     <ClCompile Include="UserAccountManager.cpp">
       <Filter>Source Files\UserAccounts</Filter>
     </ClCompile>
-    <ClCompile Include="AlarmState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Interpolate.cpp">
       <Filter>Source Files\Animator</Filter>
     </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
       <Filter>Source Files\Animator</Filter>
     </ClCompile>
-    <ClCompile Include="Alarm.cpp">
+    <ClCompile Include="StandbyState.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Alarm.cpp">
+      <Filter>Source Files\Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="AlarmEditState.cpp">
+      <Filter>Source Files\Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="AlarmState.cpp">
+      <Filter>Source Files\Alarm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,17 +96,23 @@
     <ClInclude Include="UserAccountManager.hpp">
       <Filter>Source Files\UserAccounts</Filter>
     </ClInclude>
-    <ClInclude Include="AlarmState.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationManager.hpp">
       <Filter>Source Files\Animator</Filter>
     </ClInclude>
     <ClInclude Include="Interpolate.hpp">
       <Filter>Source Files\Animator</Filter>
     </ClInclude>
-    <ClInclude Include="Alarm.hpp">
+    <ClInclude Include="StandbyState.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AlarmState.hpp">
+      <Filter>Source Files\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="Alarm.hpp">
+      <Filter>Source Files\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="AlarmEditState.hpp">
+      <Filter>Source Files\Alarm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

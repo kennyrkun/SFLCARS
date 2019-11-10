@@ -19,9 +19,12 @@ struct AppSettings
 	bool vsync = true;
 	bool debug = true;
 	bool console = false;
+	bool use24HourTime = false;
 	bool useAnimations = true;
 	float animationScale = 1;
 	int maxfps = 60;
+
+	int timezoneOffset = -6;
 
 	bool offline = false;
 

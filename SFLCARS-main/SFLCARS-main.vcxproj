@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Alarm.cpp" />
+    <ClCompile Include="AlarmEditState.cpp" />
     <ClCompile Include="AlarmState.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="AppEngine.cpp" />
@@ -36,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alarm.hpp" />
+    <ClInclude Include="AlarmEditState.hpp" />
     <ClInclude Include="AlarmState.hpp" />
     <ClInclude Include="AnimationManager.hpp" />
     <ClInclude Include="AppEngine.hpp" />
