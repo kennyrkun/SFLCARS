@@ -36,7 +36,7 @@ sf::Texture* ResourceManager::loadTexture(const std::string& resourceName, const
 		new_tex->loadFromFile(basedir + fileLocation);
 		loadedTextures[resourceName] = new_tex;
 
-		std::cout << "Loaded texture\"" + resourceName + "\" from \"" + fileLocation + "\"" << std::endl;
+		std::cout << "Loaded texture \"" + resourceName + "\" from \"" + fileLocation + "\"" << std::endl;
 
 		return new_tex;
 	}
@@ -63,7 +63,7 @@ sf::Font* ResourceManager::loadFont(const std::string& resourceName, const std::
 		new_tex->loadFromFile(basedir + fileLocation);
 		loadedFonts[resourceName] = new_tex;
 
-		std::cout << "Loaded font\"" + resourceName + "\" from \"" + fileLocation + "\"" << std::endl;
+		std::cout << "Loaded font \"" + resourceName + "\" from \"" + fileLocation + "\"" << std::endl;
 
 		return new_tex;
 	}

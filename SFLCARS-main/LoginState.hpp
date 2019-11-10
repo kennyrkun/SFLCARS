@@ -24,20 +24,12 @@ public:
 	void Draw();
 
 private:
-	struct Interface
-	{
-		Interface();
-		~Interface();
-
-		sflcars::InputBox* usernameBox;
-		sflcars::InputBox* passwordBox;
-		sflcars::Button* submitButton;
-		sflcars::Button* quitButton;
-		sflcars::TextBar* topbar;
-		sflcars::Bar* bottombar;
-	};
-
-	Interface* interface;
+	sflcars::InputBox* usernameBox;
+	sflcars::InputBox* passwordBox;
+	sflcars::Button* submitButton;
+	sflcars::Button* quitButton;
+	sflcars::TextBar* topbar;
+	sflcars::Bar* bottombar;
 
 	std::string username;
 	std::string password;

@@ -24,17 +24,21 @@ void LoginState::Init(AppEngine* app_)
 	app = app_;
 
 	display = new sflcars::Display(sf::VideoMode(300, 310));
-
-	interface = new Interface;
-
 	sflcars::Layout& layout = *display->getLayout();
 
-	layout.add(interface->topbar);
-	layout.add(interface->usernameBox, Callbacks::UsernameBox);
-	layout.add(interface->passwordBox, Callbacks::PasswordBox);
-	layout.add(interface->submitButton, Callbacks::SubmitButton);
-	layout.add(interface->quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::QuitButton);
-	layout.add(interface->bottombar);
+	topbar = new sflcars::TextBar("Login");
+	usernameBox = new sflcars::InputBox;
+	passwordBox = new sflcars::InputBox;
+	submitButton = new sflcars::Button("Submit", sf::Keyboard::Key::Return);
+	quitButton = new sflcars::Button("Quit", sf::Keyboard::Key::Escape);
+	bottombar = new sflcars::Bar;
+
+	layout.add(topbar);
+	layout.add(usernameBox, Callbacks::UsernameBox);
+	layout.add(passwordBox, Callbacks::PasswordBox);
+	layout.add(submitButton, Callbacks::SubmitButton);
+	layout.add(quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::QuitButton);
+	layout.add(bottombar);
 
 	std::cout << "LoginState ready." << std::endl;
 }
@@ -43,8 +47,7 @@ void LoginState::Cleanup()
 {
 	std::cout << "Cleaning up LoginState." << std::endl;
 
-	delete interface;
-	delete display;
+	delete display; // TODO: find out if this also cleans up the elements of that are class members
 
 	std::cout << "Cleaned up LoginState." << std::endl;
 }
@@ -71,8 +74,8 @@ void LoginState::HandleEvents()
 	case Callbacks::SubmitButton:
 	{
 		// TODO: hide the boxes while authenticating
-		username = interface->usernameBox->getText().toAnsiString();
-		password = interface->passwordBox->getText().toAnsiString();
+		username = usernameBox->getText().toAnsiString();
+		password = passwordBox->getText().toAnsiString();
 
 		sf::Packet packet;
 		packet << net::Command::Login;
@@ -116,7 +119,7 @@ void LoginState::Update()
 				event.packet >> randoHash;
 
 				// step 3
-				std::string password = interface->passwordBox->getText().toAnsiString();
+				std::string password = passwordBox->getText().toAnsiString();
 				std::string passwordHash = sflcars::utility::password::hashString(password);
 				std::string superHash = sflcars::utility::password::hashString(passwordHash + randoHash);
 
@@ -141,35 +144,9 @@ void LoginState::Update()
 			return;
 		}
 		default:
+			std::cerr << "ERROR: this code is unreachable and should never be executed" << std::endl;
 			break;
 		}
-	}
-	else
-	{
-		// print the contents of the packet
-	}
-
-	if (event.packet.getDataSize() > 0)
-	{
-		std::string total;
-
-		event.packet >> total;
-		if (total == "loginSuccess")
-		{
-			std::cout << "login successful!" << std::endl;
-
-			app->ChangeState(new MainMenuState);
-			return;
-		}
-
-		while (!event.packet.endOfPacket())
-		{
-			std::string temp;
-			event.packet >> temp;
-			total += ("\n" + temp);
-		}
-
-		std::cout << "server: " << total << std::endl;
 	}
 
 	display->Update();
@@ -180,24 +157,4 @@ void LoginState::Draw()
 	display->clear();
 	display->DrawLayout();
 	display->display();
-}
-
-LoginState::Interface::Interface()
-{
-	topbar = new sflcars::TextBar("Login");
-	usernameBox = new sflcars::InputBox;
-	passwordBox = new sflcars::InputBox;
-	submitButton = new sflcars::Button("Submit", sf::Keyboard::Key::Return);
-	quitButton = new sflcars::Button("Quit", sf::Keyboard::Key::Escape);
-	bottombar = new sflcars::Bar;
-}
-
-LoginState::Interface::~Interface()
-{
-	delete topbar;
-	delete usernameBox;
-	delete passwordBox;
-	delete submitButton;
-	delete quitButton;
-	delete bottombar;
 }

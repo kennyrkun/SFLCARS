@@ -25,14 +25,6 @@ public:
 private:
 	sf::Sound sound;
 	sf::SoundBuffer buffer;
-
-	sflcars::TextBar* topbar;
-	sflcars::Button* toSendMessageState;
-	sflcars::Button* toIntercomState;
-	sflcars::Button* toAlarmEditState;
-	sflcars::Button* toStandbyState;
-	sflcars::Button* quitButton;
-	sflcars::Bar* bottombar;
 };
 
 #endif // !MAIN_MENU_STATE_HPP
