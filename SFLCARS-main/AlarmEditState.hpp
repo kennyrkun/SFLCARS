@@ -16,6 +16,9 @@
 class AlarmEditState : public AppState
 {
 public:
+	AlarmEditState();
+	AlarmEditState(Alarm alarm);
+
 	void Init(AppEngine* app_);
 	void Cleanup();
 

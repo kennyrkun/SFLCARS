@@ -23,9 +23,25 @@ enum Callbacks
 	YearUp,
 	YearDown,
 
-	Create,
+	Save,
 	Quit,
 };
+
+AlarmEditState::AlarmEditState()
+{
+	// do nothing
+	time.time = std::time(0);
+	name = new sflcars::InputBox;
+	name->setText("New Alarm");
+}
+
+AlarmEditState::AlarmEditState(Alarm alarm)
+{
+	std::cout << "editing " << alarm.name << std::endl;
+	time.time = alarm.date;
+	name = new sflcars::InputBox;
+	name->setText(alarm.name);
+}
 
 void AlarmEditState::Init(AppEngine* app_)
 {
@@ -36,22 +52,23 @@ void AlarmEditState::Init(AppEngine* app_)
 	display = new sflcars::Display(sf::VideoMode(800, 600));
 	sflcars::Layout* layout = display->getLayout();
 
-	layout->add(new sflcars::TextBar("Create Alarm"));
+	layout->add(new sflcars::TextBar("Edit Alarm"));
 
-	layout->add(name = new sflcars::InputBox);
+	layout->add(name);
 
 	layout->add(new sflcars::Button("up"), Callbacks::HourUp);
-	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal, Callbacks::MinuteUp);
-	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal, Callbacks::SecondUp);
-	layout->add(hour = new sflcars::InputBox);
-	//layout->add(minute = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
-	//layout->add(minute = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
-	layout->add(minute = new sflcars::InputBox);
-	layout->add(second = new sflcars::InputBox);
-	layout->add(new sflcars::Button("down"), Callbacks::HourDown);
+	layout->add(hour = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
+	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::HourDown);
+
+	layout->add(new sflcars::Button("up"), Callbacks::MinuteUp);
+	layout->add(minute = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::MinuteDown);
+
+	layout->add(new sflcars::Button("up"), Callbacks::SecondUp);
+	layout->add(second = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::SecondDown);
 
+	/*
 	layout->add(new sflcars::Button("up"));
 	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal);
@@ -61,13 +78,14 @@ void AlarmEditState::Init(AppEngine* app_)
 	layout->add(new sflcars::Button("down"));
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal);
+	*/
 
-	layout->add(new sflcars::Button("Create"), Callbacks::Create);
+	layout->add(new sflcars::Button("Save"), Callbacks::Save);
 	layout->add(new sflcars::Button("Quit"), sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);
 
+	
 	layout->add(new sflcars::Bar);
 
-	time.time = std::time(0);
 	time.time += app->settings.timezoneOffset * 3600;
 
 	std::time_t $time = time.time;
@@ -164,7 +182,7 @@ void AlarmEditState::HandleEvents()
 		case Callbacks::MonthDown:
 		case Callbacks::YearUp:
 		case Callbacks::YearDown:
-		case Callbacks::Create:
+		case Callbacks::Save:
 		{
 			Alarm alarm;
 			alarm.name = name->getText();
