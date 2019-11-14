@@ -176,6 +176,16 @@ void Button::onKeyReleased(const sf::Keyboard::Key& key)
 		}
 }
 
+void Button::onStateChanged(State state)
+{
+	if (state == State::Default)
+		box.setOutlineThickness(0.0f);
+	else if (state == State::Focused)
+		box.setOutlineThickness(Theme::borderSize);
+
+	//	box.applyState(state);
+}
+
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(box, states);

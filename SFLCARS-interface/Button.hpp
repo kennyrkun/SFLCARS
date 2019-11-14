@@ -52,6 +52,8 @@ protected:
 	void onMouseReleased(const sf::Vector2f& position);
 	void onKeyPressed(const sf::Keyboard::Key& key);
 	void onKeyReleased(const sf::Keyboard::Key& key);
+	
+	void onStateChanged(State state);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
