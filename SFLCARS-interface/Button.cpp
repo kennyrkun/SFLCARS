@@ -11,7 +11,7 @@ Button::Button(const std::string& string)
 {
 	text.setFont(Theme::getFont());
 	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(36);
+	text.setCharacterSize(Theme::textCharacterSize);
 
 	box.setFillColor(Theme::getRandomColor());
 

@@ -6,7 +6,7 @@ namespace sflcars
 String::String(const std::string& string)
 {
 	text.setFont(Theme::getFont());
-	text.setCharacterSize(36);
+	text.setCharacterSize(Theme::textCharacterSize);
 	text.setString(string);
 }
 

@@ -8,8 +8,8 @@ namespace sflcars
 
 ResourceManager Theme::resources;
 
-size_t    Theme::textCharacterSize = 12;
 Theme::TextStyle Theme::label;
+size_t    Theme::textCharacterSize = 36;
 Theme::TextStyle Theme::button;
 Theme::TextStyle Theme::input;
 sf::Color Theme::windowBgColor;
