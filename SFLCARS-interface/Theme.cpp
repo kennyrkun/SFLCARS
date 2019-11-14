@@ -8,10 +8,10 @@ namespace sflcars
 
 ResourceManager Theme::resources;
 
-Theme::TextStyle Theme::label;
 size_t    Theme::textCharacterSize = 36;
+Theme::TextStyle Theme::label = { sf::Color::White, sf::Color::White, sf::Color::White, sf::Color::White };
 Theme::TextStyle Theme::button;
-Theme::TextStyle Theme::input;
+Theme::TextStyle Theme::input = { sf::Color::White, sf::Color::White, sf::Color::White, sf::Color::White };
 sf::Color Theme::windowBgColor;
 float     Theme::borderSize = 1.0f;
 //float     Theme::minWidgetWidth = 86;
