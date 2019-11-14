@@ -44,16 +44,13 @@ Element* Layout::add(Element* element, Alignment align, int id)
 
 	sf::Vector2u size = display->getSize();
 
-	element->setSize(sf::Vector2f(size.x, size.y));
-	element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING)); // HACK: get it to calculate it's geometry before we start moving things
-
 	if (elements.empty())
-		element->setPosition(sf::Vector2f(Theme::PADDING, Theme::PADDING));
+		element->setPosition(sf::Vector2f(Theme::MARGIN, Theme::MARGIN));
 	else
 		if (align == Alignment::Vertical)
-			element->setPosition(sf::Vector2f(Theme::PADDING, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::PADDING));
+			element->setPosition(sf::Vector2f(Theme::MARGIN, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::MARGIN));
 		else if (align == Alignment::Horizontal)
-			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::PADDING, elements.back()->getPosition().y));
+			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::MARGIN, elements.back()->getPosition().y));
 
 	elements.push_back(element);
 	return element;
