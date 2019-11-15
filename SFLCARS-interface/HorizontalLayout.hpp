@@ -1,7 +1,7 @@
 #ifndef SFLCARS_LAYOUT_HPP
 #define SFLCARS_LAYOUT_HPP
 
-#include <SFML/Graphics.hpp>
+#include "Element.hpp"
 
 #include <vector>
 
@@ -9,30 +9,39 @@ namespace sflcars
 {
 
 class Display;
-class Element;
-enum class State;
 
-class Layout : sf::Drawable
+class Layout : public Element
 {
 public:
+	enum class Alignment
+	{
+		Horizontal,
+		Vertical
+	};
+
 	Layout(Display* display);
 	~Layout();
 
-	void setDisplay(Display* display);
-	Display* getDisplay() const;
+	void setDisplay(Display* display) override;
+	Display* getDisplay() const override;
 
 	void setSize(const sf::Vector2f& newSize);
-	sf::Vector2f getSize() const;
+	sf::Vector2f getSize() const override;
 
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 	
+	Element* add(Element* element, Alignment align, int id = -1);
+	Element* add(Element* element, int id = -1);
+
 	int onEvent(const sf::Event& event);
 
 	bool focusNextElement();
 	bool focusPreviousElement();
 
 protected:
+	void onStateChanged(State state);
+
 	bool focusElement(Element* element, State state);
 
 	void onMouseMoved(const sf::Vector2f& position);
@@ -42,11 +51,8 @@ protected:
 	void onKeyPressed(const sf::Keyboard::Key& key);
 	void onKeyReleased(const sf::Keyboard::Key& key);
 	void onTextEntered(const sf::Uint32& unicode);
-	void onWindowResized(const sf::Event::SizeEvent& newSize);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Element* triggered;
 
 private:
 	std::vector<Element*> elements;

@@ -17,6 +17,9 @@
     <Filter Include="Source Files\Elements\Buttons">
       <UniqueIdentifier>{f1172b4e-1181-4375-9fcc-3aad02997a08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Elements\Layouts">
+      <UniqueIdentifier>{f34b8373-57bc-49fb-a282-067b25a8bc87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RoundRectangle.cpp">
@@ -29,9 +32,6 @@
       <Filter>Source Files\Elements</Filter>
     </ClCompile>
     <ClCompile Include="InputBox.cpp">
-      <Filter>Source Files\Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="Layout.cpp">
       <Filter>Source Files\Elements</Filter>
     </ClCompile>
     <ClCompile Include="Spacer.cpp">
@@ -58,6 +58,15 @@
     <ClCompile Include="IconButton.cpp">
       <Filter>Source Files\Elements\Buttons</Filter>
     </ClCompile>
+    <ClCompile Include="HorizontalLayout.cpp">
+      <Filter>Source Files\Elements\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout.cpp">
+      <Filter>Source Files\Elements\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalLayout.cpp">
+      <Filter>Source Files\Elements\Layouts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RoundRectangle.hpp">
@@ -70,9 +79,6 @@
       <Filter>Source Files\Elements</Filter>
     </ClInclude>
     <ClInclude Include="InputBox.hpp">
-      <Filter>Source Files\Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="Layout.hpp">
       <Filter>Source Files\Elements</Filter>
     </ClInclude>
     <ClInclude Include="Spacer.hpp">
@@ -98,6 +104,15 @@
     </ClInclude>
     <ClInclude Include="IconButton.hpp">
       <Filter>Source Files\Elements\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalLayout.hpp">
+      <Filter>Source Files\Elements\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout.hpp">
+      <Filter>Source Files\Elements\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalLayout.hpp">
+      <Filter>Source Files\Elements\Layouts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

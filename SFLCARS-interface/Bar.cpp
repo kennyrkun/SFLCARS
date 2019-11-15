@@ -1,6 +1,8 @@
 #include "Bar.hpp"
 #include "Theme.hpp"
 
+#include "Display.hpp"
+
 #include <iostream>
 
 namespace sflcars
@@ -13,7 +15,6 @@ Bar::Bar()
 	middle.setFillColor(Theme::getRandomColor());
 	rightEdge.setFillColor(Theme::getRandomColor());
 	rightEdgeLeft.setFillColor(rightEdge.getFillColor());
-
 }
 
 // TODO: this function needs to be updated

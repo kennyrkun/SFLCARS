@@ -1,5 +1,5 @@
-#ifndef SFLCARS_LAYOUT_HPP
-#define SFLCARS_LAYOUT_HPP
+#ifndef SFLCARS_VERTICAL_LAYOUT_HPP
+#define SFLCARS_VERTICAL_LAYOUT_HPP
 
 #include <SFML/Graphics.hpp>
 
@@ -10,13 +10,12 @@ namespace sflcars
 
 class Display;
 class Element;
-enum class State;
 
-class Layout : sf::Drawable
+class VerticalLayout : sf::Drawable
 {
 public:
-	Layout(Display* display);
-	~Layout();
+	VerticalLayout(Display* display);
+	~VerticalLayout();
 
 	void setDisplay(Display* display);
 	Display* getDisplay() const;
@@ -27,12 +26,16 @@ public:
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 	
+	Element* add(Element* element, int id = -1);
+
 	int onEvent(const sf::Event& event);
 
 	bool focusNextElement();
 	bool focusPreviousElement();
 
 protected:
+	void onStateChanged(State state);
+
 	bool focusElement(Element* element, State state);
 
 	void onMouseMoved(const sf::Vector2f& position);
@@ -42,11 +45,8 @@ protected:
 	void onKeyPressed(const sf::Keyboard::Key& key);
 	void onKeyReleased(const sf::Keyboard::Key& key);
 	void onTextEntered(const sf::Uint32& unicode);
-	void onWindowResized(const sf::Event::SizeEvent& newSize);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	Element* triggered;
 
 private:
 	std::vector<Element*> elements;
@@ -58,4 +58,4 @@ private:
 
 }
 
-#endif // !SFLCARS_LAYOUT_HPP
+#endif // !SFLCARS_VERTICAL_LAYOUT_HPP

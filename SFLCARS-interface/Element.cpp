@@ -23,6 +23,15 @@ void Element::setState(State newState)
 	onStateChanged(state);
 }
 
+void Element::setDisplay(Display* display)
+{
+}
+
+Display* Element::getDisplay() const
+{
+	return nullptr;
+}
+
 void Element::setParent(Element* element)
 {
 	parent = element;

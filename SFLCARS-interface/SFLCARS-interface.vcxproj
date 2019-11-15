@@ -136,6 +136,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Element.cpp" />
+    <ClCompile Include="HorizontalLayout.cpp" />
     <ClCompile Include="IconButton.cpp" />
     <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="Layout.cpp" />
@@ -145,12 +146,14 @@
     <ClCompile Include="String.cpp" />
     <ClCompile Include="TextBar.cpp" />
     <ClCompile Include="Theme.cpp" />
+    <ClCompile Include="VerticalLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bar.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Display.hpp" />
     <ClInclude Include="Element.hpp" />
+    <ClInclude Include="HorizontalLayout.hpp" />
     <ClInclude Include="IconButton.hpp" />
     <ClInclude Include="InputBox.hpp" />
     <ClInclude Include="Layout.hpp" />
@@ -160,6 +163,7 @@
     <ClInclude Include="String.hpp" />
     <ClInclude Include="TextBar.hpp" />
     <ClInclude Include="Theme.hpp" />
+    <ClInclude Include="VerticalLayout.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

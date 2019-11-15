@@ -41,8 +41,9 @@ public:
 	virtual void setState(State newState);
 	State getState() const { return state; };
 
-	void setDisplay(Display* display);
-	Display* getDisplay() const;
+	// TODO: get this outta here!
+	virtual void setDisplay(Display* display);
+	virtual Display* getDisplay() const;
 
 	void setParent(Element* element);
 	Element* getParent() const;

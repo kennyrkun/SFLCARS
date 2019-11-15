@@ -1,50 +1,91 @@
 #include "Layout.hpp"
 #include "Display.hpp"
-#include "Element.hpp"
+#include "Button.hpp"
+#include "Bar.hpp"
+#include "TextBar.hpp"
+#include "Theme.hpp"
 
 namespace sflcars
 {
 
-Layout::Layout(Display* display) : display(display)
+VerticalLayout::VerticalLayout(Display* display) : display(display)
 {
 }
 
-Layout::~Layout()
+VerticalLayout::~VerticalLayout()
 {
 }
 
-void Layout::setDisplay(Display* display)
+void VerticalLayout::setDisplay(Display* display)
 {
 	// TODO: allow this
 	abort();
 }
 
-Display* Layout::getDisplay() const
+Display* VerticalLayout::getDisplay() const
 {
 	return display;
 }
 
-void Layout::setSize(const sf::Vector2f& newSize)
+void VerticalLayout::setSize(const sf::Vector2f& newSize)
 {
 	// TODO: this might not be legal
 	size = newSize;
 }
 
-sf::Vector2f Layout::getSize() const
+sf::Vector2f VerticalLayout::getSize() const
 {
 	return size;
 }
 
-void Layout::setPosition(const sf::Vector2f& newPosition)
+void VerticalLayout::setPosition(const sf::Vector2f& newPosition)
 {
 }
 
-sf::Vector2f Layout::getPosition() const
+sf::Vector2f VerticalLayout::getPosition() const
 {
 	return sf::Vector2f();
 }
 
-int Layout::onEvent(const sf::Event& event)
+Element* VerticalLayout::add(Element* element, Alignment align, int id)
+{
+	std::cout << "[VerticalLayout] adding element with id " << id << std::endl;
+
+	element->setParent(this);
+	element->setID(id);
+
+	sf::Vector2u size = display->getSize();
+
+	if (elements.empty())
+		element->setPosition(sf::Vector2f(Theme::MARGIN, Theme::MARGIN));
+	else
+		if (align == Alignment::Vertical)
+			element->setPosition(sf::Vector2f(Theme::MARGIN, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::MARGIN));
+		else if (align == Alignment::Horizontal)
+			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::MARGIN, elements.back()->getPosition().y));
+
+	elements.push_back(element);
+	return element;
+}
+
+Element* VerticalLayout::add(Element* element, int id)
+{
+	return add(element, Alignment::Vertical, id);
+}
+
+void VerticalLayout::onStateChanged(State state)
+{
+	if (state == State::Default)
+	{
+		if (focused != nullptr)
+		{
+			focused->setState(State::Default);
+			focused = nullptr;
+		}
+	}
+}
+
+int VerticalLayout::onEvent(const sf::Event& event)
 {
 	sf::Vector2f mouse = display->getMousePosition();
 
@@ -96,7 +137,7 @@ int Layout::onEvent(const sf::Event& event)
 	return -1;
 }
 
-bool Layout::focusNextElement()
+bool VerticalLayout::focusNextElement()
 {
 	for (size_t i = 0; i < elements.size(); i++)
 		if (elements[i] != nullptr)
@@ -111,7 +152,7 @@ bool Layout::focusNextElement()
 	return false;
 }
 
-bool Layout::focusPreviousElement()
+bool VerticalLayout::focusPreviousElement()
 {
 	for (size_t i = 0; i < elements.size(); i++)
 		if (elements[i] != nullptr)
@@ -126,7 +167,7 @@ bool Layout::focusPreviousElement()
 	return false;
 }
 
-void Layout::onMouseMoved(const sf::Vector2f& position)
+void VerticalLayout::onMouseMoved(const sf::Vector2f& position)
 {
 	// Pressed elements still receive mouse move events even when not hovered if mouse is pressed
 	// for things like sliders and scrollbars, which might move without the mouse being overtop of them.
@@ -170,7 +211,7 @@ void Layout::onMouseMoved(const sf::Vector2f& position)
 	}
 }
 
-void Layout::onMousePressed(const sf::Vector2f& position)
+void VerticalLayout::onMousePressed(const sf::Vector2f& position)
 {
 	// TODO: focus element on mousePress, not mouseRelease. might only apply to OptionBox
 	// TODO: this method gets called more than once, apparently
@@ -194,7 +235,7 @@ void Layout::onMousePressed(const sf::Vector2f& position)
 	}
 }
 
-void Layout::onMouseReleased(const sf::Vector2f& position)
+void VerticalLayout::onMouseReleased(const sf::Vector2f& position)
 {
 	if (focused != nullptr)
 	{
@@ -204,13 +245,13 @@ void Layout::onMouseReleased(const sf::Vector2f& position)
 	}
 }
 
-void Layout::onMouseWheelMoved(int delta)
+void VerticalLayout::onMouseWheelMoved(int delta)
 {
 	if (focused != nullptr)
 		focused->onMouseWheelMoved(delta);
 }
 
-void Layout::onKeyPressed(const sf::Keyboard::Key& key)
+void VerticalLayout::onKeyPressed(const sf::Keyboard::Key& key)
 {
 	// TODO: if in a text box, focus next element on return
 	// TODO: make this more versatile
@@ -231,19 +272,19 @@ void Layout::onKeyPressed(const sf::Keyboard::Key& key)
 	}
 }
 
-void Layout::onKeyReleased(const sf::Keyboard::Key& key)
+void VerticalLayout::onKeyReleased(const sf::Keyboard::Key& key)
 {
 	if (focused != nullptr)
 		focused->onKeyReleased(key);
 }
 
-void Layout::onTextEntered(const sf::Uint32& unicode)
+void VerticalLayout::onTextEntered(const sf::Uint32& unicode)
 {
 	if (focused != nullptr)
 		focused->onTextEntered(unicode);
 }
 
-bool Layout::focusElement(Element* element, State state)
+bool VerticalLayout::focusElement(Element* element, State state)
 {
 	if (element != nullptr)
 	{
@@ -263,7 +304,7 @@ bool Layout::focusElement(Element* element, State state)
 	return false;
 }
 
-void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void VerticalLayout::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::RectangleShape shape;
 	shape.setSize(getSize());

@@ -1,6 +1,9 @@
 #include "Layout.hpp"
 #include "Display.hpp"
-#include "Element.hpp"
+#include "Button.hpp"
+#include "Bar.hpp"
+#include "TextBar.hpp"
+#include "Theme.hpp"
 
 namespace sflcars
 {
@@ -42,6 +45,44 @@ void Layout::setPosition(const sf::Vector2f& newPosition)
 sf::Vector2f Layout::getPosition() const
 {
 	return sf::Vector2f();
+}
+
+Element* Layout::add(Element* element, Alignment align, int id)
+{
+	std::cout << "[Layout] adding element with id " << id << std::endl;
+
+	element->setParent(this);
+	element->setID(id);
+
+	sf::Vector2u size = display->getSize();
+
+	if (elements.empty())
+		element->setPosition(sf::Vector2f(Theme::MARGIN, Theme::MARGIN));
+	else
+		if (align == Alignment::Vertical)
+			element->setPosition(sf::Vector2f(Theme::MARGIN, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::MARGIN));
+		else if (align == Alignment::Horizontal)
+			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::MARGIN, elements.back()->getPosition().y));
+
+	elements.push_back(element);
+	return element;
+}
+
+Element* Layout::add(Element* element, int id)
+{
+	return add(element, Alignment::Vertical, id);
+}
+
+void Layout::onStateChanged(State state)
+{
+	if (state == State::Default)
+	{
+		if (focused != nullptr)
+		{
+			focused->setState(State::Default);
+			focused = nullptr;
+		}
+	}
 }
 
 int Layout::onEvent(const sf::Event& event)
