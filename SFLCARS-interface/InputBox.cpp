@@ -7,27 +7,32 @@
 
 #include <iostream>
 
-float padding = 4;
-
 namespace sflcars
 {
 
 InputBox::InputBox(float width) : cursorPos(0), maxCharacters(-1), blinkPeriod(1.0f)
 {
-	text.setFont(Theme::getFont());
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(36);
-
-	box.setSize(sf::Vector2f(width, Theme::getFont().getLineSpacing(text.getCharacterSize())));
+	box.setSize(sf::Vector2f(width, Theme::getBoxHeight()));
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(Theme::getRandomColor());
-	box.setOutlineThickness(-4);
+	box.setOutlineThickness(Theme::borderSize);
 
-	float outlineThickness = std::abs(box.getOutlineThickness());
+	float offset = Theme::borderSize + Theme::PADDING;
+	text.setFont(Theme::getFont());
+	text.setPosition(box.getPosition().x + offset, box.getPosition().y + offset);
+	text.setFillColor(Theme::input.normal);
+	text.setCharacterSize(Theme::textCharacterSize);
 
-	cursor.setSize(sf::Vector2f(2, Theme::getFont().getLineSpacing(text.getCharacterSize()) - (outlineThickness * 2) - (padding * 2)));
-	cursor.setFillColor(sf::Color::White);
+	// Build cursor
+	cursor.setPosition(offset, offset);
+	cursor.setSize(sf::Vector2f(1.f, Theme::getLineSpacing()));
+	cursor.setFillColor(Theme::input.normal);
 	setCursorPosition(0);
+
+	// TODO: is this necessary?
+	setText("");
+
+	setSize(box.getSize());
 }
 
 void InputBox::setText(const sf::String& string)
@@ -38,19 +43,14 @@ void InputBox::setText(const sf::String& string)
 	oldText = text.getString();
 }
 
-const sf::String& InputBox::getText() const
-{
-	return text.getString();
-}
-
-void InputBox::addText(const sf::String& string)
-{
-	setText(getText() + string);
-}
-
 bool InputBox::isEmpty() const
 {
 	return text.getString().isEmpty();
+}
+
+const sf::String& InputBox::getText() const
+{
+	return text.getString();
 }
 
 void InputBox::setCursorPosition(size_t index)
@@ -59,37 +59,44 @@ void InputBox::setCursorPosition(size_t index)
 	{
 		cursorPos = index;
 
-		cursor.setPosition(text.findCharacterPos(index).x, box.getPosition().y + std::abs(box.getOutlineThickness()) + padding);
+		float innerPadding = Theme::borderSize + Theme::PADDING;
+		cursor.setPosition(text.findCharacterPos(index).x, box.getPosition().y + innerPadding);
 		cursorTimer.restart();
 
-		if (cursor.getPosition().x > getSize().x - padding)
+		if (cursor.getPosition().x > getPosition().x + getSize().x - innerPadding)
 		{
+			std::cout << "shifting text on left" << std::endl;
+
 			// Shift text on left
-			float diff = cursor.getPosition().x - getSize().x + padding;
+			float diff = cursor.getPosition().x - (getPosition().x + getSize().x - innerPadding);
 			text.move(-diff, 0);
 			cursor.move(-diff, 0);
 		}
-		else if (cursor.getPosition().x < padding)
+		else if (cursor.getPosition().x < getPosition().x + innerPadding)
 		{
+			std::cout << "shifting text on right" << std::endl;
+
 			// Shift text on right
-			float diff = padding - cursor.getPosition().x;
+			float diff = (getPosition().x + innerPadding) - cursor.getPosition().x;
 			text.move(diff, 0);
 			cursor.move(diff, 0);
 		}
 
-		float text_width = text.getLocalBounds().width;
+		float textWidth = text.getLocalBounds().width;
 
-		if (text.getPosition().x < padding
-			&& text.getPosition().x + text_width < getSize().x - padding)
+		if (text.getPosition().x < innerPadding
+			&& text.getPosition().x + textWidth < getSize().x - innerPadding)
 		{
-			float diff = (getSize().x - padding) - (text.getPosition().x + text_width);
+			std::cout << "shifting" << std::endl;
+
+			float diff = ((getPosition().x + getSize().x) - innerPadding) - (text.getPosition().x + textWidth);
 			text.move(diff, 0);
 			cursor.move(diff, 0);
 
 			// If text is smaller than the textbox, force align on left
-			if (text_width < (getSize().x - padding * 2))
+			if (textWidth < (getSize().x - innerPadding * 2))
 			{
-				diff = padding - text.getPosition().x;
+				diff = innerPadding - text.getPosition().x;
 				text.move(diff, 0);
 				cursor.move(diff, 0);
 			}
@@ -115,8 +122,8 @@ float InputBox::getBlinkPeriod() const
 void InputBox::setPosition(const sf::Vector2f& newPosition)
 {
 	box.setPosition(newPosition);
-	text.setPosition(sf::Vector2f(box.getPosition().x - box.getOutlineThickness() + 4, box.getPosition().y + box.getOutlineThickness()));
-	setCursorPosition(getCursorPosition());
+	float offset = Theme::borderSize + Theme::PADDING;
+	text.setPosition(box.getPosition().x + offset, box.getPosition().y + offset);
 }
 
 sf::Vector2f InputBox::getPosition() const
@@ -126,7 +133,6 @@ sf::Vector2f InputBox::getPosition() const
 
 void InputBox::setSize(const sf::Vector2f& newSize)
 {
-	return;
 }
 
 sf::Vector2f InputBox::getSize() const
@@ -141,9 +147,11 @@ void InputBox::onKeyPressed(const sf::Keyboard::Key& key)
 	case sf::Keyboard::Left:
 		setCursorPosition(cursorPos - 1);
 		break;
+
 	case sf::Keyboard::Right:
 		setCursorPosition(cursorPos + 1);
 		break;
+
 	case sf::Keyboard::BackSpace:
 		// Erase character before cursor
 		if (cursorPos > 0)
@@ -155,6 +163,7 @@ void InputBox::onKeyPressed(const sf::Keyboard::Key& key)
 			setCursorPosition(cursorPos - 1);
 		}
 		break;
+
 	case sf::Keyboard::Delete:
 		// Erase character after cursor
 		if (cursorPos < text.getString().getSize())
@@ -166,30 +175,35 @@ void InputBox::onKeyPressed(const sf::Keyboard::Key& key)
 			setCursorPosition(cursorPos);
 		}
 		break;
+
 	case sf::Keyboard::Home:
 		setCursorPosition(0);
 		break;
+
 	case sf::Keyboard::End:
 		setCursorPosition(text.getString().getSize());
 		break;
+
 	case sf::Keyboard::Return:
 		triggerCallback();
 		break;
+
 	case sf::Keyboard::Escape:
 		text.setString(oldText);
 		setCursorPosition(text.getString().getSize());
+
 	default:
 		break;
 	}
 }
 
-void InputBox::onMousePressed(const sf::Vector2f& position)
+void InputBox::onMousePressed(const sf::Vector2f& pos)
 {
 	for (int i = text.getString().getSize(); i >= 0; --i)
 	{
-		// Place cursor after the character; under the mouse
+		// Place cursor after the character under the mouse
 		sf::Vector2f glyph_pos = text.findCharacterPos(i);
-		if (glyph_pos.x <= position.x)
+		if (glyph_pos.x <= pos.x)
 		{
 			setCursorPosition(i);
 			break;
@@ -217,6 +231,8 @@ void InputBox::onStateChanged(State state)
 {
 	if (state == State::Default)
 		oldText = text.getString();
+
+//	box.applyState(state);
 }
 
 void InputBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -228,26 +244,26 @@ void InputBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	glEnable(GL_SCISSOR_TEST);
 
 	sf::Vector2f pos = box.getPosition();
-	glScissor((pos.x + std::abs(box.getOutlineThickness())) - 1, target.getSize().y - (pos.y + getSize().y), getSize().x - 2, getSize().y);
+	glScissor((pos.x + Theme::borderSize) - 1, target.getSize().y - (pos.y + getSize().y) + 1, getSize().x, getSize().y - 2);
 	target.draw(text, states);
 
 	glDisable(GL_SCISSOR_TEST);
 #else
-    // draw the text even though it won't have been cut.
-    // FIXME: this needs to go away when opengl can be linked
+	// draw the text even though it won't have been cut.
+	// FIXME: this needs to go away when opengl can be linked
 	target.draw(text, states);
 #endif
 
 	// Show cursor if focused
 	if (isFocused())
 	{
+		// Make it blink
 		float timer = cursorTimer.getElapsedTime().asSeconds();
 		if (timer >= blinkPeriod)
 			cursorTimer.restart();
 
 		// Updating in the drawing method, deal with it
-		//sf::Color color = Theme::input.textColor;
-		sf::Color color = sf::Color::White;
+		sf::Color color = Theme::input.normal;
 		color.a = 255 - (255 * timer / blinkPeriod);
 		cursor.setFillColor(color);
 

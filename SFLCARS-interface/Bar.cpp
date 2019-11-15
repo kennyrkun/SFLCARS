@@ -8,8 +8,6 @@ namespace sflcars
 
 Bar::Bar()
 {
-	std::cout << "created bar" << std::endl;
-
 	leftEdge.setFillColor(Theme::getRandomColor());
 	leftEdgeRight.setFillColor(leftEdge.getFillColor());
 	middle.setFillColor(Theme::getRandomColor());

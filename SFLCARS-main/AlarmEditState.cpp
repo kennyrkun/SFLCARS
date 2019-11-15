@@ -68,7 +68,6 @@ void AlarmEditState::Init(AppEngine* app_)
 	layout->add(second = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::SecondDown);
 
-	/*
 	layout->add(new sflcars::Button("up"));
 	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal);
@@ -78,7 +77,6 @@ void AlarmEditState::Init(AppEngine* app_)
 	layout->add(new sflcars::Button("down"));
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal);
 	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal);
-	*/
 
 	layout->add(new sflcars::Button("Save"), Callbacks::Save);
 	layout->add(new sflcars::Button("Quit"), sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);

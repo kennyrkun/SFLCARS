@@ -37,6 +37,9 @@ public:
 	void setBlinkPeriod(float period);
 	float getBlinkPeriod() const;
 
+	// TODO: float getWidth();
+	// TODO: void setWidth(float width);
+
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 

@@ -10,8 +10,6 @@ TextBar::TextBar(const std::string& string, const TextAlignment align) : align(a
 	text.setFont(Theme::getFont());
 	text.setCharacterSize(36);
 	text.setString(string);
-	
-	std::cout << "created textbar" << std::endl;
 }
 
 void TextBar::setAlignment(TextAlignment align)

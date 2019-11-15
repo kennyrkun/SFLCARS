@@ -26,7 +26,7 @@ public:
 
 	static const sf::Font& getFont();
 
-	// Widget height based on text size
+	// Element height based on text size
 	static float getBoxHeight();
 
 	// Height of a line of text
