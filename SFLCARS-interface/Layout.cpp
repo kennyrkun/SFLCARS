@@ -1,6 +1,10 @@
 #include "Layout.hpp"
+#include "VerticalLayout.hpp"
+#include "HorizontalLayout.hpp"
 #include "Display.hpp"
 #include "Element.hpp"
+
+#include <iostrem>
 
 namespace sflcars
 {
@@ -37,11 +41,29 @@ sf::Vector2f Layout::getSize() const
 
 void Layout::setPosition(const sf::Vector2f& newPosition)
 {
+	std::cout << "set layout position" << std::endl;
+
+	// TODO: might need to update the position of all the objects that are contained within this object
+	position = newPosition;
 }
 
 sf::Vector2f Layout::getPosition() const
 {
-	return sf::Vector2f();
+	return position;
+}
+
+VerticalLayout* Layout::addVerticalLayout()
+{
+	VerticalLayout* layout = new VerticalLayout(display);
+	push(layout);
+	return layout;
+}
+
+HorizontalLayout* Layout::addHorizontalLayout()
+{
+	HorizontalLayout* layout = new HorizontalLayout(display);
+	push(layout);
+	return layout;
 }
 
 Element* Layout::push(Element* element)

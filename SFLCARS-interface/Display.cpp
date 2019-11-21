@@ -39,16 +39,6 @@ sf::Vector2f Display::getMousePosition() const
 	return mapPixelToCoords(sf::Mouse::getPosition(*this));
 }
 
-void Display::setPadding(float padding)
-{
-	Theme::PADDING = padding;
-}
-
-float Display::getPadding() const
-{
-	return Theme::PADDING;
-}
-
 DisplayEvent Display::HandleEvents()
 {
 	DisplayEvent displayEvent;

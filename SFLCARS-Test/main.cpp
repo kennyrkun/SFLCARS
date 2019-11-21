@@ -3,6 +3,7 @@
 #include <TextBar.hpp>
 #include <Button.hpp>
 #include <InputBox.hpp>
+#include <HorizontalLayout.hpp>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -44,9 +45,6 @@ int calculator()
 	beep.setBuffer(buffer);
 
 	Display* display = new Display(sf::VideoMode(400, 350), ApplicationDisplay::Calculator);
-
-	display->setPadding(5);
-
 	Layout* layout = display->getLayout();
 
 	//	TextBar bar("CALCULATOR");
@@ -97,50 +95,60 @@ int calculator()
 	Button equals("=", { sf::Keyboard::Key::Return, sf::Keyboard::Key::Equal });
 	Button add("+", sf::Keyboard::Key::Add);
 
-	layout->add(&rad, Callback::cRad);
-	layout->add(&deg, Layout::Alignment::Horizontal, Callback::cDeg);
-	layout->add(&x, Layout::Alignment::Horizontal, Callback::cx);
+	sflcars::HorizontalLayout* row1 = layout->addHorizontalLayout();
+	row1->add(&rad, Callback::cRad);
+	row1->add(&deg, Callback::cDeg);
+	row1->add(&x, Callback::cx);
 
-	layout->add(&leftParenthesis, Layout::Alignment::Horizontal);
-	layout->add(&rightParenthesis, Layout::Alignment::Horizontal);
-	layout->add(&percent, Layout::Alignment::Horizontal);
-	layout->add(&clear, Layout::Alignment::Horizontal);
+	sflcars::HorizontalLayout* row2 = layout->addHorizontalLayout();
+	row2->add(&leftParenthesis);
+	row2->add(&rightParenthesis);
+	row2->add(&percent);
+	row2->add(&clear);
 
-	layout->add(&inv, Callback::cInv);
-	layout->add(&sin, Layout::Alignment::Horizontal, Callback::csin);
-	layout->add(&ln, Layout::Alignment::Horizontal, Callback::cln);
+	sflcars::HorizontalLayout* row3 = layout->addHorizontalLayout();
+	row3->add(&inv, Callback::cInv);
+	row3->add(&sin, Callback::csin);
+	row3->add(&ln, Callback::cln);
 
-	layout->add(&seven, Layout::Alignment::Horizontal);
-	layout->add(&eight, Layout::Alignment::Horizontal);
-	layout->add(&nine, Layout::Alignment::Horizontal);
-	layout->add(&divide, Layout::Alignment::Horizontal);
+	sflcars::HorizontalLayout* row4 = layout->addHorizontalLayout();
+	row4->add(&seven);
+	row4->add(&eight);
+	row4->add(&nine);
+	row4->add(&divide);
 
-	layout->add(&pi, Callback::cpi);
-	layout->add(&cos, Layout::Alignment::Horizontal, Callback::ccos);
-	layout->add(&log, Layout::Alignment::Horizontal, Callback::clog);
+	sflcars::HorizontalLayout* row5 = layout->addHorizontalLayout();
+	row5->add(&pi, Callback::cpi);
+	row5->add(&cos, Callback::ccos);
+	row5->add(&log, Callback::clog);
 
-	layout->add(&four, Layout::Alignment::Horizontal);
-	layout->add(&five, Layout::Alignment::Horizontal);
-	layout->add(&six, Layout::Alignment::Horizontal);
-	layout->add(&multiply, Layout::Alignment::Horizontal);
+	sflcars::HorizontalLayout* row6 = layout->addHorizontalLayout();
+	row6->add(&four);
+	row6->add(&five);
+	row6->add(&six);
+	row6->add(&multiply);
 
-	layout->add(&e, Callback::ce);
-	layout->add(&tan, Layout::Alignment::Horizontal, Callback::ctan);
-	layout->add(&sqrt, Layout::Alignment::Horizontal, Callback::csqrt);
+	sflcars::HorizontalLayout* row7 = layout->addHorizontalLayout();
+	row7->add(&e, Callback::ce);
+	row7->add(&tan, Callback::ctan);
+	row7->add(&sqrt, Callback::csqrt);
 
-	layout->add(&one, Layout::Alignment::Horizontal);
-	layout->add(&two, Layout::Alignment::Horizontal);
-	layout->add(&three, Layout::Alignment::Horizontal);
-	layout->add(&subtract, Layout::Alignment::Horizontal);
+	sflcars::HorizontalLayout* row8 = layout->addHorizontalLayout();
+	row8->add(&one);
+	row8->add(&two);
+	row8->add(&three);
+	row8->add(&subtract);
 
-	layout->add(&ans, Callback::cans);
-	layout->add(&exp, Layout::Alignment::Horizontal, Callback::cEXP);
-	layout->add(&xy, Layout::Alignment::Horizontal, Callback::cxy);
+	sflcars::HorizontalLayout* row9 = layout->addHorizontalLayout();
+	row9->add(&ans, Callback::cans);
+	row9->add(&exp, Callback::cEXP);
+	row9->add(&xy, Callback::cxy);
 
-	layout->add(&zero, Layout::Alignment::Horizontal);
-	layout->add(&decimal, Layout::Alignment::Horizontal);
-	layout->add(&equals, Layout::Alignment::Horizontal, Callback::cReturn);
-	layout->add(&add, Layout::Alignment::Horizontal);
+	sflcars::HorizontalLayout* row10 = layout->addHorizontalLayout();
+	row10->add(&zero);
+	row10->add(&decimal);
+	row10->add(&equals, Callback::cReturn);
+	row10->add(&add);
 
 	while (display->isOpen())
 	{
@@ -214,66 +222,10 @@ int calculator()
 		}
 
 		display->Update();
+
+		display->clear();
 		display->DrawLayout();
-	}
-
-	return 0;
-}
-
-int notifier()
-{
-	sf::SoundBuffer buffer_start;
-	sf::SoundBuffer buffer_loop;
-	sf::SoundBuffer buffer_end;
-	sf::Sound whistle;
-	whistle.setVolume(50);
-	buffer_start.loadFromFile("./resources/sounds/processing2_1.ogg");
-	buffer_loop.loadFromFile("./resources/sounds/processing2_2.ogg");
-	buffer_end.loadFromFile("./resources/sounds/processing2_3.ogg");
-
-	whistle.setBuffer(buffer_start);
-
-	Display* display = new Display(sf::VideoMode(600, 400));
-
-	Layout* layout = display->getLayout();
-
-	InputBox messageBox;
-	layout->add(&messageBox);
-
-	Button send("Send");
-	layout->add(&send, Layout::Alignment::Horizontal, 1);
-
-	while (display->isOpen())
-	{
-		DisplayEvent event = display->HandleEvents();
-
-		switch (event.elementCallbackID)
-		{
-		case 1:
-		{
-			sf::sleep(sf::milliseconds(100));
-			messageBox.setText("");
-			whistle.play();
-
-			while (whistle.getStatus() != sf::Sound::Status::Stopped)
-				continue;
-
-			whistle.setBuffer(buffer_loop);
-			whistle.setLoop(true);
-			whistle.play();
-
-			sf::sleep(sf::seconds(1));
-
-			whistle.setBuffer(buffer_end);
-			whistle.setLoop(false);
-			whistle.play();
-
-			break;
-		}
-		}
-
-		display->Update();
-		display->DrawLayout();
+		display->display();
 	}
 
 	return 0;
@@ -281,7 +233,9 @@ int notifier()
 
 int main()
 {
-	notifier();
+	sflcars::Theme::loadFont("fonts/Okuda.otf");
+
+	calculator();
 	return EXIT_SUCCESS;
 
 	Display* display = new Display(sf::VideoMode(600, 400));
@@ -308,7 +262,6 @@ int main()
 
 	layout->add(&bar3);
 	layout->add(&button5);
-
 
 	return EXIT_SUCCESS;
 }

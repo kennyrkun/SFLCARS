@@ -9,6 +9,8 @@ namespace sflcars
 {
 
 class Display;
+class HorizontalLayout;
+class VerticalLayout;
 
 class Layout : public Element
 {
@@ -24,7 +26,10 @@ public:
 
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
-	
+
+	VerticalLayout* addVerticalLayout();
+	HorizontalLayout* addHorizontalLayout();
+
 	virtual Element* add(Element* element, int callbackID = -1) = 0;
 
 	Element* push(Element* element);
@@ -52,6 +57,7 @@ protected:
 private:
 	std::vector<Element*> elements;
 	sf::Vector2f size;
+	sf::Vector2f position;
 };
 
 }

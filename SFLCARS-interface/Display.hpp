@@ -30,9 +30,6 @@ public:
 
 	sf::Vector2f getMousePosition() const;
 
-	void setPadding(float padding);
-	float getPadding() const;
-
 	DisplayEvent HandleEvents();
     void Update();
     void DrawLayout();
