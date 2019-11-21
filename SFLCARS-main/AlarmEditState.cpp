@@ -57,29 +57,29 @@ void AlarmEditState::Init(AppEngine* app_)
 	layout->add(name);
 
 	layout->add(new sflcars::Button("up"), Callbacks::HourUp);
-	layout->add(hour = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
-	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::HourDown);
+	layout->add(hour = new sflcars::InputBox);
+	layout->add(new sflcars::Button("down"), Callbacks::HourDown);
 
 	layout->add(new sflcars::Button("up"), Callbacks::MinuteUp);
-	layout->add(minute = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
-	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::MinuteDown);
+	layout->add(minute = new sflcars::InputBox);
+	layout->add(new sflcars::Button("down"), Callbacks::MinuteDown);
 
 	layout->add(new sflcars::Button("up"), Callbacks::SecondUp);
-	layout->add(second = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
-	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal, Callbacks::SecondDown);
+	layout->add(second = new sflcars::InputBox);
+	layout->add(new sflcars::Button("down"), Callbacks::SecondDown);
 
 	layout->add(new sflcars::Button("up"));
-	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal);
-	layout->add(new sflcars::Button("up"), sflcars::Layout::Alignment::Horizontal);
+	layout->add(new sflcars::Button("up"));
+	layout->add(new sflcars::Button("up"));
 	layout->add(year = new sflcars::InputBox);
-	layout->add(month = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
-	layout->add(day = new sflcars::InputBox, sflcars::Layout::Alignment::Horizontal);
+	layout->add(month = new sflcars::InputBox);
+	layout->add(day = new sflcars::InputBox);
 	layout->add(new sflcars::Button("down"));
-	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal);
-	layout->add(new sflcars::Button("down"), sflcars::Layout::Alignment::Horizontal);
+	layout->add(new sflcars::Button("down"));
+	layout->add(new sflcars::Button("down"));
 
 	layout->add(new sflcars::Button("Save"), Callbacks::Save);
-	layout->add(new sflcars::Button("Quit"), sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);
+	layout->add(new sflcars::Button("Quit"), Callbacks::Quit);
 
 	
 	layout->add(new sflcars::Bar);

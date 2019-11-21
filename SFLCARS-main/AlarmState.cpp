@@ -41,7 +41,7 @@ void AlarmState::Init(AppEngine* app_)
 	}
 
 	layout->add(new sflcars::Button("End"), Callbacks::EndAlarm);
-	layout->add(new sflcars::Button("Snooze"), sflcars::Layout::Alignment::Horizontal, Callbacks::SnoozeAlarm);
+	layout->add(new sflcars::Button("Snooze"), Callbacks::SnoozeAlarm);
 	layout->add(new sflcars::Bar);
 
 	buffer.loadFromFile("./resources/sounds/alarm/" + alarm.soundName + ".wav");

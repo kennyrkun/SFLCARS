@@ -29,8 +29,8 @@ public:
 	void setFont(sf::Font& font);
 	sf::Font getFont() const;
 
-	void setFillColor(const sf::Color& color);
-	const sf::Color& getColor() const;
+	void setFillColor(const sf::Color& color) override;
+	const sf::Color& getFillColor() const override;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

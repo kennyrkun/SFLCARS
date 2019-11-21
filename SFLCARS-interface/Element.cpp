@@ -32,12 +32,12 @@ Display* Element::getDisplay() const
 	return nullptr;
 }
 
-void Element::setParent(Element* element)
+void Element::setParent(Layout* element)
 {
 	parent = element;
 }
 
-Element* Element::getParent() const
+Layout* Element::getParent() const
 {
 	return parent;
 }

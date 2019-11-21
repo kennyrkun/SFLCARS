@@ -73,7 +73,7 @@ void String::setFillColor(const sf::Color& color)
 	text.setFillColor(color);
 }
 
-const sf::Color& String::getColor() const
+const sf::Color& String::getFillColor() const
 {
 	return text.getFillColor();
 }

@@ -1,6 +1,7 @@
 #include "Display.hpp"
 
-#include "Layout.hpp"
+#include "VerticalLayout.hpp"
+#include "Theme.hpp"
 
 #include <iostream>
 
@@ -9,7 +10,7 @@ namespace sflcars
 
 Display::Display(const sf::VideoMode& size, int id) : RenderWindow(size, "SFLCARS", sf::Style::Default), id(id)
 {
-	layout = new Layout(this);
+	layout = new VerticalLayout(this);
 
 	setVerticalSyncEnabled(true);
 

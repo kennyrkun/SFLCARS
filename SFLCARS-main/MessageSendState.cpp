@@ -39,7 +39,7 @@ void MessageSendState::Init(AppEngine* app_)
 	layout.add(destinationBox);
 	layout.add(messageBox);
 	layout.add(submitButton, Callbacks::SendMessage);
-	layout.add(quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::Quit);
+	layout.add(quitButton, Callbacks::Quit);
 	layout.add(bottombar);
 
 	std::cout << "MessageSendState ready." << std::endl;

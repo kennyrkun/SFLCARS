@@ -37,7 +37,7 @@ void LoginState::Init(AppEngine* app_)
 	layout.add(usernameBox, Callbacks::UsernameBox);
 	layout.add(passwordBox, Callbacks::PasswordBox);
 	layout.add(submitButton, Callbacks::SubmitButton);
-	layout.add(quitButton, sflcars::Layout::Alignment::Horizontal, Callbacks::QuitButton);
+	layout.add(quitButton, Callbacks::QuitButton);
 	layout.add(bottombar);
 
 	std::cout << "LoginState ready." << std::endl;

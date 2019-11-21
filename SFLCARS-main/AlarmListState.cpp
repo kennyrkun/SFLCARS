@@ -4,7 +4,7 @@
 #include "IntercomState.hpp"
 #include "AlarmEditState.hpp"
 
-#include <Layout.hpp>
+#include <VerticalLayout.hpp>
 #include <Display.hpp>
 
 #include <iostream>
@@ -119,7 +119,7 @@ std::vector<std::string> AlarmListState::getObjectsAtPath(const std::string& s, 
 void AlarmListState::buildMenu()
 {
 	delete display->getLayout();
-	sflcars::Layout* layout = new sflcars::Layout(display);
+	sflcars::Layout* layout = new sflcars::VerticalLayout(display);
 	display->setLayout(layout);
 
 	alarmDeleteButtons.clear();
@@ -146,7 +146,7 @@ void AlarmListState::buildMenu()
 	{
 		layout->add(new sflcars::Button(alarms[i].name), i);
 		alarmDeleteButtons.emplace(numbersAfterAlarmSize, i);
-		layout->add(new sflcars::Button("Delete"), sflcars::Layout::Alignment::Horizontal, numbersAfterAlarmSize);
+		layout->add(new sflcars::Button("Delete"), numbersAfterAlarmSize);
 		numbersAfterAlarmSize++;
 	}
 

@@ -1,7 +1,7 @@
 #ifndef SFLCARS_LAYOUT_HPP
 #define SFLCARS_LAYOUT_HPP
 
-#include <SFML/Graphics.hpp>
+#include "Element.hpp"
 
 #include <vector>
 
@@ -9,10 +9,8 @@ namespace sflcars
 {
 
 class Display;
-class Element;
-enum class State;
 
-class Layout : sf::Drawable
+class Layout : public Element
 {
 public:
 	Layout(Display* display);
@@ -27,32 +25,32 @@ public:
 	void setPosition(const sf::Vector2f& newPosition);
 	sf::Vector2f getPosition() const;
 	
+	virtual Element* add(Element* element, int callbackID = -1) = 0;
+
+	Element* push(Element* element);
+
 	int onEvent(const sf::Event& event);
 
 	bool focusNextElement();
 	bool focusPreviousElement();
 
 protected:
-	bool focusElement(Element* element, State state);
+	friend class Element;
+	friend class HorizontalLayout;
+	friend class VerticalLayout;
 
-	void onMouseMoved(const sf::Vector2f& position);
-	void onMousePressed(const sf::Vector2f& position);
-	void onMouseReleased(const sf::Vector2f& position);
-	void onMouseWheelMoved(int delta);
-	void onKeyPressed(const sf::Keyboard::Key& key);
-	void onKeyReleased(const sf::Keyboard::Key& key);
-	void onTextEntered(const sf::Uint32& unicode);
-	void onWindowResized(const sf::Event::SizeEvent& newSize);
+	bool focusElement(Element* element, State state);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Element* triggered;
-
-private:
-	std::vector<Element*> elements;
+	Element* triggered = nullptr;
+	Element* focused = nullptr;
+	Element* hovered = nullptr;
 
 	Display* display;
 
+private:
+	std::vector<Element*> elements;
 	sf::Vector2f size;
 };
 
