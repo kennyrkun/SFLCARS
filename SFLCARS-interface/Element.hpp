@@ -25,18 +25,14 @@ public:
 	void setID(int id);
 	int getID() const;
 
-	// optional
 	virtual void setSize(const sf::Vector2f& newSize) {}
-	// optional
 	virtual sf::Vector2f getSize() const { return sf::Vector2f(0, 0); }
 
-	// required
-	virtual void setPosition(const sf::Vector2f& newPosition);
-	// required
-	virtual sf::Vector2f getPosition() const;
+	virtual void setPosition(const sf::Vector2f& newPosition) {};
+	virtual sf::Vector2f getPosition() const { return sf::Vector2f(0, 0); };
 
-	virtual void setFillColor(const sf::Color& color);
-	virtual const sf::Color& getFillColor() const;
+	virtual void setFillColor(const sf::Color& color) {};
+	virtual const sf::Color& getFillColor() const { return sf::Color::White; };
 
 	virtual void setState(State newState);
 	State getState() const { return state; };
