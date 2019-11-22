@@ -4,7 +4,7 @@
 #include "Display.hpp"
 #include "Element.hpp"
 
-#include <iostrem>
+#include <iostream>
 
 namespace sflcars
 {
