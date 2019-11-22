@@ -15,6 +15,9 @@ public:
 	VerticalLayout(Display* display);
 
 	Element* add(Element* element, int id = -1);
+
+private:
+	void recomputeGeometry();
 };
 
 }

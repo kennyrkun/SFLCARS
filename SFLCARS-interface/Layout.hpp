@@ -24,8 +24,8 @@ public:
 	void setSize(const sf::Vector2f& newSize);
 	sf::Vector2f getSize() const;
 
-	void setPosition(const sf::Vector2f& newPosition);
-	sf::Vector2f getPosition() const;
+	void setPosition(const sf::Vector2f& newPosition) override;
+	sf::Vector2f getPosition() const override;
 
 	VerticalLayout* addVerticalLayout();
 	HorizontalLayout* addHorizontalLayout();
@@ -47,6 +47,8 @@ protected:
 	bool focusElement(Element* element, State state);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	virtual void recomputeGeometry() = 0;
 
 	Element* triggered = nullptr;
 	Element* focused = nullptr;

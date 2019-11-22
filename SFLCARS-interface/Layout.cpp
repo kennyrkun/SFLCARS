@@ -55,20 +55,21 @@ sf::Vector2f Layout::getPosition() const
 VerticalLayout* Layout::addVerticalLayout()
 {
 	VerticalLayout* layout = new VerticalLayout(display);
-	push(layout);
+	add(layout);
 	return layout;
 }
 
 HorizontalLayout* Layout::addHorizontalLayout()
 {
 	HorizontalLayout* layout = new HorizontalLayout(display);
-	push(layout);
+	add(layout);
 	return layout;
 }
 
 Element* Layout::push(Element* element)
 {
 	elements.push_back(element);
+	recomputeGeometry();
 	return element;
 }
 
@@ -179,6 +180,7 @@ void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	sf::RectangleShape shape;
 	shape.setSize(getSize());
 	shape.setPosition(getPosition());
+	shape.setFillColor(Theme::getRandomColor());
 	target.draw(shape, states);
 
 	for (const auto element : elements)
