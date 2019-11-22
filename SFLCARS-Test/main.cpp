@@ -100,55 +100,52 @@ int calculator()
 	row1->add(&deg, Callback::cDeg);
 	row1->add(&x, Callback::cx);
 
-	sflcars::HorizontalLayout* row2 = layout->addHorizontalLayout();
-	row2->add(&leftParenthesis);
-	row2->add(&rightParenthesis);
-	row2->add(&percent);
-	row2->add(&clear);
+	row1->add(&leftParenthesis);
+	row1->add(&rightParenthesis);
+	row1->add(&percent);
+	row1->add(&clear);
 
 	sflcars::HorizontalLayout* row3 = layout->addHorizontalLayout();
 	row3->add(&inv, Callback::cInv);
 	row3->add(&sin, Callback::csin);
 	row3->add(&ln, Callback::cln);
 
-	sflcars::HorizontalLayout* row4 = layout->addHorizontalLayout();
-	row4->add(&seven);
-	row4->add(&eight);
-	row4->add(&nine);
-	row4->add(&divide);
+	row3->add(&seven);
+	row3->add(&eight);
+	row3->add(&nine);
+	row3->add(&divide);
 
 	sflcars::HorizontalLayout* row5 = layout->addHorizontalLayout();
 	row5->add(&pi, Callback::cpi);
 	row5->add(&cos, Callback::ccos);
 	row5->add(&log, Callback::clog);
 
-	sflcars::HorizontalLayout* row6 = layout->addHorizontalLayout();
-	row6->add(&four);
-	row6->add(&five);
-	row6->add(&six);
-	row6->add(&multiply);
+	row5->add(&four);
+	row5->add(&five);
+	row5->add(&six);
+	row5->add(&multiply);
 
 	sflcars::HorizontalLayout* row7 = layout->addHorizontalLayout();
 	row7->add(&e, Callback::ce);
 	row7->add(&tan, Callback::ctan);
 	row7->add(&sqrt, Callback::csqrt);
 
-	sflcars::HorizontalLayout* row8 = layout->addHorizontalLayout();
-	row8->add(&one);
-	row8->add(&two);
-	row8->add(&three);
-	row8->add(&subtract);
+	row7->add(&one);
+	row7->add(&two);
+	row7->add(&three);
+	row7->add(&subtract);
 
 	sflcars::HorizontalLayout* row9 = layout->addHorizontalLayout();
 	row9->add(&ans, Callback::cans);
 	row9->add(&exp, Callback::cEXP);
 	row9->add(&xy, Callback::cxy);
 
-	sflcars::HorizontalLayout* row10 = layout->addHorizontalLayout();
-	row10->add(&zero);
-	row10->add(&decimal);
-	row10->add(&equals, Callback::cReturn);
-	row10->add(&add);
+	row9->add(&zero);
+	row9->add(&decimal);
+	row9->add(&equals, Callback::cReturn);
+	row9->add(&add);
+
+	display->setSize(sf::Vector2u(layout->getSize().x, layout->getSize().y));
 
 	while (display->isOpen())
 	{
