@@ -197,6 +197,10 @@ void Button::reposition()
 	sf::FloatRect size = text.getGlobalBounds();
 
 	box.setSize(sf::Vector2f(size.width + 30, 35));
+
+	if (box.getSize().x < Theme::minWidgetWidth)
+		box.setSize(sf::Vector2f(Theme::minWidgetWidth, 35));
+
 	box.setCornerPointCount(16);
 	box.setCornersRadius(16);
 

@@ -72,7 +72,7 @@ public:
 	static sf::Color windowBgColor;
 
 	static float borderSize; // I think this is unused, but normally it would be the size of lines around things like buttons and sliders
-//	static float minWidgetWidth; // Don't know what this is
+	static float minWidgetWidth; // minimum width of each widget (think text box)
 
 	static float PADDING; // Spacing inside widget
 	static float MARGIN;  // Spacing between widgets

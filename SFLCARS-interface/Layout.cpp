@@ -294,11 +294,13 @@ bool Layout::focusElement(Element* element, State state)
 
 void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	/*
 	sf::RectangleShape shape;
 	shape.setSize(getSize());
 	shape.setPosition(getPosition());
 	shape.setFillColor(Theme::getRandomColor());
 	target.draw(shape, states);
+	*/
 
 	for (const auto element : elements)
 		target.draw(*element, states);

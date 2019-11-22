@@ -14,7 +14,7 @@ Theme::TextStyle Theme::button;
 Theme::TextStyle Theme::input = { sf::Color::White, sf::Color::White, sf::Color::White, sf::Color::White };
 sf::Color Theme::windowBgColor;
 float     Theme::borderSize = 1.0f;
-//float     Theme::minWidgetWidth = 86;
+float     Theme::minWidgetWidth = 86;
 float     Theme::PADDING = 1.0f;
 float     Theme::MARGIN = 20.0f;
 bool Theme::triggerCallbacksOnRelease = true;
