@@ -349,3 +349,4 @@ SFLCARS-Test/resources
 SFLCARS-main/resources
 SFLCARS-Server/sflcars_server/accounts/admin/account.dat
 SFLCARS-main/sflcars/alarms/
+build-dir/
