@@ -27,8 +27,6 @@ struct AppSettings
 	// TODO: this
 	//bool use24HourTime = false;
 
-	bool offline = false;
-
 	struct Server
 	{
 		enum class NetworkOptions
@@ -36,7 +34,7 @@ struct AppSettings
 			Offline,
 			Local,
 			Public,
-		} networkType = NetworkOptions::Offline;
+		} networkType = NetworkOptions::Local;
 
 		sf::IpAddress serverIpAddress = sf::IpAddress::LocalHost;
 		unsigned short serverPort = 12345;

@@ -239,7 +239,6 @@ void Server::run()
 
 								send(notifyPacket, client);
 
-
 								// TODO: remove client
 								client->socket->disconnect();
 								delete client->socket;

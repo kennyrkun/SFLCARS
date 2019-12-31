@@ -84,7 +84,6 @@ void InitialiseState::Update()
 		if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
 		{
 			std::cerr << "failed to connect to server (" << failedConnectionAttempts << ")" << std::endl;
-			app->settings.offline = true;
 			failedConnectionAttempts++;
 		}
 		else
