@@ -59,8 +59,6 @@ public:
 	void ChangeState(AppState* state);
 	void PushState(AppState* state);
 	void PopState();
-	// amount: the amount of states to pop starting from the back
-	void PopStates(int amount);
 
 	void HandleEvents();
 	void Update();
