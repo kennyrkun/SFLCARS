@@ -70,15 +70,6 @@ void MessageSendState::HandleEvents()
 
 	if (event.event.type == sf::Event::EventType::Closed)
 		app->Quit();
-	else if (event.event.type == sf::Event::EventType::KeyPressed)
-	{
-		if (event.event.key.code == sf::Keyboard::Key::Tilde)
-		{
-			app->settings.debug = !app->settings.debug;
-
-			std::cout << "cl_debug set to " + std::to_string(app->settings.debug) << std::endl;
-		}
-	}
 
 	switch (event.elementCallbackID)
 	{
