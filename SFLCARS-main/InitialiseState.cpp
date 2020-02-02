@@ -84,7 +84,7 @@ void InitialiseState::Update()
 		if (!app->listener.connectToServer(app->settings.server.serverIpAddress, app->settings.server.serverPort))
 		{
 			std::cerr << "failed to connect to server (" << failedConnectionAttempts << ")" << std::endl;
-			app->settings.offline = true;
+			app->settings.server.currentlyConnected = false;
 			failedConnectionAttempts++;
 		}
 		else
@@ -112,6 +112,7 @@ void InitialiseState::Update()
 				if (event.command == net::Command::ConnectionAccepted)
 				{
 					std::cout << "connection accepted" << std::endl;
+					app->settings.server.currentlyConnected = true;
 					app->ChangeState(new LoginState);
 					return;
 				}
