@@ -53,6 +53,11 @@ const sf::String& InputBox::getText() const
 	return text.getString();
 }
 
+void InputBox::addText(const sf::String& string)
+{
+	text.setString(text.getString().toAnsiString() + string);
+}
+
 void InputBox::setCursorPosition(size_t index)
 {
 	if (index <= text.getString().getSize())
