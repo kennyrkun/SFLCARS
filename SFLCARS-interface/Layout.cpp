@@ -22,8 +22,14 @@ void Layout::setSize(const sf::Vector2f& newSize)
 
 sf::Vector2f Layout::getSize() const
 {
-	float height = (elements.front()->getPosition().y - (elements.back()->getPosition().y + elements.back()->getSize().y));
-	return sf::Vector2f(0, height);
+	float height = 0;
+
+	if (!elements.empty())
+		height = (elements.front()->getPosition().y - (elements.back()->getPosition().y + elements.back()->getSize().y));
+
+	float width = display->getSize().x;
+
+	return sf::Vector2f(width, height);
 }
 
 void Layout::setPosition(const sf::Vector2f& newPosition)
@@ -51,6 +57,8 @@ Element* Layout::add(Element* element, Alignment align, int id)
 			element->setPosition(sf::Vector2f(Theme::MARGIN, elements.back()->getPosition().y + elements.back()->getSize().y + Theme::MARGIN));
 		else if (align == Alignment::Horizontal)
 			element->setPosition(sf::Vector2f(elements.back()->getPosition().x + elements.back()->getSize().x + Theme::MARGIN, elements.back()->getPosition().y));
+
+	element->setSize(sf::Vector2f(getSize().x - (Theme::MARGIN * 2), getSize().y));
 
 	elements.push_back(element);
 	return element;

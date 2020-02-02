@@ -16,6 +16,7 @@ public:
 	{
 		Left,
 		Right
+		// TODO: middle
 	};
 
 	TextBar(const std::string& string, const TextAlignment align = TextAlignment::Left);
