@@ -28,6 +28,8 @@ public:
 	void Update();
 	void Draw();
 
+	const bool connectionRequired = true;
+
 private:
 	sflcars::TextBar* topbar;
 	sflcars::Button* allClientsButton;

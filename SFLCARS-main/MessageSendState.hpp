@@ -23,6 +23,8 @@ public:
 	void Update();
 	void Draw();
 
+	const bool connectionRequired = true;
+
 private:
 	sflcars::InputBox* destinationBox;
 	sflcars::InputBox* messageBox;
