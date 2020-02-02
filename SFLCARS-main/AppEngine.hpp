@@ -60,7 +60,7 @@ public:
 	void PushState(AppState* state);
 	void PopState();
 	// amount: the amount of states to pop starting from the back
-	void PopState(int amount);
+	void PopStates(int amount);
 
 	void HandleEvents();
 	void Update();

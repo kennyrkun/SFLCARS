@@ -113,7 +113,7 @@ void AppEngine::PopState()
 		states.back()->Resume();
 }
 
-void AppEngine::PopState(int amount)
+void AppEngine::PopStates(int amount)
 {
 	for (size_t i = 0; i < amount; i++)
 	{
