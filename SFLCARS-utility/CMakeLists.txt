@@ -1,0 +1,17 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+
+SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_REQUIRED_STANDARD ON)
+SET(CMAKE_DEBUG_POSTFIX "-d")
+
+SET(PROJECT_NAME "sflcars-utility")
+PROJECT(${PROJECT_NAME} LANGUAGES CXX)
+
+SET(HEADERS ./Command.hpp ./Password.hpp ./PicoSHA256.hpp ./SettingsParser.hpp ./Utility.hpp ./Time.hpp)
+SET(SOURCES ./Command.cpp ./Password.cpp ./SettingsParser.cpp ./Utility.cpp ./Time.cpp)
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${HEADERS} ${SOURCES})
+
+TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC ../SFML/include)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} sfml-network sfml-system -L"../SFML/lib")
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} stdc++fs)
