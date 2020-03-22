@@ -121,8 +121,7 @@ inline std::string SettingsParser::convertToStr(T value) const
 	}
 	catch (const std::exception& e)
 	{
-		logger::ERROR("SettingsParser] ERROR: ");
-		logger::ERROR(e.what());
+		std::cerr << "SettingsParser] ERROR: " << e.what() << std::endl;
 		throw "Unsupported type supplied, either change types, or write a correct conversion function for the template type.";
 	}
 }
@@ -214,8 +213,7 @@ inline T SettingsParser::convertToType(const std::string &input) const
 	}
 	catch (const std::exception& e)
 	{
-		logger::ERROR("[SettingsParser] ERROR: ");
-		logger::ERROR(e.what());
+		std::cerr << "SettingsParser] ERROR: " << e.what() << std::endl;
 		throw "Unconvertable type encountered, please use a different type, or define the handle case in SettingsParser.hpp";
 	}
 }

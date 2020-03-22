@@ -23,7 +23,5 @@ int main(int argc, char* argv[])
 
 	app.Cleanup();
 
-	std::cin.get();
-
 	return EXIT_SUCCESS;
 }

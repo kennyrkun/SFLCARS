@@ -32,7 +32,14 @@ void AlarmState::Init(AppEngine* app_)
 
 	{
 		struct tm timeInfo;
+
+#if defined(_WIN32)
 		localtime_s(&timeInfo, &alarm.date);
+#elif defined(__linux__)
+		localtime_r(&alarm.date, &timeInfo);
+#else
+		timeInfo = localtime(&alarm.date);
+#endif
 
 		std::string timestamp = std::to_string(timeInfo.tm_hour) + ":" + std::to_string(timeInfo.tm_min);
 

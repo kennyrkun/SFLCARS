@@ -6,7 +6,7 @@
 
 #include <SFML/Network.hpp>
 
-#include <filesystem>
+#include <experimental/filesystem>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -15,7 +15,7 @@
 
 // TODO: send commands instead of strings
 
-namespace fs = std::filesystem;
+namespace fs = std::experimental::filesystem;
 namespace util = sflcars::utility;
 namespace pass = sflcars::utility::password;
 namespace net = sflcars::utility::network;

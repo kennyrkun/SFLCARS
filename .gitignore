@@ -349,3 +349,13 @@ SFLCARS-Test/resources
 SFLCARS-main/resources
 SFLCARS-Server/sflcars_server/accounts/admin/account.dat
 SFLCARS-main/sflcars/alarms/
+
+*/CMakeFiles/
+*/CMakeCache.txt
+*/Makefile
+*/cmake_install.cmake
+*.so
+*.a
+*.dll
+*.lib
+*.exe
